@@ -21,14 +21,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                HolidayFragment holidayTab = new HolidayFragment();
-                return holidayTab;
+                return new HolidayFragment();
             case 1:
-                BirthdayFragment birthdayTab = new BirthdayFragment();
-                return birthdayTab;
+                return new BirthdayFragment();
             case 2:
-                EventFragment eventTab = new EventFragment();
-                return eventTab;
+                return new EventFragment();
             default:
                 return null;
         }

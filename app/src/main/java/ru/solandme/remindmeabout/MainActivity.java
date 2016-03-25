@@ -29,12 +29,16 @@ public class MainActivity extends AppCompatActivity {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         final PagerAdapter pagerAdapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        if (viewPager != null) {
+            viewPager.setAdapter(pagerAdapter);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        }
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                if (viewPager != null) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                }
             }
 
             @Override
@@ -69,10 +73,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTabs() {
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.Holidays));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.Birthdays));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.Events));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        if (tabLayout != null) {
+            tabLayout.addTab(tabLayout.newTab().setText(R.string.Holidays));
+            tabLayout.addTab(tabLayout.newTab().setText(R.string.Birthdays));
+            tabLayout.addTab(tabLayout.newTab().setText(R.string.Events));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        }
     }
 
     @Override
