@@ -4,4 +4,7 @@
     <string name="app_icon">Иконка приложения</string>
     <string name="app_version">версия 0.1.альфа</string>
     <string name="about_app">О приложении</string>
+    <string name="Birthdays">Дни рождения</string>
+    <string name="Events">События</string>
+    <string name="Holidays">Праздники</string>
 </resources>
