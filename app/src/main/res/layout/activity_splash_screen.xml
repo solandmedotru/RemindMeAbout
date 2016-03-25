@@ -16,7 +16,7 @@
         android:layout_weight="50"
         android:layout_marginTop="60dp"
         android:baselineAlignBottom="false"
-        android:src="@drawable/ic_launcher1"/>
+        android:src="@drawable/ic_launcher"/>
 
     <TextView
         android:id="@+id/textView"
