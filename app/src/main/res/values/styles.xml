@@ -13,7 +13,7 @@
     </style>
 
 
-    <style name="splashScreenTheme" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
+    <style name="splashScreenTheme" parent="AppDefault">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
