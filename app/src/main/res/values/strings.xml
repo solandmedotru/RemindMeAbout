@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RemindMe About</string>
+    <string name="app_icon">App Icon</string>
+    <string name="app_version">v0.1.alpha</string>
 </resources>

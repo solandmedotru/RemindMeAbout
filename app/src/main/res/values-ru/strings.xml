@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Напомни Об...</string>
+    <string name="app_name">Напомни мне...</string>
+    <string name="app_icon">Иконка приложения</string>
 </resources>

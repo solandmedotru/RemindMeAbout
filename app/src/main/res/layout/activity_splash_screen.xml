@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/splashScreenTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="ru.solandme.remindmeabout.SplashScreen">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="134dp"
+        android:contentDescription="@string/app_icon"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="50"
+        android:layout_marginTop="90dp"
         android:baselineAlignBottom="false"
-        android:src="@drawable/ic_launcher"
-        android:scaleType="fitCenter"/>
+        android:src="@drawable/ic_launcher1"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageView"
-        android:layout_marginTop="10dp"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"/>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="40"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:gravity="center_horizontal"
+        android:text="@string/app_version"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>
