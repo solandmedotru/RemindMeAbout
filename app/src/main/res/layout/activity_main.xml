@@ -27,13 +27,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tab_layout"
                 app:tabIndicatorColor="@color/colorAccent"
-                app:tabIndicatorHeight="2dp"
-                app:tabTextColor="@color/colorWhite"
+                app:tabIndicatorHeight="3dp"
+                app:tabTextColor="@color/colorWhiteDark"
                 android:background="@color/colorPrimary"
                 app:tabSelectedTextColor="@color/colorWhite"
                 app:tabMode="fixed"
                 app:tabGravity="fill"/>
-
 
         </android.support.design.widget.AppBarLayout>
 
