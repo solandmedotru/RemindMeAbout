@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Напомни мне...</string>
     <string name="app_icon">Иконка приложения</string>
+    <string name="app_version">версия 0.1.альфа</string>
 </resources>

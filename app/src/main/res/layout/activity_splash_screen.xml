@@ -14,15 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="50"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="60dp"
         android:baselineAlignBottom="false"
         android:src="@drawable/ic_launcher1"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:text="@string/app_name"
