@@ -8,6 +8,7 @@
     tools:context="ru.solandme.remindmeabout.fragments.HolidayFragment">
 
     <TextView
+        android:id="@+id/holidayTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Holiday"/>
