@@ -10,9 +10,18 @@ import java.util.ArrayList;
 public class Holiday {
     private String id;
     private String name;
+    private String description;
     private String day;
     private String month;
-    private String imageId;
+    private int imageId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -20,6 +29,14 @@ public class Holiday {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDay() {
@@ -38,23 +55,23 @@ public class Holiday {
         this.month = month;
     }
 
-    public String getImageId() {
+    public int getImageId() {
         return imageId;
     }
 
-    public void setImageId(String imageId) {
+    public void setImageId(int imageId) {
         this.imageId = imageId;
     }
-
 
     public static Holiday fromJson(JSONObject jsonObject) {
         Holiday holiday = new Holiday();
         try {
             holiday.id = jsonObject.getString("id");
             holiday.name = jsonObject.getString("name");
+            holiday.description = jsonObject.getString("description");
             holiday.day = jsonObject.getString("day");
             holiday.month = jsonObject.getString("month");
-            holiday.imageId = jsonObject.getString("imageId");
+            holiday.imageId = Integer.decode(jsonObject.getString("imageId"));
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
