@@ -13,7 +13,7 @@ public class Holiday {
     private String description;
     private String day;
     private String month;
-    private int imageId;
+    private String imageUri;
 
     public String getId() {
         return id;
@@ -55,12 +55,12 @@ public class Holiday {
         this.month = month;
     }
 
-    public int getImageId() {
-        return imageId;
+    public String getImageUri() {
+        return imageUri;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public static Holiday fromJson(JSONObject jsonObject) {
@@ -71,7 +71,7 @@ public class Holiday {
             holiday.description = jsonObject.getString("description");
             holiday.day = jsonObject.getString("day");
             holiday.month = jsonObject.getString("month");
-            holiday.imageId = Integer.decode(jsonObject.getString("imageId"));
+            holiday.imageUri = jsonObject.getString("imageUri");
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

@@ -46,7 +46,9 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         holder.holidayName.setText(holiday.getName());
         holder.textHolidayDescription.setText(holiday.getDescription());
 //        holder.textDays.setText(holiday.getDaysToHoliday());
-        holder.imageHoliday.setImageResource(holiday.getImageId());
+
+        int imgResId = context.getResources().getIdentifier(holiday.getImageUri(), "drawable", context.getPackageName());
+        holder.imageHoliday.setImageResource(imgResId);
 
 
     }
