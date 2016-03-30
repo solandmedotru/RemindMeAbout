@@ -9,11 +9,12 @@
     <string name="Holidays">Праздники</string>
 
     <plurals name="days">
-        <item quantity="one">%d день</item>
-        <item quantity="few">%d дня</item>
-        <item quantity="many">%d дней</item>
-        <item quantity="other">%d дней</item>
+        <item quantity="one">%d\nдень</item>
+        <item quantity="few">%d\nдня</item>
+        <item quantity="many">%d\nдней</item>
+        <item quantity="other">%d\nдней</item>
     </plurals>
     <string name="textFinish">прошел</string>
     <string name="textNow">сегодня</string>
+    <string name="bookmark_icon">значек закладки</string>
 </resources>

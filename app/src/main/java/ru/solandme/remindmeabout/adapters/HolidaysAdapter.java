@@ -9,17 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import ru.solandme.remindmeabout.Holiday;
-import ru.solandme.remindmeabout.MyJSON;
 import ru.solandme.remindmeabout.R;
 
 

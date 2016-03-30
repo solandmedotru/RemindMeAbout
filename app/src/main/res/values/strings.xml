@@ -8,6 +8,11 @@
     <string name="Events">Events</string>
     <string name="textNow">today</string>
     <string name="textFinish">finished</string>
+    <string name="bookmark_icon">bookmark icon</string>
+    <string name="days_from_holiday">356\n дней</string>
+    <string name="description">Description</string>
+    <string name="holiday_name">Holiday Name</string>
+    <string name="holiday_picture">Holiday picture</string>
 
 
     <plurals name="days">
