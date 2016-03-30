@@ -1,0 +1,12 @@
+{
+  "birthdays": [
+    {
+      "id": "1",
+      "name": "Соломин Андрей",
+      "description": "Мой день рождения",
+      "day": "26",
+      "month": "3",
+      "imageUri": "june"
+    }
+  ]
+}

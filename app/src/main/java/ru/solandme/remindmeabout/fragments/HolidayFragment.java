@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import ru.solandme.remindmeabout.Holiday;
@@ -50,8 +51,17 @@ public class HolidayFragment extends Fragment {
     private ArrayList<Holiday> createListHolidayData() {
         JSONObject jsonObject;
         ArrayList<Holiday> holidays = null;
+        if (!new File(getContext().getFilesDir().getPath() + "/" + "holidays.json").exists()) {
+            try {
+                jsonObject = new JSONObject(MyJSON.getDataFromRawDir(getContext(), R.raw.holidays));
+                MyJSON.saveData(getContext(), jsonObject.toString(), "holidays.json");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         try {
-            jsonObject = new JSONObject(MyJSON.getDataFromRawDir(getContext(), R.raw.holidays));
+            jsonObject = new JSONObject(MyJSON.getData(getContext(), "holidays.json"));
             JSONArray jsonArray = jsonObject.getJSONArray("holidays");
             holidays = Holiday.fromJson(jsonArray);
         } catch (JSONException e) {

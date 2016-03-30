@@ -11,9 +11,9 @@ public class Holiday {
     private String id;
     private String name;
     private String description;
-    private String day;
-    private String month;
-    private int imageId;
+    private int day;
+    private int month;
+    private String imageUri;
 
     public String getId() {
         return id;
@@ -39,28 +39,28 @@ public class Holiday {
         this.description = description;
     }
 
-    public String getDay() {
+    public int getDay() {
         return day;
     }
 
-    public void setDay(String day) {
+    public void setDay(int day) {
         this.day = day;
     }
 
-    public String getMonth() {
+    public int getMonth() {
         return month;
     }
 
-    public void setMonth(String month) {
+    public void setMonth(int month) {
         this.month = month;
     }
 
-    public int getImageId() {
-        return imageId;
+    public String getImageUri() {
+        return imageUri;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public static Holiday fromJson(JSONObject jsonObject) {
@@ -69,9 +69,9 @@ public class Holiday {
             holiday.id = jsonObject.getString("id");
             holiday.name = jsonObject.getString("name");
             holiday.description = jsonObject.getString("description");
-            holiday.day = jsonObject.getString("day");
-            holiday.month = jsonObject.getString("month");
-            holiday.imageId = Integer.decode(jsonObject.getString("imageId"));
+            holiday.day = jsonObject.getInt("day");
+            holiday.month = jsonObject.getInt("month");
+            holiday.imageUri = jsonObject.getString("imageUri");
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

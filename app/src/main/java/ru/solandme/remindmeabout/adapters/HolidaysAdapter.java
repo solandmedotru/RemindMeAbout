@@ -9,15 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import ru.solandme.remindmeabout.Holiday;
-import ru.solandme.remindmeabout.MyJSON;
 import ru.solandme.remindmeabout.R;
 
 
@@ -45,8 +41,10 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         Holiday holiday = holidays.get(position);
         holder.holidayName.setText(holiday.getName());
         holder.textHolidayDescription.setText(holiday.getDescription());
-//        holder.textDays.setText(holiday.getDaysToHoliday());
-        holder.imageHoliday.setImageResource(holiday.getImageId());
+        holder.textDays.setText(getDays(holiday.getDay(), holiday.getMonth()));
+
+        int imgResId = context.getResources().getIdentifier(holiday.getImageUri(), "drawable", context.getPackageName());
+        holder.imageHoliday.setImageResource(imgResId);
 
 
     }
@@ -75,6 +73,24 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             textDays = (TextView) itemView.findViewById(R.id.textDays);
 
             imageHoliday = (ImageView) itemView.findViewById(R.id.imageHoliday);
+        }
+    }
+
+    private String getDays(int day, int month) {
+        Calendar todayCalendar = new GregorianCalendar();
+        int year = todayCalendar.get(Calendar.YEAR);
+        int daysInYear = todayCalendar.getActualMaximum(Calendar.DAY_OF_YEAR); //максимум дней в этом году
+        Calendar calendar = new GregorianCalendar(year, month - 1, day);
+        int days = (int) ((calendar.getTimeInMillis() - todayCalendar.getTimeInMillis()) / 1000) / 86400;
+
+        if (days >= 1) {
+            return context.getResources().getQuantityString(R.plurals.days, days, days);
+        } else if (days < -2) {
+            return context.getResources().getQuantityString(R.plurals.days, daysInYear + days, daysInYear + days);
+        } else if (days == 0) {
+            return " " + context.getString(R.string.textNow);
+        } else {
+            return " " + context.getString(R.string.textFinish);
         }
     }
 }

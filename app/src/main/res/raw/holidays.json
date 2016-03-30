@@ -6,7 +6,7 @@
       "description": "Зимний праздник, знаменующий начало года",
       "day": "31",
       "month": "12",
-      "imageId": "0x7f02004d"
+      "imageUri": "december"
     },
     {
       "id": "2",
@@ -14,7 +14,7 @@
       "description": "Международный женский день",
       "day": "8",
       "month": "3",
-      "imageId": "0x7f020059"
+      "imageUri": "march"
     },
     {
       "id": "3",
@@ -22,7 +22,7 @@
       "description": "День защитника отечества",
       "day": "23",
       "month": "2",
-      "imageId": "0x7f020058"
+      "imageUri": "january"
     },
     {
       "id": "4",
@@ -30,7 +30,7 @@
       "description": "День всех влюбленных",
       "day": "14",
       "month": "2",
-      "imageId": "0x7f020050"
+      "imageUri": "february"
     }
   ]
 }

@@ -13,9 +13,8 @@ import java.io.InputStream;
 
 public class MyJSON {
 
-    static String fileName = "myholidays.json";
 
-    public static void saveData(Context context, String mJsonResponse) {
+    public static void saveData(Context context, String mJsonResponse, String fileName) {
         try {
             FileWriter file = new FileWriter(context.getFilesDir().getPath() + "/" + fileName);
             file.write(mJsonResponse);
@@ -26,11 +25,11 @@ public class MyJSON {
         }
     }
 
-    public static String getData(Context context) {
+    public static String getData(Context context, String fileName) {
         try {
-            File f = new File(context.getFilesDir().getPath() + "/" + fileName);
+            File file = new File(context.getFilesDir().getPath() + "/" + fileName);
             //check whether file exists
-            FileInputStream is = new FileInputStream(f);
+            FileInputStream is = new FileInputStream(file);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
