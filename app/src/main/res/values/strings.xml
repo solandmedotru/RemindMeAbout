@@ -6,4 +6,14 @@
     <string name="Holidays">Holidays</string>
     <string name="Birthdays">Birthdays</string>
     <string name="Events">Events</string>
+    <string name="textNow">today</string>
+    <string name="textFinish">finished</string>
+
+
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="few">%d days</item>
+        <item quantity="many">%d days</item>
+        <item quantity="other">%d days</item>
+    </plurals>
 </resources>

@@ -7,4 +7,13 @@
     <string name="Birthdays">Дни рождения</string>
     <string name="Events">События</string>
     <string name="Holidays">Праздники</string>
+
+    <plurals name="days">
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дня</item>
+        <item quantity="many">%d дней</item>
+        <item quantity="other">%d дней</item>
+    </plurals>
+    <string name="textFinish">прошел</string>
+    <string name="textNow">сегодня</string>
 </resources>
