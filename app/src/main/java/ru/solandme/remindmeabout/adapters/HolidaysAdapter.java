@@ -45,8 +45,6 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
 
         int imgResId = context.getResources().getIdentifier(holiday.getImageUri(), "drawable", context.getPackageName());
         holder.imageHoliday.setImageResource(imgResId);
-
-
     }
 
     @Override
@@ -54,7 +52,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         return holidays.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView holidayName;
         TextView textDays;

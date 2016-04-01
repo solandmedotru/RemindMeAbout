@@ -24,7 +24,7 @@ import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
 public class EventFragment extends Fragment {
     public static final int LAYOUT = R.layout.fragment_event;
     protected View view;
-
+    static HolidaysAdapter holidaysAdapter;
 
     public EventFragment() {
     }
@@ -43,14 +43,15 @@ public class EventFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext()); //создаем новый LinearLayoutManager
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); //задаем ориентацию вертикальную
         recyclerView.setLayoutManager(linearLayoutManager); //устанавливаем для RV менеджера
-        recyclerView.setAdapter(new HolidaysAdapter(createListHolidayData()));
+        holidaysAdapter = new HolidaysAdapter(createListHolidayData());
+        recyclerView.setAdapter(holidaysAdapter);
 
         return view;
     }
 
     private ArrayList<Holiday> createListHolidayData() {
         JSONObject jsonObject;
-        ArrayList<Holiday> holidays = null;
+        ArrayList<Holiday> events = null;
         if (!new File(getContext().getFilesDir().getPath() + "/" + "events.json").exists()) {
             try {
                 jsonObject = new JSONObject(MyJSON.getDataFromRawDir(getContext(), R.raw.events));
@@ -63,10 +64,10 @@ public class EventFragment extends Fragment {
         try {
             jsonObject = new JSONObject(MyJSON.getData(getContext(), "events.json"));
             JSONArray jsonArray = jsonObject.getJSONArray("events");
-            holidays = Holiday.fromJson(jsonArray);
+            events = Holiday.fromJson(jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return holidays;
+        return events;
     }
 }

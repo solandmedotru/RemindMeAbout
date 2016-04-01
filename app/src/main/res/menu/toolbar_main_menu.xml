@@ -9,6 +9,12 @@
         android:orderInCategory="100"
         app:showAsAction="never">
     </item>
+    <item
+        android:title="@string/add_new_holiday"
+        android:id="@+id/add_new_holiday"
+        android:orderInCategory="100"
+        app:showAsAction="never">
+    </item>
 
 
 </menu>

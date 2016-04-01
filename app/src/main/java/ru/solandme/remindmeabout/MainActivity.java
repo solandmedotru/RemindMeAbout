@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import ru.solandme.remindmeabout.adapters.PagerAdapter;
+import ru.solandme.remindmeabout.fragments.AddDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         initTabs();
         initPager();
     }
+
 
     private void initPager() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -88,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.about_app_menu_item:
                 Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
+                break;
+            case R.id.add_new_holiday:
+                new AddDialog().show(getSupportFragmentManager(), "holiday");
                 break;
         }
         return true;

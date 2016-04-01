@@ -17,4 +17,9 @@
     <string name="textFinish">прошел</string>
     <string name="textNow">сегодня</string>
     <string name="bookmark_icon">значек закладки</string>
+    <string name="add_new_holiday">Добавить праздник</string>
+    <string name="days_from_holiday">356\n дней</string>
+    <string name="description">Описание</string>
+    <string name="holiday_name">Название праздника</string>
+    <string name="holiday_picture">Картинка праздника</string>
 </resources>
