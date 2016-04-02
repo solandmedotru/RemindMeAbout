@@ -5,13 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.solandme.remindmeabout.MyJSON;
-import ru.solandme.remindmeabout.R;
-import ru.solandme.remindmeabout.fragments.HolidayFragment;
 
 public class AddDialog extends AppCompatActivity {
 
@@ -23,13 +25,73 @@ public class AddDialog extends AppCompatActivity {
     EditText add_holidayDescription;
     public static final int RESULT_SAVE = 100;
 
+    InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_form);
-        Holiday holiday = (Holiday)getIntent().getSerializableExtra("holiday");
+        Holiday holiday = (Holiday) getIntent().getSerializableExtra("holiday");
         setTitle(holiday.getName());
         initView();
+
+        initAdView();
+
+        initAdInterstitial();
+    }
+
+    private void initAdInterstitial() {
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-8994936165518589/2527362551");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                saveHoliday();
+            }
+        });
+
+        requestNewInterstitial();
+    }
+
+    private void saveHoliday() {
+        try {
+            holidayName = add_holidayName.getText().toString();
+            holidayDescription = add_holidayDescription.getText().toString();
+            jsonObject = new JSONObject(MyJSON.getData(getApplicationContext(), "holidays.json"));
+            JSONArray jsonArray = jsonObject.getJSONArray("holidays");
+
+            newJsonObject = new JSONObject();
+
+            newJsonObject
+                    .put("id", "0")
+                    .put("name", holidayName)
+                    .put("description", holidayDescription)
+                    .put("day", "0")
+                    .put("month", "0")
+                    .put("imageUri", "june")
+                    .put("category", "holidays");
+
+            jsonArray.put(newJsonObject);
+            JSONObject newJsonObject2 = new JSONObject();
+            newJsonObject2.put("holidays", jsonArray);
+
+            String text = newJsonObject2.toString();
+            MyJSON.saveData(getApplicationContext(), text, "holidays.json");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void initAdView() {
+        AdView adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().
+                addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        adView.loadAd(adRequest);
     }
 
     private void initView() {
@@ -37,37 +99,23 @@ public class AddDialog extends AppCompatActivity {
         add_holidayDescription = (EditText) findViewById(R.id.add_holiday_description);
     }
 
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+
 
     public void onClick(View view) {
 
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_save:
-                try {
-                    holidayName = add_holidayName.getText().toString();
-                    holidayDescription = add_holidayDescription.getText().toString();
-                    jsonObject = new JSONObject(MyJSON.getData(getApplicationContext(), "holidays.json"));
-                    JSONArray jsonArray = jsonObject.getJSONArray("holidays");
-
-                    newJsonObject = new JSONObject();
-
-                    newJsonObject
-                            .put("id", "0")
-                            .put("name", holidayName)
-                            .put("description", holidayDescription)
-                            .put("day", "0")
-                            .put("month", "0")
-                            .put("imageUri", "june")
-                            .put("category", "holidays");
-
-                    jsonArray.put(newJsonObject);
-                    JSONObject newJsonObject2 = new JSONObject();
-                    newJsonObject2.put("holidays", jsonArray);
-
-                    String text = newJsonObject2.toString();
-                    MyJSON.saveData(getApplicationContext(), text, "holidays.json");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    saveHoliday();
                 }
                 setResult(RESULT_SAVE);
                 finish();
