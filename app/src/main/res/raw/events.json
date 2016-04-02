@@ -6,7 +6,8 @@
       "description": "В этот день я познакомился с женой",
       "day": "31",
       "month": "12",
-      "imageUri": "march"
+      "imageUri": "march",
+      "category": "events"
     }
   ]
 }

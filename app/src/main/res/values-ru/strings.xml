@@ -22,4 +22,5 @@
     <string name="description">Описание</string>
     <string name="holiday_name">Название праздника</string>
     <string name="holiday_picture">Картинка праздника</string>
+    <string name="new_holiday">Новый праздник</string>
 </resources>

@@ -6,7 +6,8 @@
       "description": "Зимний праздник, знаменующий начало года",
       "day": "31",
       "month": "12",
-      "imageUri": "december"
+      "imageUri": "december",
+      "category": "holidays"
     },
     {
       "id": "2",
@@ -14,7 +15,8 @@
       "description": "Международный женский день",
       "day": "8",
       "month": "3",
-      "imageUri": "march"
+      "imageUri": "march",
+      "category": "holidays"
     },
     {
       "id": "3",
@@ -22,7 +24,8 @@
       "description": "День защитника отечества",
       "day": "23",
       "month": "2",
-      "imageUri": "january"
+      "imageUri": "january",
+      "category": "holidays"
     },
     {
       "id": "4",
@@ -30,7 +33,30 @@
       "description": "День всех влюбленных",
       "day": "14",
       "month": "2",
-      "imageUri": "february"
+      "imageUri": "february",
+      "category": "holidays"
+    }
+  ],
+  "birthdays": [
+    {
+      "id": "1",
+      "name": "Соломин Андрей",
+      "description": "Мой день рождения",
+      "day": "26",
+      "month": "3",
+      "imageUri": "june",
+      "category": "birthdays"
+    }
+  ],
+  "events": [
+    {
+      "id": "1",
+      "name": "День знакомства",
+      "description": "В этот день я познакомился с женой",
+      "day": "31",
+      "month": "12",
+      "imageUri": "march",
+      "category": "events"
     }
   ]
 }

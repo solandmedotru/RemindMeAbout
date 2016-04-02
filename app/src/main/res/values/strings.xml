@@ -14,6 +14,7 @@
     <string name="holiday_name">Holiday Name</string>
     <string name="holiday_picture">Holiday picture</string>
     <string name="add_new_holiday">Add new holiday</string>
+    <string name="new_holiday">New Holiday</string>
 
 
     <plurals name="days">

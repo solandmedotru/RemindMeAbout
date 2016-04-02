@@ -24,7 +24,7 @@ import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
 public class HolidayFragment extends Fragment{
     public static final int LAYOUT = R.layout.fragment_holiday;
     protected View view;
-    static HolidaysAdapter holidaysAdapter;
+    public static HolidaysAdapter holidaysAdapter;
 
     public HolidayFragment() {
     }
@@ -43,9 +43,9 @@ public class HolidayFragment extends Fragment{
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext()); //создаем новый LinearLayoutManager
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); //задаем ориентацию вертикальную
         recyclerView.setLayoutManager(linearLayoutManager); //устанавливаем для RV менеджера
-
         holidaysAdapter = new HolidaysAdapter(createListHolidayData());
         recyclerView.setAdapter(holidaysAdapter);
+
         return view;
     }
 
@@ -70,6 +70,4 @@ public class HolidayFragment extends Fragment{
         }
         return holidays;
     }
-
-
 }

@@ -24,7 +24,7 @@ import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
 public class BirthdayFragment extends Fragment {
     public static final int LAYOUT = R.layout.fragment_birthday;
     protected View view;
-    static HolidaysAdapter holidaysAdapter;
+    HolidaysAdapter holidaysAdapter;
 
     public BirthdayFragment() {
     }

@@ -5,15 +5,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Holiday {
+public class Holiday implements Serializable {
+
     private String id;
     private String name;
     private String description;
     private int day;
     private int month;
     private String imageUri;
+    private String category;
+
+    public Holiday() {
+    }
 
     public String getId() {
         return id;
@@ -63,6 +69,14 @@ public class Holiday {
         this.imageUri = imageUri;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public static Holiday fromJson(JSONObject jsonObject) {
         Holiday holiday = new Holiday();
         try {
@@ -72,6 +86,7 @@ public class Holiday {
             holiday.day = jsonObject.getInt("day");
             holiday.month = jsonObject.getInt("month");
             holiday.imageUri = jsonObject.getString("imageUri");
+            holiday.category = jsonObject.getString("category");
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

@@ -1,5 +1,6 @@
 package ru.solandme.remindmeabout;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +10,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import ru.solandme.remindmeabout.adapters.PagerAdapter;
-import ru.solandme.remindmeabout.fragments.AddDialog;
+import ru.solandme.remindmeabout.fragments.HolidayFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String HOLIDAY = "holiday";
+    private static final int HOLIDAY_REQUEST = 1;
     Toolbar toolbar;
     TabLayout tabLayout;
 
@@ -84,6 +87,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == HOLIDAY_REQUEST){
+            switch (resultCode) {
+                case RESULT_CANCELED:
+                    Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+                    break;
+                case AddDialog.RESULT_SAVE:
+                    Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
@@ -92,7 +111,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
                 break;
             case R.id.add_new_holiday:
-                new AddDialog().show(getSupportFragmentManager(), "holiday");
+                Holiday holiday = new Holiday();
+                holiday.setName(getString(R.string.new_holiday));
+                Intent intent = new Intent(getApplicationContext(), AddDialog.class);
+                intent.putExtra(HOLIDAY, holiday);
+                startActivityForResult(intent, HOLIDAY_REQUEST);
+
+//                new AddDialog().show(getSupportFragmentManager(), "holiday");
                 break;
         }
         return true;
