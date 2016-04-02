@@ -42,7 +42,7 @@ public class AddDialog extends AppCompatActivity {
 
     private void initAdInterstitial() {
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-8994936165518589/2527362551");
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.fullscreen_ad_unit_id));
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -91,7 +91,9 @@ public class AddDialog extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().
                 addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
-        adView.loadAd(adRequest);
+        if (adView != null) {
+            adView.loadAd(adRequest);
+        }
     }
 
     private void initView() {
