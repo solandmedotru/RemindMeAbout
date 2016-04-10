@@ -5,19 +5,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     tools:context=".AddDialog">
 
     <EditText
         android:id="@+id/add_holiday_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:hint="Название праздника"/>
     <EditText
         android:id="@+id/add_holiday_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="6dp"
         android:inputType="textMultiLine"
         android:hint="Краткое описание праздника"/>
     <RadioGroup
@@ -26,22 +27,29 @@
         android:orientation="horizontal"
         android:id="@+id/radio_group">
         <RadioButton
+            android:id="@+id/radio_button_holidays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Holidays"
             android:clickable="true"/>
         <RadioButton
+            android:id="@+id/radio_button_birthdays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Birthdays"
             android:clickable="true"/>
         <RadioButton
+            android:id="@+id/radio_button_events"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Events"
             android:checked="true"
             android:clickable="true"/>
     </RadioGroup>
+    <DatePicker
+        android:id="@+id/pickerdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_save"
