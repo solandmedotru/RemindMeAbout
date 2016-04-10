@@ -1,6 +1,7 @@
 package ru.solandme.remindmeabout.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import ru.solandme.remindmeabout.AddEditDialog;
 import ru.solandme.remindmeabout.Holiday;
 import ru.solandme.remindmeabout.R;
 
@@ -21,6 +23,8 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
 
     Context context;
     ArrayList<Holiday> holidays;
+    private static final String HOLIDAY = "holiday";
+    private static final int HOLIDAY_REQUEST = 1;
 
 
     public HolidaysAdapter(ArrayList<Holiday> holidays) {
@@ -36,7 +40,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
         holder.holidayName.setText(holiday.getName());
@@ -45,6 +49,19 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
 
         int imgResId = context.getResources().getIdentifier(holiday.getImageUri(), "drawable", context.getPackageName());
         holder.imageHoliday.setImageResource(imgResId);
+
+        holder.actionEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Holiday holiday = holidays.get(holder.getAdapterPosition());
+                Intent intent = new Intent(context, AddEditDialog.class);
+                intent.putExtra(HOLIDAY, holiday);
+                intent.putExtra("Editing", true);
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -58,6 +75,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         TextView textDays;
         TextView textHolidayDescription;
         ImageView imageHoliday;
+        ImageView actionEdit;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +89,9 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             textDays = (TextView) itemView.findViewById(R.id.textDays);
 
             imageHoliday = (ImageView) itemView.findViewById(R.id.imageHoliday);
+
+            actionEdit = (ImageView) itemView.findViewById(R.id.img_action_edit);
+
         }
     }
 

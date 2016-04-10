@@ -3,8 +3,10 @@ package ru.solandme.remindmeabout;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -20,9 +22,10 @@ import org.json.JSONObject;
 import java.util.Calendar;
 
 
-public class AddDialog extends AppCompatActivity {
+public class AddEditDialog extends AppCompatActivity {
 
     Holiday holiday;
+    DBHelper dbHelper;
 
     JSONObject jsonObject;
     JSONObject newJsonObject;
@@ -36,6 +39,11 @@ public class AddDialog extends AppCompatActivity {
     private DatePicker pickerDate;
 
     RadioGroup radioGroup;
+    RadioButton radio_button_holidays;
+    RadioButton radio_button_birthdays;
+    RadioButton radio_button_events;
+
+    Button btn_delete;
 
     public static final int RESULT_SAVE = 100;
 
@@ -46,6 +54,7 @@ public class AddDialog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_form);
         holiday = (Holiday) getIntent().getSerializableExtra("holiday");
+        dbHelper = new DBHelper(getApplicationContext());
         setTitle(holiday.getName());
 
         initView();
@@ -67,6 +76,7 @@ public class AddDialog extends AppCompatActivity {
 
         requestNewInterstitial();
     }
+
     private void initAdView() {
         AdView adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
@@ -76,6 +86,7 @@ public class AddDialog extends AppCompatActivity {
             adView.loadAd(adRequest);
         }
     }
+
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -86,22 +97,22 @@ public class AddDialog extends AppCompatActivity {
 
 
     private void saveHoliday() {
-
         holiday.setName(add_holidayName.getText().toString());
         holiday.setDescription(add_holidayDescription.getText().toString());
-        holiday.setDay(pickerDate.getDayOfMonth()+1);
-        holiday.setMonth(pickerDate.getMonth()+1);
+        holiday.setDay(pickerDate.getDayOfMonth() + 1);
+        holiday.setMonth(pickerDate.getMonth() + 1);
 
-        if(holiday.getCategory() == null){
-            holiday.setCategory("events");
+
+        if (getIntent().getBooleanExtra("Editing", true)) {
+            dbHelper.replaceHolidayOnDB(holiday);
+        }else {
+            if (holiday.getCategory() == null) {
+                holiday.setCategory("events");
+            }
+            holiday.setImageUri("june");
+            dbHelper.addHolidayToDB(holiday);
         }
-
-        holiday.setImageUri("june");
-
-        DBHelper dbHelper = new DBHelper(getApplicationContext());
-        dbHelper.addHolidayToDB(holiday);
         dbHelper.close();
-
 
 //        try {
 //            holiday.setName(add_holidayName.getText().toString());
@@ -136,27 +147,18 @@ public class AddDialog extends AppCompatActivity {
     private void initView() {
         add_holidayName = (EditText) findViewById(R.id.add_holiday_name);
         add_holidayDescription = (EditText) findViewById(R.id.add_holiday_description);
-
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
-
+        radio_button_holidays = (RadioButton) findViewById(R.id.radio_button_holidays);
+        radio_button_birthdays = (RadioButton) findViewById(R.id.radio_button_birthdays);
+        radio_button_events = (RadioButton) findViewById(R.id.radio_button_events);
         pickerDate = (DatePicker) findViewById(R.id.pickerdate);
+
+        btn_delete = (Button) findViewById(R.id.btn_delete);
+
         if (pickerDate != null) {
             pickerDate.setCalendarViewShown(false);
         }
         Calendar today = Calendar.getInstance();
-
-        pickerDate.init(today.get(Calendar.YEAR),today.get(Calendar.MONTH),
-                today.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
-
-                    @Override
-                    public void onDateChanged(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-                        Toast.makeText(getApplicationContext(),
-                                "Дата выбрана", Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -178,6 +180,38 @@ public class AddDialog extends AppCompatActivity {
                 }
             }
         });
+
+        if (getIntent().getBooleanExtra("Editing", true)) {
+            add_holidayName.setText(holiday.getName());
+            add_holidayDescription.setText(holiday.getDescription());
+            switch (holiday.getCategory()){
+                case "holidays":
+                    radio_button_holidays.setChecked(true);
+                    break;
+                case "birthdays":
+                    radio_button_birthdays.setChecked(true);
+                    break;
+                case "events":
+                    radio_button_events.setChecked(true);
+                    break;
+            }
+
+            pickerDate.init(today.get(Calendar.YEAR),holiday.getMonth()-1, holiday.getDay(), new DatePicker.OnDateChangedListener() {
+                @Override
+                public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                }
+            });
+        } else {
+            btn_delete.setVisibility(View.GONE);
+            pickerDate.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+                    today.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+                        @Override
+                        public void onDateChanged(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                        }
+                    });
+        }
     }
 
     public void onClick(View view) {
@@ -194,6 +228,11 @@ public class AddDialog extends AppCompatActivity {
                 break;
             case R.id.btn_cancel:
                 setResult(RESULT_CANCELED);
+                finish();
+                break;
+            case R.id.btn_delete:
+                dbHelper.deleteHolidayFromDB(holiday);
+                setResult(RESULT_SAVE);
                 finish();
                 break;
             default:

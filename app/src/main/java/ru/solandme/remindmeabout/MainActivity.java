@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import ru.solandme.remindmeabout.adapters.PagerAdapter;
-import ru.solandme.remindmeabout.fragments.HolidayFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 case RESULT_CANCELED:
                     Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
                     break;
-                case AddDialog.RESULT_SAVE:
+                case AddEditDialog.RESULT_SAVE:
                     Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
                     break;
                 default:
@@ -113,11 +112,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.add_new_holiday:
                 Holiday holiday = new Holiday();
                 holiday.setName(getString(R.string.new_holiday));
-                Intent intent = new Intent(getApplicationContext(), AddDialog.class);
+                Intent intent = new Intent(getApplicationContext(), AddEditDialog.class);
                 intent.putExtra(HOLIDAY, holiday);
+                intent.putExtra("Editing", false);
                 startActivityForResult(intent, HOLIDAY_REQUEST);
 
-//                new AddDialog().show(getSupportFragmentManager(), "holiday");
+//                new AddEditDialog().show(getSupportFragmentManager(), "holiday");
                 break;
         }
         return true;

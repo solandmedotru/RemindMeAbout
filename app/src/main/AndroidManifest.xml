@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".AddDialog"
+        <activity android:name=".AddEditDialog"
             android:theme="@style/Theme.AppCompat.Light"/>
     </application>
 

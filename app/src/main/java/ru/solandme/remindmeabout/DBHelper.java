@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -16,6 +17,7 @@ public class DBHelper extends SQLiteAssetHelper {
 
 
     public static final String TABLE = "holidays";
+    public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_DAY = "day";
@@ -24,12 +26,11 @@ public class DBHelper extends SQLiteAssetHelper {
     public static final String COLUMN_CATEGORY = "category";
 
 
-
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public ArrayList<Holiday> getHolidaysByCategory(String category){
+    public ArrayList<Holiday> getHolidaysByCategory(String category) {
         ArrayList<Holiday> holidays = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
 
@@ -52,7 +53,7 @@ public class DBHelper extends SQLiteAssetHelper {
         return holidays;
     }
 
-    public void addHolidayToDB(Holiday holiday){
+    public void addHolidayToDB(Holiday holiday) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues cv = new ContentValues();
@@ -66,4 +67,26 @@ public class DBHelper extends SQLiteAssetHelper {
         db.insert(TABLE, null, cv);
         db.close();
     }
+
+    public void replaceHolidayOnDB(Holiday holiday) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(DBHelper.COLUMN_NAME, holiday.getName());
+        cv.put(DBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
+        cv.put(DBHelper.COLUMN_DAY, holiday.getDay());
+        cv.put(DBHelper.COLUMN_MONTH, holiday.getMonth());
+        cv.put(DBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
+        cv.put(DBHelper.COLUMN_CATEGORY, holiday.getCategory());
+
+        db.update(TABLE, cv, "_id=" + holiday.getId(), null);
+        db.close();
+    }
+
+    public boolean deleteHolidayFromDB(Holiday holiday) {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(TABLE, COLUMN_ID + "=" + holiday.getId(), null) > 0;
+    }
+
+
 }

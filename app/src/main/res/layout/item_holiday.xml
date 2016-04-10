@@ -78,6 +78,14 @@
                 android:paddingRight="3dp">
 
                 <ImageView
+                    android:id="@+id/img_action_edit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/edit_icon"
+                    android:src="@drawable/ic_edit"/>
+
+                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="fill_horizontal|center"
@@ -128,4 +136,5 @@
         android:layout_marginRight="5dp"
         android:elevation="5dp"
         android:src="@drawable/ic_turned_in_black_24dp" />
+
 </RelativeLayout>
