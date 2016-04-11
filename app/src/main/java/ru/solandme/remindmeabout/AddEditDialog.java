@@ -27,12 +27,6 @@ public class AddEditDialog extends AppCompatActivity {
     Holiday holiday;
     DBHelper dbHelper;
 
-    JSONObject jsonObject;
-    JSONObject newJsonObject;
-
-    String holidayName;
-    String holidayDescription;
-
     EditText add_holidayName;
     EditText add_holidayDescription;
 
@@ -81,6 +75,7 @@ public class AddEditDialog extends AppCompatActivity {
         AdView adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
                 .build();
         if (adView != null) {
             adView.loadAd(adRequest);
@@ -90,6 +85,7 @@ public class AddEditDialog extends AppCompatActivity {
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
                 .build();
 
         mInterstitialAd.loadAd(adRequest);
@@ -113,35 +109,6 @@ public class AddEditDialog extends AppCompatActivity {
             dbHelper.addHolidayToDB(holiday);
         }
         dbHelper.close();
-
-//        try {
-//            holiday.setName(add_holidayName.getText().toString());
-//            holiday.setDescription(add_holidayDescription.getText().toString());
-//
-//            jsonObject = new JSONObject(MyJSON.getData(getApplicationContext(), "holidays.json"));
-//            JSONArray jsonArray = jsonObject.getJSONArray("holidays");
-//
-//            newJsonObject = new JSONObject();
-//
-//            newJsonObject
-//                    .put("id", "0")
-//                    .put("name", holidayName)
-//                    .put("description", holidayDescription)
-//                    .put("day", "0")
-//                    .put("month", "0")
-//                    .put("imageUri", "june")
-//                    .put("category", "holidays");
-//
-//            jsonArray.put(newJsonObject);
-//            JSONObject newJsonObject2 = new JSONObject();
-//            newJsonObject2.put("holidays", jsonArray);
-//
-//            String text = newJsonObject2.toString();
-//            MyJSON.saveData(getApplicationContext(), text, "holidays.json");
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void initView() {

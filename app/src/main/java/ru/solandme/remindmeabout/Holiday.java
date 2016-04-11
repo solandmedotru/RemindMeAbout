@@ -1,12 +1,6 @@
 package ru.solandme.remindmeabout;
 
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Holiday implements Serializable {
 
@@ -77,41 +71,4 @@ public class Holiday implements Serializable {
         this.category = category;
     }
 
-//    public static Holiday fromJson(JSONObject jsonObject) {
-//        Holiday holiday = new Holiday();
-//        try {
-//            holiday.id = jsonObject.getString("id");
-//            holiday.name = jsonObject.getString("name");
-//            holiday.description = jsonObject.getString("description");
-//            holiday.day = jsonObject.getInt("day");
-//            holiday.month = jsonObject.getInt("month");
-//            holiday.imageUri = jsonObject.getString("imageUri");
-//            holiday.category = jsonObject.getString("category");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//        return holiday;
-//    }
-
-
-//    public static ArrayList<Holiday> fromJson(JSONArray jsonArray) {
-//        JSONObject holidayJson;
-//        ArrayList<Holiday> holidays = new ArrayList<>(jsonArray.length());
-//        for (int i = 0; i < jsonArray.length(); i++) {
-//            try {
-//                holidayJson = jsonArray.getJSONObject(i);
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                continue;
-//            }
-//            Holiday holiday = Holiday.fromJson(holidayJson);
-//            if (holiday != null) {
-//                holidays.add(holiday);
-//            }
-//        }
-//        return holidays;
-//
-//    }
 }

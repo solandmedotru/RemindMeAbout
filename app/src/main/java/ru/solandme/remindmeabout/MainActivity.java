@@ -62,9 +62,6 @@ public class MainActivity extends AppCompatActivity {
         if (toolbar != null) {
             toolbar.setTitle(R.string.app_name);
         }
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -116,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(HOLIDAY, holiday);
                 intent.putExtra("Editing", false);
                 startActivityForResult(intent, HOLIDAY_REQUEST);
-
-//                new AddEditDialog().show(getSupportFragmentManager(), "holiday");
                 break;
         }
         return true;
