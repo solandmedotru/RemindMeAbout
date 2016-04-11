@@ -27,6 +27,7 @@ public class HolidayFragment extends Fragment{
     protected View view;
     public static HolidaysAdapter holidaysAdapter;
     DBHelper dbHelper;
+    RecyclerView recyclerView;
 
     public HolidayFragment() {
     }
@@ -41,7 +42,7 @@ public class HolidayFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false); //надуваем вьюху
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvHolidays);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rvHolidays);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext()); //создаем новый LinearLayoutManager
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); //задаем ориентацию вертикальную
         recyclerView.setLayoutManager(linearLayoutManager); //устанавливаем для RV менеджера
@@ -51,10 +52,20 @@ public class HolidayFragment extends Fragment{
         recyclerView.setAdapter(holidaysAdapter);
 
         dbHelper.close();
+
         return view;
+
     }
 
-//    private ArrayList<Holiday> createListHolidayData() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        holidaysAdapter = new HolidaysAdapter(dbHelper.getHolidaysByCategory("holidays"));
+        recyclerView.setAdapter(holidaysAdapter);
+        dbHelper.close();
+    }
+
+    //    private ArrayList<Holiday> createListHolidayData() {
 //        JSONObject jsonObject;
 //        ArrayList<Holiday> holidays = null;
 //        if (!new File(getContext().getFilesDir().getPath() + "/" + "holidays.json").exists()) {

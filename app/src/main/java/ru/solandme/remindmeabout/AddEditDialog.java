@@ -32,6 +32,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
+
 
 public class AddEditDialog extends AppCompatActivity {
 
@@ -115,9 +117,8 @@ public class AddEditDialog extends AppCompatActivity {
 
         if(holiday.getImageUri() == null){
             holiday.setImageUri("ic_h.png"); //устанавливаем иконку по умолчанию если не задана
+            dbHelper.addHolidayToDB(holiday);
         }
-        dbHelper.addHolidayToDB(holiday);
-
 
         if (getIntent().getBooleanExtra("Editing", true)) {
             dbHelper.replaceHolidayOnDB(holiday);
@@ -125,7 +126,7 @@ public class AddEditDialog extends AppCompatActivity {
             if (holiday.getCategory() == null) {
                 holiday.setCategory("events");
             }
-
+            dbHelper.addHolidayToDB(holiday);
         }
         dbHelper.close();
     }

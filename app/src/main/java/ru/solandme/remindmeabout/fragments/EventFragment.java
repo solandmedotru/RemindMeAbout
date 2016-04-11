@@ -28,6 +28,7 @@ public class EventFragment extends Fragment {
     HolidaysAdapter holidaysAdapter;
 
     DBHelper dbHelper;
+    RecyclerView recyclerView;
 
     public EventFragment() {
     }
@@ -42,7 +43,7 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false); //надуваем вьюху
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvEvent);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rvEvent);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext()); //создаем новый LinearLayoutManager
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); //задаем ориентацию вертикальную
         recyclerView.setLayoutManager(linearLayoutManager); //устанавливаем для RV менеджера
@@ -54,6 +55,13 @@ public class EventFragment extends Fragment {
         dbHelper.close();
 
         return view;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        holidaysAdapter = new HolidaysAdapter(dbHelper.getHolidaysByCategory("events"));
+        recyclerView.setAdapter(holidaysAdapter);
+        dbHelper.close();
     }
 
 //    private ArrayList<Holiday> createListHolidayData() {

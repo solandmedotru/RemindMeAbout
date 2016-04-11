@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class BirthdayFragment extends Fragment {
     public static final int LAYOUT = R.layout.fragment_birthday;
     protected View view;
     HolidaysAdapter holidaysAdapter;
+    RecyclerView recyclerView;
 
     DBHelper dbHelper;
 
@@ -42,7 +44,7 @@ public class BirthdayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false); //надуваем вьюху
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvBirthday);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rvBirthday);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext()); //создаем новый LinearLayoutManager
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); //задаем ориентацию вертикальную
         recyclerView.setLayoutManager(linearLayoutManager); //устанавливаем для RV менеджера
@@ -55,6 +57,14 @@ public class BirthdayFragment extends Fragment {
 
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        holidaysAdapter = new HolidaysAdapter(dbHelper.getHolidaysByCategory("birthdays"));
+        recyclerView.setAdapter(holidaysAdapter);
+        dbHelper.close();
+    }
+
 
 //    private ArrayList<Holiday> createListHolidayData() {
 //        JSONObject jsonObject;

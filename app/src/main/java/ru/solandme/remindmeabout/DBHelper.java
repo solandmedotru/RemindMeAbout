@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -65,6 +66,7 @@ public class DBHelper extends SQLiteAssetHelper {
 
         db.insert(TABLE, null, cv);
         db.close();
+        Log.e("DB_add", cv.toString());
     }
 
     public void replaceHolidayOnDB(Holiday holiday) {
@@ -78,8 +80,9 @@ public class DBHelper extends SQLiteAssetHelper {
         cv.put(DBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
         cv.put(DBHelper.COLUMN_CATEGORY, holiday.getCategory());
 
-        db.update(TABLE, cv, "_id=" + holiday.getId(), null);
+        db.update(TABLE, cv, COLUMN_ID + "=" + holiday.getId(), null);
         db.close();
+        Log.e("DB_edit", holiday.getId() + "  " + cv.toString());
     }
 
     public boolean deleteHolidayFromDB(Holiday holiday) {
