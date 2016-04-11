@@ -1,29 +1,41 @@
 package ru.solandme.remindmeabout;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class AddEditDialog extends AppCompatActivity {
 
+    private static final int THUMBSIZE = 80;
     Holiday holiday;
     DBHelper dbHelper;
 
@@ -37,9 +49,12 @@ public class AddEditDialog extends AppCompatActivity {
     RadioButton radio_button_birthdays;
     RadioButton radio_button_events;
 
+    ImageView edit_image_holiday;
+
     Button btn_delete;
 
     public static final int RESULT_SAVE = 100;
+    private static int LOAD_IMAGE_RESULTS = 1;
 
     InterstitialAd mInterstitialAd;
 
@@ -98,15 +113,19 @@ public class AddEditDialog extends AppCompatActivity {
         holiday.setDay(pickerDate.getDayOfMonth() + 1);
         holiday.setMonth(pickerDate.getMonth() + 1);
 
+        if(holiday.getImageUri() == null){
+            holiday.setImageUri("ic_h.png"); //устанавливаем иконку по умолчанию если не задана
+        }
+        dbHelper.addHolidayToDB(holiday);
+
 
         if (getIntent().getBooleanExtra("Editing", true)) {
             dbHelper.replaceHolidayOnDB(holiday);
-        }else {
+        } else {
             if (holiday.getCategory() == null) {
                 holiday.setCategory("events");
             }
-            holiday.setImageUri("june");
-            dbHelper.addHolidayToDB(holiday);
+
         }
         dbHelper.close();
     }
@@ -119,6 +138,7 @@ public class AddEditDialog extends AppCompatActivity {
         radio_button_birthdays = (RadioButton) findViewById(R.id.radio_button_birthdays);
         radio_button_events = (RadioButton) findViewById(R.id.radio_button_events);
         pickerDate = (DatePicker) findViewById(R.id.pickerdate);
+        edit_image_holiday = (ImageView) findViewById(R.id.edit_image_holiday);
 
         btn_delete = (Button) findViewById(R.id.btn_delete);
 
@@ -151,7 +171,10 @@ public class AddEditDialog extends AppCompatActivity {
         if (getIntent().getBooleanExtra("Editing", true)) {
             add_holidayName.setText(holiday.getName());
             add_holidayDescription.setText(holiday.getDescription());
-            switch (holiday.getCategory()){
+            Bitmap bmp = BitmapFactory.decodeFile(getApplicationContext().getFilesDir().getPath() + "/images/" + holiday.getImageUri());
+            edit_image_holiday.setImageBitmap(bmp);
+
+            switch (holiday.getCategory()) {
                 case "holidays":
                     radio_button_holidays.setChecked(true);
                     break;
@@ -163,7 +186,7 @@ public class AddEditDialog extends AppCompatActivity {
                     break;
             }
 
-            pickerDate.init(today.get(Calendar.YEAR),holiday.getMonth()-1, holiday.getDay(), new DatePicker.OnDateChangedListener() {
+            pickerDate.init(today.get(Calendar.YEAR), holiday.getMonth() - 1, holiday.getDay(), new DatePicker.OnDateChangedListener() {
                 @Override
                 public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
@@ -202,9 +225,68 @@ public class AddEditDialog extends AppCompatActivity {
                 setResult(RESULT_SAVE);
                 finish();
                 break;
+            case R.id.edit_image_holiday:
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, LOAD_IMAGE_RESULTS);
             default:
                 break;
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LOAD_IMAGE_RESULTS && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
+
+                Bitmap thumbImage = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(picturePath), THUMBSIZE, THUMBSIZE);
+                edit_image_holiday.setImageBitmap(thumbImage);
+                saveImage(thumbImage);
+            }
+        }
+    }
+
+    private void saveImage(Bitmap image) {
+        File pictureFile = getOutputMediaFile();
+        if (pictureFile == null) {
+            Log.d("Holidays",
+                    "Error creating media file, check storage permissions: ");
+            return;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d("Holidays", "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d("Holidays", "Error accessing file: " + e.getMessage());
+        }
+    }
+
+    private  File getOutputMediaFile(){
+        File mediaStorageDir = new File(getApplicationContext().getFilesDir().getPath()
+                + "/images");
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.ROOT).format(new Date());
+        String mImageName="thumbImage_"+ timeStamp +".png";
+        holiday.setImageUri(mImageName);
+        return new File(mediaStorageDir.getPath() + File.separator + mImageName);
     }
 }

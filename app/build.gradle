@@ -28,5 +28,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+    compile 'com.makeramen:roundedimageview:2.2.1'
 
 }

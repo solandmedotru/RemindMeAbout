@@ -2,6 +2,9 @@ package ru.solandme.remindmeabout.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -47,8 +51,13 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         holder.textHolidayDescription.setText(holiday.getDescription());
         holder.textDays.setText(getDays(holiday.getDay(), holiday.getMonth()));
 
-        int imgResId = context.getResources().getIdentifier(holiday.getImageUri(), "drawable", context.getPackageName());
-        holder.imageHoliday.setImageResource(imgResId);
+
+        Bitmap bmp = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/images/" + holiday.getImageUri());
+        holder.imageHoliday.setImageBitmap(bmp);
+
+
+//        int imgResId = context.getResources().getIdentifier(holiday.getImageUri(), "drawable", context.getPackageName());
+//        holder.imageHoliday.setImageResource(imgResId);
 
         holder.actionEdit.setOnClickListener(new View.OnClickListener() {
             @Override
