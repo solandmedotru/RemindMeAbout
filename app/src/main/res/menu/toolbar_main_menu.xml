@@ -9,6 +9,13 @@
         android:orderInCategory="100"
         app:showAsAction="never">
     </item>
+    <item
+        android:title="@string/add_new_holiday"
+        android:icon="@drawable/ic_note_add"
+        android:id="@+id/add_new_holiday"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom">
+    </item>
 
 
 </menu>

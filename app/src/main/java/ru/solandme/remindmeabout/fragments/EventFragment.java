@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 
+import ru.solandme.remindmeabout.DBHelper;
 import ru.solandme.remindmeabout.Holiday;
 import ru.solandme.remindmeabout.MyJSON;
 import ru.solandme.remindmeabout.R;
@@ -24,7 +25,9 @@ import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
 public class EventFragment extends Fragment {
     public static final int LAYOUT = R.layout.fragment_event;
     protected View view;
+    HolidaysAdapter holidaysAdapter;
 
+    DBHelper dbHelper;
 
     public EventFragment() {
     }
@@ -43,30 +46,35 @@ public class EventFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext()); //создаем новый LinearLayoutManager
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); //задаем ориентацию вертикальную
         recyclerView.setLayoutManager(linearLayoutManager); //устанавливаем для RV менеджера
-        recyclerView.setAdapter(new HolidaysAdapter(createListHolidayData()));
+
+        dbHelper = new DBHelper(getContext());
+        holidaysAdapter = new HolidaysAdapter(dbHelper.getHolidaysByCategory("events"));
+        recyclerView.setAdapter(holidaysAdapter);
+
+        dbHelper.close();
 
         return view;
     }
 
-    private ArrayList<Holiday> createListHolidayData() {
-        JSONObject jsonObject;
-        ArrayList<Holiday> holidays = null;
-        if (!new File(getContext().getFilesDir().getPath() + "/" + "events.json").exists()) {
-            try {
-                jsonObject = new JSONObject(MyJSON.getDataFromRawDir(getContext(), R.raw.events));
-                MyJSON.saveData(getContext(), jsonObject.toString(), "events.json");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
-            jsonObject = new JSONObject(MyJSON.getData(getContext(), "events.json"));
-            JSONArray jsonArray = jsonObject.getJSONArray("events");
-            holidays = Holiday.fromJson(jsonArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return holidays;
-    }
+//    private ArrayList<Holiday> createListHolidayData() {
+//        JSONObject jsonObject;
+//        ArrayList<Holiday> events = null;
+//        if (!new File(getContext().getFilesDir().getPath() + "/" + "events.json").exists()) {
+//            try {
+//                jsonObject = new JSONObject(MyJSON.getDataFromRawDir(getContext(), R.raw.events));
+//                MyJSON.saveData(getContext(), jsonObject.toString(), "events.json");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        try {
+//            jsonObject = new JSONObject(MyJSON.getData(getContext(), "events.json"));
+//            JSONArray jsonArray = jsonObject.getJSONArray("events");
+//            events = Holiday.fromJson(jsonArray);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return events;
+//    }
 }

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    tools:context=".AddEditDialog">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:contentDescription="@string/holiday_picture"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:id="@+id/edit_image_holiday"
+        android:src="@drawable/ic_take_picture"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="100dp"
+        app:riv_mutate_background="true"
+        android:layout_margin="6dp"
+        android:onClick="onClick"/>
+
+    <EditText
+        android:id="@+id/add_holiday_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/holiday_name"/>
+    <EditText
+        android:id="@+id/add_holiday_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:inputType="textMultiLine"
+        android:hint="@string/holiday_description"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/radio_group">
+        <RadioButton
+            android:id="@+id/radio_button_holidays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Holidays"
+            android:clickable="true"/>
+        <RadioButton
+            android:id="@+id/radio_button_birthdays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Birthdays"
+            android:clickable="true"/>
+        <RadioButton
+            android:id="@+id/radio_button_events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Events"
+            android:checked="true"
+            android:clickable="true"/>
+    </RadioGroup>
+    <DatePicker
+        android:id="@+id/pickerdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:onClick="onClick"/>
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:onClick="onClick"/>
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            android:onClick="onClick"/>
+
+    </LinearLayout>
+
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"/>
+
+</LinearLayout>

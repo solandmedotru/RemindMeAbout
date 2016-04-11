@@ -6,7 +6,8 @@
       "description": "Мой день рождения",
       "day": "26",
       "month": "3",
-      "imageUri": "june"
+      "imageUri": "june",
+      "category": "birthdays"
     }
   ]
 }

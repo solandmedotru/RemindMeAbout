@@ -17,4 +17,17 @@
     <string name="textFinish">прошел</string>
     <string name="textNow">сегодня</string>
     <string name="bookmark_icon">значек закладки</string>
+    <string name="add_new_holiday">Добавить праздник</string>
+    <string name="days_from_holiday">356\n дней</string>
+    <string name="description">Описание</string>
+    <string name="holiday_name">Название праздника</string>
+    <string name="holiday_picture">Картинка праздника</string>
+    <string name="new_holiday">Новый праздник</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="edit_icon">Иконка редактирования</string>
+    <string name="holiday_description">Краткое описание праздника</string>
+    <string name="save">Сохранить</string>
+    <string name="fullscreen_ad_unit_id">ca-app-pub-8994936165518589/2527362551</string>
+    <string name="banner_ad_unit_id">ca-app-pub-8994936165518589/2387761753</string>
 </resources>
