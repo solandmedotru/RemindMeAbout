@@ -2,7 +2,6 @@ package ru.solandme.remindmeabout.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -51,13 +49,8 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         holder.textHolidayDescription.setText(holiday.getDescription());
         holder.textDays.setText(getDays(holiday.getDay(), holiday.getMonth()));
 
-
         Bitmap bmp = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/images/" + holiday.getImageUri());
         holder.imageHoliday.setImageBitmap(bmp);
-
-
-//        int imgResId = context.getResources().getIdentifier(holiday.getImageUri(), "drawable", context.getPackageName());
-//        holder.imageHoliday.setImageResource(imgResId);
 
         holder.actionEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +63,6 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -90,17 +82,11 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             super(itemView);
 
             cardView = (CardView) itemView.findViewById(R.id.cardView);
-
             holidayName = (TextView) itemView.findViewById(R.id.textDisplayHolidayName);
-
             textHolidayDescription = (TextView) itemView.findViewById(R.id.textHolidayDescription);
-
             textDays = (TextView) itemView.findViewById(R.id.textDays);
-
             imageHoliday = (ImageView) itemView.findViewById(R.id.imageHoliday);
-
             actionEdit = (ImageView) itemView.findViewById(R.id.img_action_edit);
-
         }
     }
 
