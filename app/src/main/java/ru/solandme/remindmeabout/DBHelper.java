@@ -90,5 +90,4 @@ public class DBHelper extends SQLiteAssetHelper {
         return db.delete(TABLE, COLUMN_ID + "=" + holiday.getId(), null) > 0;
     }
 
-
 }
