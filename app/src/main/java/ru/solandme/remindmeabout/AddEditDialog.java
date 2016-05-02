@@ -1,5 +1,6 @@
 package ru.solandme.remindmeabout;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -32,10 +33,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
 
-
-public class AddEditDialog extends AppCompatActivity {
+public class AddEditDialog extends AppCompatActivity{
 
     public static final int RESULT_SAVE = 100;
     private static int LOAD_IMAGE_RESULTS = 1;
@@ -45,17 +44,28 @@ public class AddEditDialog extends AppCompatActivity {
     private DBHelper dbHelper;
     private EditText add_holidayName;
     private EditText add_holidayDescription;
-    private DatePicker pickerDate;
     private RadioGroup radioGroup;
     private RadioButton radio_button_holidays;
     private RadioButton radio_button_birthdays;
     private RadioButton radio_button_events;
     private ImageView edit_image_holiday;
     private Button btn_delete;
+    private Button btn_data;
+    private Calendar calendar;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private InterstitialAd mInterstitialAd;
 
-    @Override
+    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            calendar = Calendar.getInstance();
+            calendar.set(year,monthOfYear,dayOfMonth);
+            holiday.setDate(calendar.getTimeInMillis());
+            btn_data.setText(dateFormat.format(holiday.getDate()));
+        }
+    };
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_form);
@@ -71,12 +81,11 @@ public class AddEditDialog extends AppCompatActivity {
     private void initAdInterstitial() {
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getResources().getString(R.string.fullscreen_ad_unit_id));
-
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
-                saveHoliday();
+                saveHoliday(holiday);
             }
         });
 
@@ -99,16 +108,13 @@ public class AddEditDialog extends AppCompatActivity {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("C79BD6D360D092383E26BB030B13893D")
                 .build();
-
         mInterstitialAd.loadAd(adRequest);
     }
 
 
-    private void saveHoliday() {
+    private void saveHoliday(Holiday holiday) {
         holiday.setName(add_holidayName.getText().toString());
         holiday.setDescription(add_holidayDescription.getText().toString());
-        holiday.setDay(pickerDate.getDayOfMonth() + 1);
-        holiday.setMonth(pickerDate.getMonth() + 1);
 
         if (holiday.getImageUri() == null) {
             holiday.setImageUri("ic_h.png"); //устанавливаем иконку по умолчанию если не задана
@@ -141,16 +147,17 @@ public class AddEditDialog extends AppCompatActivity {
         radio_button_holidays = (RadioButton) findViewById(R.id.radio_button_holidays);
         radio_button_birthdays = (RadioButton) findViewById(R.id.radio_button_birthdays);
         radio_button_events = (RadioButton) findViewById(R.id.radio_button_events);
-        pickerDate = (DatePicker) findViewById(R.id.pickerdate);
         edit_image_holiday = (ImageView) findViewById(R.id.edit_image_holiday);
 
         btn_delete = (Button) findViewById(R.id.btn_delete);
+        btn_data = (Button) findViewById(R.id.btn_data);
 
-        if (pickerDate != null) {
-            pickerDate.setCalendarViewShown(false);
+        if(holiday.getDate() == null){
+            calendar = Calendar.getInstance();
+            holiday.setDate(calendar.getTimeInMillis());
         }
-        Calendar today = Calendar.getInstance();
 
+        btn_data.setText(dateFormat.format(holiday.getDate()));
 
         if (getIntent().getBooleanExtra("Editing", true)) {
             add_holidayName.setText(holiday.getName());
@@ -169,22 +176,8 @@ public class AddEditDialog extends AppCompatActivity {
                     radio_button_events.setChecked(true);
                     break;
             }
-
-            pickerDate.init(today.get(Calendar.YEAR), holiday.getMonth() - 1, holiday.getDay(), new DatePicker.OnDateChangedListener() {
-                @Override
-                public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                }
-            });
         } else {
             btn_delete.setVisibility(View.GONE);
-            pickerDate.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
-                    today.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
-                        @Override
-                        public void onDateChanged(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                        }
-                    });
         }
     }
 
@@ -195,7 +188,7 @@ public class AddEditDialog extends AppCompatActivity {
                 if (mInterstitialAd.isLoaded()) {
                     mInterstitialAd.show();
                 } else {
-                    saveHoliday();
+                    saveHoliday(holiday);
                 }
                 setResult(RESULT_SAVE);
                 finish();
@@ -212,6 +205,17 @@ public class AddEditDialog extends AppCompatActivity {
             case R.id.edit_image_holiday:
                 Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, LOAD_IMAGE_RESULTS);
+                break;
+            case R.id.btn_data:
+                Log.e(TAG, "On datapicjer");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(holiday.getDate());
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateSetListener,
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+                break;
             default:
                 break;
         }
@@ -272,4 +276,5 @@ public class AddEditDialog extends AppCompatActivity {
         holiday.setImageUri(mImageName);
         return new File(mediaStorageDir.getPath() + File.separator + mImageName);
     }
+
 }

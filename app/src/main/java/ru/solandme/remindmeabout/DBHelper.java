@@ -24,6 +24,7 @@ public class DBHelper extends SQLiteAssetHelper {
     public static final String COLUMN_MONTH = "month";
     public static final String COLUMN_IMAGE_URI = "imageUri";
     public static final String COLUMN_CATEGORY = "category";
+    public static final String COLUMN_DATA = "date";
 
 
     public DBHelper(Context context) {
@@ -32,7 +33,7 @@ public class DBHelper extends SQLiteAssetHelper {
 
     public ArrayList<Holiday> getHolidaysByCategory(String category) {
         ArrayList<Holiday> holidays = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
 
         Cursor cursor = db.rawQuery("select * from " + DBHelper.TABLE + " where " +
                 DBHelper.COLUMN_CATEGORY + "=? ", new String[]{category});
@@ -46,6 +47,7 @@ public class DBHelper extends SQLiteAssetHelper {
             holiday.setMonth(cursor.getInt(4));
             holiday.setImageUri(cursor.getString(5));
             holiday.setCategory(cursor.getString(6));
+            holiday.setDate(cursor.getLong(7));
             holidays.add(holiday);
         }
         cursor.close();
@@ -63,6 +65,7 @@ public class DBHelper extends SQLiteAssetHelper {
         cv.put(DBHelper.COLUMN_MONTH, holiday.getMonth());
         cv.put(DBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
         cv.put(DBHelper.COLUMN_CATEGORY, holiday.getCategory());
+        cv.put(DBHelper.COLUMN_DATA, holiday.getDate());
 
         db.insert(TABLE, null, cv);
         db.close();
@@ -79,6 +82,7 @@ public class DBHelper extends SQLiteAssetHelper {
         cv.put(DBHelper.COLUMN_MONTH, holiday.getMonth());
         cv.put(DBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
         cv.put(DBHelper.COLUMN_CATEGORY, holiday.getCategory());
+        cv.put(DBHelper.COLUMN_DATA, holiday.getDate());
 
         db.update(TABLE, cv, COLUMN_ID + "=" + holiday.getId(), null);
         db.close();

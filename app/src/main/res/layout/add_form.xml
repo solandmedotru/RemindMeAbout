@@ -98,17 +98,24 @@
             android:text="@string/Events" />
     </RadioGroup>
 
-    <DatePicker
-        android:id="@+id/pickerdate"
-        android:calendarViewShown="false"
-        android:layout_height="120dp"
-        android:layout_width="match_parent"
-        android:scaleX="0.90"
-        android:scaleY="0.70"
-        android:layout_marginLeft="-10dp"
-        android:layout_marginTop="-10dp"
-        android:layout_marginRight="-10dp"
-        android:layout_marginBottom="-10dp" />
+    <!--<DatePicker-->
+        <!--android:id="@+id/pickerdate"-->
+        <!--android:calendarViewShown="false"-->
+        <!--android:layout_height="120dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:scaleX="0.90"-->
+        <!--android:scaleY="0.70"-->
+        <!--android:layout_marginLeft="-10dp"-->
+        <!--android:layout_marginTop="-10dp"-->
+        <!--android:layout_marginRight="-10dp"-->
+        <!--android:layout_marginBottom="-10dp" />-->
+    <Button
+        android:id="@+id/btn_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onClick"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
