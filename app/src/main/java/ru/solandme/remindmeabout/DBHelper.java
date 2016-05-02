@@ -20,8 +20,6 @@ public class DBHelper extends SQLiteAssetHelper {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_DAY = "day";
-    public static final String COLUMN_MONTH = "month";
     public static final String COLUMN_IMAGE_URI = "imageUri";
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_DATA = "date";
@@ -43,11 +41,9 @@ public class DBHelper extends SQLiteAssetHelper {
             holiday.setId(cursor.getString(0));
             holiday.setName(cursor.getString(1));
             holiday.setDescription(cursor.getString(2));
-            holiday.setDay(cursor.getInt(3));
-            holiday.setMonth(cursor.getInt(4));
-            holiday.setImageUri(cursor.getString(5));
-            holiday.setCategory(cursor.getString(6));
-            holiday.setDate(cursor.getLong(7));
+            holiday.setImageUri(cursor.getString(3));
+            holiday.setCategory(cursor.getString(4));
+            holiday.setDate(cursor.getLong(5));
             holidays.add(holiday);
         }
         cursor.close();
@@ -61,8 +57,6 @@ public class DBHelper extends SQLiteAssetHelper {
         ContentValues cv = new ContentValues();
         cv.put(DBHelper.COLUMN_NAME, holiday.getName());
         cv.put(DBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
-        cv.put(DBHelper.COLUMN_DAY, holiday.getDay());
-        cv.put(DBHelper.COLUMN_MONTH, holiday.getMonth());
         cv.put(DBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
         cv.put(DBHelper.COLUMN_CATEGORY, holiday.getCategory());
         cv.put(DBHelper.COLUMN_DATA, holiday.getDate());
@@ -78,8 +72,6 @@ public class DBHelper extends SQLiteAssetHelper {
         ContentValues cv = new ContentValues();
         cv.put(DBHelper.COLUMN_NAME, holiday.getName());
         cv.put(DBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
-        cv.put(DBHelper.COLUMN_DAY, holiday.getDay());
-        cv.put(DBHelper.COLUMN_MONTH, holiday.getMonth());
         cv.put(DBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
         cv.put(DBHelper.COLUMN_CATEGORY, holiday.getCategory());
         cv.put(DBHelper.COLUMN_DATA, holiday.getDate());

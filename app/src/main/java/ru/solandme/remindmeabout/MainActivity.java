@@ -21,7 +21,7 @@ import ru.solandme.remindmeabout.adapters.PagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String HOLIDAY = "holiday";
+    public static final String HOLIDAY = "holiday";
     private static final int HOLIDAY_REQUEST = 1;
     Toolbar toolbar;
     TabLayout tabLayout;

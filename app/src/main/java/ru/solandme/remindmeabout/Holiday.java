@@ -7,8 +7,6 @@ public class Holiday implements Serializable {
     private String id;
     private String name;
     private String description;
-    private int day;
-    private int month;
     private String imageUri;
     private String category;
     private int daysLeft;
@@ -39,22 +37,6 @@ public class Holiday implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
     }
 
     public String getImageUri() {

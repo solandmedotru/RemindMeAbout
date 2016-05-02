@@ -52,7 +52,7 @@ public class AddEditDialog extends AppCompatActivity{
     private Button btn_delete;
     private Button btn_data;
     private Calendar calendar;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private InterstitialAd mInterstitialAd;
 
@@ -69,7 +69,7 @@ public class AddEditDialog extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_form);
-        holiday = (Holiday) getIntent().getSerializableExtra("holiday");
+        holiday = (Holiday) getIntent().getSerializableExtra(MainActivity.HOLIDAY);
         dbHelper = new DBHelper(getApplicationContext());
         setTitle(holiday.getName());
 
@@ -207,7 +207,6 @@ public class AddEditDialog extends AppCompatActivity{
                 startActivityForResult(i, LOAD_IMAGE_RESULTS);
                 break;
             case R.id.btn_data:
-                Log.e(TAG, "On datapicjer");
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(holiday.getDate());
                 DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateSetListener,
