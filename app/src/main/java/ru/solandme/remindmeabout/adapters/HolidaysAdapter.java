@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import ru.solandme.remindmeabout.AddEditDialog;
 import ru.solandme.remindmeabout.Holiday;
@@ -47,10 +46,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
         holder.holidayName.setText(holiday.getName());
         holder.textHolidayDescription.setText(holiday.getDescription());
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(holiday.getDate());
-        holder.textDays.setText(getDays(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH)+1));
+        holder.textDays.setText(getDays(holiday.getDate()));
 
         Bitmap bmp = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/images/" + holiday.getImageUri());
         holder.imageHoliday.setImageBitmap(bmp);
@@ -62,7 +58,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
                 Holiday holiday = holidays.get(holder.getAdapterPosition());
                 Intent intent = new Intent(context, AddEditDialog.class);
                 intent.putExtra(HOLIDAY, holiday);
-                intent.putExtra("Editing", true);
+                intent.putExtra("isActionEdit", true);
                 context.startActivity(intent);
             }
         });
@@ -93,19 +89,28 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         }
     }
 
-    private String getDays(int day, int month) {
-        Calendar todayCalendar = new GregorianCalendar();
-        int year = todayCalendar.get(Calendar.YEAR);
+    private String getDays(Long holidaysDate) {
+        Calendar todayCalendar = Calendar.getInstance();
+        Calendar holidayCalendar = Calendar.getInstance();
+        holidayCalendar.setTimeInMillis(holidaysDate);
+
+        int todayYear = todayCalendar.get(Calendar.YEAR);
+        int month = holidayCalendar.get(Calendar.MONTH);
+        int day = holidayCalendar.get(Calendar.DAY_OF_MONTH);
+
         int daysInYear = todayCalendar.getActualMaximum(Calendar.DAY_OF_YEAR); //максимум дней в этом году
-        Calendar calendar = new GregorianCalendar(year, month - 1, day);
-        int days = (int) ((calendar.getTimeInMillis() - todayCalendar.getTimeInMillis()) / 1000) / 86400;
+        holidayCalendar.set(todayYear, month, day);
+        int days = (int) ((holidayCalendar.getTimeInMillis() - todayCalendar.getTimeInMillis()) / 1000) / 86400;
+        int hours = (int) ((holidayCalendar.getTimeInMillis() - todayCalendar.getTimeInMillis()) / 1000) / 3600;
 
         if (days >= 1) {
             return context.getResources().getQuantityString(R.plurals.days, days, days);
         } else if (days < -2) {
             return context.getResources().getQuantityString(R.plurals.days, daysInYear + days, daysInYear + days);
-        } else if (days == 0) {
+        } else if ((days == 0) && (hours < 12)) {
             return " " + context.getString(R.string.textNow);
+        } else if ((days == 0) && (hours >= 12)) {
+            return context.getResources().getQuantityString(R.plurals.hours, hours, hours);
         } else {
             return " " + context.getString(R.string.textFinish);
         }

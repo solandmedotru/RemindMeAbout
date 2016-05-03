@@ -56,16 +56,7 @@ public class AddEditDialog extends AppCompatActivity{
 
     private InterstitialAd mInterstitialAd;
 
-    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            calendar = Calendar.getInstance();
-            calendar.set(year,monthOfYear,dayOfMonth);
-            holiday.setDate(calendar.getTimeInMillis());
-            btn_data.setText(dateFormat.format(holiday.getDate()));
-        }
-    };
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_form);
@@ -111,6 +102,16 @@ public class AddEditDialog extends AppCompatActivity{
         mInterstitialAd.loadAd(adRequest);
     }
 
+    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            calendar = Calendar.getInstance();
+            calendar.set(year,monthOfYear,dayOfMonth);
+            holiday.setDate(calendar.getTimeInMillis());
+            btn_data.setText(dateFormat.format(holiday.getDate()));
+        }
+    };
+
 
     private void saveHoliday(Holiday holiday) {
         holiday.setName(add_holidayName.getText().toString());
@@ -132,7 +133,7 @@ public class AddEditDialog extends AppCompatActivity{
                 break;
         }
 
-        if (getIntent().getBooleanExtra("Editing", true)) {
+        if (getIntent().getBooleanExtra("isActionEdit", true)) {
             dbHelper.replaceHolidayOnDB(holiday);
         } else {
             dbHelper.addHolidayToDB(holiday);
@@ -159,7 +160,7 @@ public class AddEditDialog extends AppCompatActivity{
 
         btn_data.setText(dateFormat.format(holiday.getDate()));
 
-        if (getIntent().getBooleanExtra("Editing", true)) {
+        if (getIntent().getBooleanExtra("isActionEdit", true)) {
             add_holidayName.setText(holiday.getName());
             add_holidayDescription.setText(holiday.getDescription());
             Bitmap bmp = BitmapFactory.decodeFile(getApplicationContext().getFilesDir().getPath() + "/images/" + holiday.getImageUri());

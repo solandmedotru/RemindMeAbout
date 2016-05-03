@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 holiday.setName(getString(R.string.new_holiday));
                 Intent intent = new Intent(getApplicationContext(), AddEditDialog.class);
                 intent.putExtra(HOLIDAY, holiday);
-                intent.putExtra("Editing", false);
+                intent.putExtra("isActionEdit", false);
                 startActivityForResult(intent, HOLIDAY_REQUEST);
                 break;
         }
