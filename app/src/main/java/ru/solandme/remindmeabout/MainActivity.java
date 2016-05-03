@@ -153,10 +153,10 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == HOLIDAY_REQUEST) {
             switch (resultCode) {
                 case RESULT_CANCELED:
-                    Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.canceled, Toast.LENGTH_SHORT).show();
                     break;
                 case AddEditDialog.RESULT_SAVE:
-                    Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;

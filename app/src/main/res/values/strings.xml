@@ -38,4 +38,6 @@
     <string name="delete">Delete</string>
     <string name="holiday_description">Holiday description</string>
     <string name="celebrated_from">celebrated from</string>
+    <string name="canceled">Canceled</string>
+    <string name="saved">Saved</string>
 </resources>

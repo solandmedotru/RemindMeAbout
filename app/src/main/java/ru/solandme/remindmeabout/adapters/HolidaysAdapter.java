@@ -46,7 +46,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
         holder.holidayName.setText(holiday.getName());
         holder.textHolidayDescription.setText(holiday.getDescription());
-        holder.textDays.setText(getDays(holiday.getDate()));
+        holder.textDays.setText(getDaysForHolidayDate(holiday.getDate()));
 
         Bitmap bmp = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/images/" + holiday.getImageUri());
         holder.imageHoliday.setImageBitmap(bmp);
@@ -89,7 +89,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         }
     }
 
-    private String getDays(Long holidaysDate) {
+    private String getDaysForHolidayDate(Long holidaysDate) {
         Calendar todayCalendar = Calendar.getInstance();
         Calendar holidayCalendar = Calendar.getInstance();
         holidayCalendar.setTimeInMillis(holidaysDate);
