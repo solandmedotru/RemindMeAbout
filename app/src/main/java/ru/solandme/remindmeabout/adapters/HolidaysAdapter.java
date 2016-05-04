@@ -34,9 +34,8 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_holiday, parent, false);
         context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_holiday, parent, false);
         return new ViewHolder(view);
     }
 
