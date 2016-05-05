@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Holiday implements Serializable {
 
+    public static final String CATEGORY_HOLIDAY = "holiday";
+    public static final String CATEGORY_BIRTHDAY = "birthday";
+    public static final String CATEGORY_EVENT = "event";
+
     private String id;
     private String name;
     private String description;
@@ -11,6 +15,7 @@ public class Holiday implements Serializable {
     private String category;
     private int daysLeft;
     private Long date;
+    private String code;
 
     public Holiday() {
     }
@@ -69,5 +74,13 @@ public class Holiday implements Serializable {
 
     public void setDate(Long date) {
         this.date = date;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

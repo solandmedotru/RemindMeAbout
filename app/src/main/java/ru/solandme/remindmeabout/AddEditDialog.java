@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,7 +42,7 @@ public class AddEditDialog extends AppCompatActivity{
     private static final int THUMBSIZE = 80;
     private static final String TAG = "Holidays Log:";
     private Holiday holiday;
-    private DBHelper dbHelper;
+    private HolidayDBHelper holidayDbHelper;
     private EditText add_holidayName;
     private EditText add_holidayDescription;
     private RadioGroup radioGroup;
@@ -56,17 +57,26 @@ public class AddEditDialog extends AppCompatActivity{
 
     private InterstitialAd mInterstitialAd;
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_form);
         holiday = (Holiday) getIntent().getSerializableExtra(MainActivity.HOLIDAY);
-        dbHelper = new DBHelper(getApplicationContext());
-        setTitle(holiday.getName());
-
+        holidayDbHelper = new HolidayDBHelper(getApplicationContext());
+        initToolBar();
         initView();
         initAdView();
         initAdInterstitial();
+
+    }
+
+    private void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolBarAddEditActivity);
+        if (toolbar != null) {
+            toolbar.setTitle(R.string.app_name);
+        }
     }
 
     private void initAdInterstitial() {
@@ -123,22 +133,31 @@ public class AddEditDialog extends AppCompatActivity{
         //задаем категорию праздника
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_button_holidays:
-                holiday.setCategory("holidays");
+                holiday.setCategory(Holiday.CATEGORY_HOLIDAY);
                 break;
             case R.id.radio_button_birthdays:
-                holiday.setCategory("birthdays");
+                holiday.setCategory(Holiday.CATEGORY_EVENT);
                 break;
             case R.id.radio_button_events:
-                holiday.setCategory("events");
+                holiday.setCategory(Holiday.CATEGORY_EVENT);
                 break;
         }
 
         if (getIntent().getBooleanExtra("isActionEdit", true)) {
-            dbHelper.replaceHolidayOnDB(holiday);
+            holidayDbHelper.replaceHolidayOnDB(holiday);
         } else {
-            dbHelper.addHolidayToDB(holiday);
+            holiday.setCode(generateCode());
+            holidayDbHelper.addHolidayToDB(holiday);
         }
-        dbHelper.close();
+        holidayDbHelper.close();
+    }
+
+    private String generateCode() {
+        if (holiday.getCategory().equals(Holiday.CATEGORY_HOLIDAY) || holiday.getCategory().equals(Holiday.CATEGORY_EVENT)){
+            return holiday.getCategory() + holiday.getId();
+        } else {
+            return Holiday.CATEGORY_BIRTHDAY;
+        }
     }
 
     private void initView() {
@@ -167,13 +186,13 @@ public class AddEditDialog extends AppCompatActivity{
             edit_image_holiday.setImageBitmap(bmp);
 
             switch (holiday.getCategory()) {
-                case "holidays":
+                case Holiday.CATEGORY_HOLIDAY:
                     radio_button_holidays.setChecked(true);
                     break;
-                case "birthdays":
+                case Holiday.CATEGORY_BIRTHDAY:
                     radio_button_birthdays.setChecked(true);
                     break;
-                case "events":
+                case Holiday.CATEGORY_EVENT:
                     radio_button_events.setChecked(true);
                     break;
             }
@@ -199,7 +218,7 @@ public class AddEditDialog extends AppCompatActivity{
                 finish();
                 break;
             case R.id.btn_delete:
-                dbHelper.deleteHolidayFromDB(holiday);
+                holidayDbHelper.deleteHolidayFromDB(holiday);
                 setResult(RESULT_SAVE);
                 finish();
                 break;

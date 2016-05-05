@@ -12,23 +12,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import ru.solandme.remindmeabout.AddEditDialog;
 import ru.solandme.remindmeabout.Holiday;
 import ru.solandme.remindmeabout.R;
+import ru.solandme.remindmeabout.SlidePagerActivity;
 
 
 public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<Holiday> holidays;
+    List<Holiday> holidays;
     private static final String HOLIDAY = "holiday";
     private static final int HOLIDAY_REQUEST = 1;
 
 
-    public HolidaysAdapter(ArrayList<Holiday> holidays) {
+    public HolidaysAdapter(List<Holiday> holidays) {
         this.holidays = holidays;
     }
 
@@ -42,7 +43,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
+        final Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
         holder.holidayName.setText(holiday.getName());
         holder.textHolidayDescription.setText(holiday.getDescription());
         holder.textDays.setText(getDaysForHolidayDate(holiday.getDate()));
@@ -61,6 +62,15 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
+
+        holder.img_action_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SlidePagerActivity.class);
+                intent.putExtra("code", holiday.getCode());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -75,6 +85,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         TextView textHolidayDescription;
         ImageView imageHoliday;
         ImageView actionEdit;
+        ImageView img_action_text;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,6 +96,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             textDays = (TextView) itemView.findViewById(R.id.textDays);
             imageHoliday = (ImageView) itemView.findViewById(R.id.imageHoliday);
             actionEdit = (ImageView) itemView.findViewById(R.id.img_action_edit);
+            img_action_text = (ImageView) itemView.findViewById(R.id.img_action_text);
         }
     }
 

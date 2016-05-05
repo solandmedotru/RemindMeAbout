@@ -40,4 +40,29 @@
     <string name="celebrated_from">celebrated from</string>
     <string name="canceled">Canceled</string>
     <string name="saved">Saved</string>
+    <string name="lorem_ipsum">
+        Тебе желаю море счастья,\n
+        Улыбок, солнца и тепла.\n
+        Чтоб жизнь была еще прекрасней,\n
+        Не знать печали никогда!\n
+        \n
+        Пусть в доме будет только радость,\n
+        Уют, достаток и покой.\n
+        Друзья, родные будут рядом,\n
+        Беда обходит стороной!\n
+        \n
+        Здоровья крепкого желаю\n
+        И легких жизненных дорог.\n
+        И пусть всегда, благословляя,\n
+        Тебя хранит твой ангелок!\n
+    </string>
+    <string name="lorem_ipsum2">
+        Тебе желаю море счастья,\n
+        Улыбок, солнца и тепла.\n
+        Чтоб жизнь была еще прекрасней,\n
+        Не знать печали никогда!\n
+    </string>
+    <string name="textCounter">10/124</string>
+    <string name="add_new_congratulate">Add new</string>
+    <string name="share">share</string>
 </resources>
