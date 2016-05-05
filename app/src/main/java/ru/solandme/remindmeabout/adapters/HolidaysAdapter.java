@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import ru.solandme.remindmeabout.AddEditDialog;
 import ru.solandme.remindmeabout.Holiday;
@@ -24,12 +24,12 @@ import ru.solandme.remindmeabout.SlidePagerActivity;
 public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<Holiday> holidays;
+    List<Holiday> holidays;
     private static final String HOLIDAY = "holiday";
     private static final int HOLIDAY_REQUEST = 1;
 
 
-    public HolidaysAdapter(ArrayList<Holiday> holidays) {
+    public HolidaysAdapter(List<Holiday> holidays) {
         this.holidays = holidays;
     }
 

@@ -41,7 +41,7 @@ public class AddEditDialog extends AppCompatActivity{
     private static final int THUMBSIZE = 80;
     private static final String TAG = "Holidays Log:";
     private Holiday holiday;
-    private DBHelper dbHelper;
+    private HolidayDBHelper holidayDbHelper;
     private EditText add_holidayName;
     private EditText add_holidayDescription;
     private RadioGroup radioGroup;
@@ -61,7 +61,7 @@ public class AddEditDialog extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_form);
         holiday = (Holiday) getIntent().getSerializableExtra(MainActivity.HOLIDAY);
-        dbHelper = new DBHelper(getApplicationContext());
+        holidayDbHelper = new HolidayDBHelper(getApplicationContext());
         setTitle(holiday.getName());
 
         initView();
@@ -134,11 +134,11 @@ public class AddEditDialog extends AppCompatActivity{
         }
 
         if (getIntent().getBooleanExtra("isActionEdit", true)) {
-            dbHelper.replaceHolidayOnDB(holiday);
+            holidayDbHelper.replaceHolidayOnDB(holiday);
         } else {
-            dbHelper.addHolidayToDB(holiday);
+            holidayDbHelper.addHolidayToDB(holiday);
         }
-        dbHelper.close();
+        holidayDbHelper.close();
     }
 
     private void initView() {
@@ -199,7 +199,7 @@ public class AddEditDialog extends AppCompatActivity{
                 finish();
                 break;
             case R.id.btn_delete:
-                dbHelper.deleteHolidayFromDB(holiday);
+                holidayDbHelper.deleteHolidayFromDB(holiday);
                 setResult(RESULT_SAVE);
                 finish();
                 break;

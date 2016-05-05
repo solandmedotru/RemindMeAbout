@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ru.solandme.remindmeabout.DBHelper;
+import ru.solandme.remindmeabout.HolidayDBHelper;
 import ru.solandme.remindmeabout.R;
 import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
 
@@ -18,7 +18,7 @@ public class EventFragment extends Fragment {
     protected View view;
     HolidaysAdapter holidaysAdapter;
 
-    DBHelper dbHelper;
+    HolidayDBHelper holidayDbHelper;
     RecyclerView recyclerView;
 
     public EventFragment() {
@@ -38,17 +38,17 @@ public class EventFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext()); //создаем новый LinearLayoutManager
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); //задаем ориентацию вертикальную
         recyclerView.setLayoutManager(linearLayoutManager); //устанавливаем для RV менеджера
-        dbHelper = new DBHelper(getContext());
-        holidaysAdapter = new HolidaysAdapter(dbHelper.getHolidaysByCategory("events"));
+        holidayDbHelper = new HolidayDBHelper(getContext());
+        holidaysAdapter = new HolidaysAdapter(holidayDbHelper.getHolidaysByCategory("events"));
         recyclerView.setAdapter(holidaysAdapter);
-        dbHelper.close();
+        holidayDbHelper.close();
         return view;
     }
     @Override
     public void onResume() {
         super.onResume();
-        holidaysAdapter = new HolidaysAdapter(dbHelper.getHolidaysByCategory("events"));
+        holidaysAdapter = new HolidaysAdapter(holidayDbHelper.getHolidaysByCategory("events"));
         recyclerView.setAdapter(holidaysAdapter);
-        dbHelper.close();
+        holidayDbHelper.close();
     }
 }

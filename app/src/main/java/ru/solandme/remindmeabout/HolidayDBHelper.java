@@ -9,8 +9,9 @@ import android.util.Log;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class DBHelper extends SQLiteAssetHelper {
+public class HolidayDBHelper extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "holidays.db";
     private static final int DATABASE_VERSION = 1;
@@ -25,16 +26,16 @@ public class DBHelper extends SQLiteAssetHelper {
     public static final String COLUMN_DATA = "date";
 
 
-    public DBHelper(Context context) {
+    public HolidayDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public ArrayList<Holiday> getHolidaysByCategory(String category) {
-        ArrayList<Holiday> holidays = new ArrayList<>();
+    public List<Holiday> getHolidaysByCategory(String category) {
+        List<Holiday> holidays = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("select * from " + DBHelper.TABLE + " where " +
-                DBHelper.COLUMN_CATEGORY + "=? ", new String[]{category});
+        Cursor cursor = db.rawQuery("select * from " + HolidayDBHelper.TABLE + " where " +
+                HolidayDBHelper.COLUMN_CATEGORY + "=? ", new String[]{category});
 
         while (cursor.moveToNext()) {
             Holiday holiday = new Holiday();
@@ -55,11 +56,11 @@ public class DBHelper extends SQLiteAssetHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(DBHelper.COLUMN_NAME, holiday.getName());
-        cv.put(DBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
-        cv.put(DBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
-        cv.put(DBHelper.COLUMN_CATEGORY, holiday.getCategory());
-        cv.put(DBHelper.COLUMN_DATA, holiday.getDate());
+        cv.put(HolidayDBHelper.COLUMN_NAME, holiday.getName());
+        cv.put(HolidayDBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
+        cv.put(HolidayDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
+        cv.put(HolidayDBHelper.COLUMN_CATEGORY, holiday.getCategory());
+        cv.put(HolidayDBHelper.COLUMN_DATA, holiday.getDate());
 
         db.insert(TABLE, null, cv);
         db.close();
@@ -70,11 +71,11 @@ public class DBHelper extends SQLiteAssetHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(DBHelper.COLUMN_NAME, holiday.getName());
-        cv.put(DBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
-        cv.put(DBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
-        cv.put(DBHelper.COLUMN_CATEGORY, holiday.getCategory());
-        cv.put(DBHelper.COLUMN_DATA, holiday.getDate());
+        cv.put(HolidayDBHelper.COLUMN_NAME, holiday.getName());
+        cv.put(HolidayDBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
+        cv.put(HolidayDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
+        cv.put(HolidayDBHelper.COLUMN_CATEGORY, holiday.getCategory());
+        cv.put(HolidayDBHelper.COLUMN_DATA, holiday.getDate());
 
         db.update(TABLE, cv, COLUMN_ID + "=" + holiday.getId(), null);
         db.close();

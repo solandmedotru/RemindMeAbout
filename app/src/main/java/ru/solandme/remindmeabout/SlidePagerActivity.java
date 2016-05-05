@@ -16,20 +16,17 @@ import ru.solandme.remindmeabout.trasformers.ZoomOutPageTransformer;
 
 public class SlidePagerActivity extends FragmentActivity {
 
-    private ViewPager slidePager;
-    private PagerAdapter pagerAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide);
 
-        slidePager = (ViewPager) findViewById(R.id.slidePager);
+        ViewPager slidePager = (ViewPager) findViewById(R.id.slidePager);
 
         //Можно выбрать другую анимацию, заменив PageTransformer на
         //slidePager.setPageTransformer(true, new DepthPageTransformer());
         slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
-        pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
+        PagerAdapter pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
         slidePager.setAdapter(pagerAdapter);
     }
 
