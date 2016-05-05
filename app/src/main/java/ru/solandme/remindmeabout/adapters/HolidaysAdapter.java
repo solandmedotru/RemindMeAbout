@@ -18,6 +18,7 @@ import java.util.Calendar;
 import ru.solandme.remindmeabout.AddEditDialog;
 import ru.solandme.remindmeabout.Holiday;
 import ru.solandme.remindmeabout.R;
+import ru.solandme.remindmeabout.SlidePagerActivity;
 
 
 public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHolder> {
@@ -61,6 +62,14 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
+
+        holder.img_action_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SlidePagerActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -75,6 +84,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         TextView textHolidayDescription;
         ImageView imageHoliday;
         ImageView actionEdit;
+        ImageView img_action_text;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,6 +95,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             textDays = (TextView) itemView.findViewById(R.id.textDays);
             imageHoliday = (ImageView) itemView.findViewById(R.id.imageHoliday);
             actionEdit = (ImageView) itemView.findViewById(R.id.img_action_edit);
+            img_action_text = (ImageView) itemView.findViewById(R.id.img_action_text);
         }
     }
 
