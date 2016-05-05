@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.solandme.remindmeabout.fragments.SlidePageFragment;
@@ -31,10 +30,13 @@ public class SlidePagerActivity extends FragmentActivity {
     }
 
     private List<String> getTextCongratulate() {
-        List<String> data = new ArrayList<>();
-        data.add(getResources().getString(R.string.lorem_ipsum));
-        data.add(getResources().getString(R.string.lorem_ipsum2));
-        return data;
+        List<String> textCongratulate;
+        CongratulateDBHelper helper = new CongratulateDBHelper(getApplicationContext());
+        textCongratulate = helper.getCongratulationsByCode(getIntent().getStringExtra("code"));
+        if (textCongratulate.size() == 0) {
+            textCongratulate.add("Empty");
+        }
+        return textCongratulate;
     }
 
     private class SlidePageAdapter extends FragmentStatePagerAdapter {

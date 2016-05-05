@@ -24,6 +24,7 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
     public static final String COLUMN_IMAGE_URI = "imageUri";
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_DATA = "date";
+    public static final String COLUMN_CODE = "code";
 
 
     public HolidayDBHelper(Context context) {
@@ -45,6 +46,7 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
             holiday.setImageUri(cursor.getString(3));
             holiday.setCategory(cursor.getString(4));
             holiday.setDate(cursor.getLong(5));
+            holiday.setCode(cursor.getString(6));
             holidays.add(holiday);
         }
         cursor.close();
@@ -61,6 +63,7 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
         cv.put(HolidayDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
         cv.put(HolidayDBHelper.COLUMN_CATEGORY, holiday.getCategory());
         cv.put(HolidayDBHelper.COLUMN_DATA, holiday.getDate());
+        cv.put(HolidayDBHelper.COLUMN_CODE, holiday.getCode());
 
         db.insert(TABLE, null, cv);
         db.close();
@@ -76,6 +79,7 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
         cv.put(HolidayDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
         cv.put(HolidayDBHelper.COLUMN_CATEGORY, holiday.getCategory());
         cv.put(HolidayDBHelper.COLUMN_DATA, holiday.getDate());
+        cv.put(HolidayDBHelper.COLUMN_CODE, holiday.getCode());
 
         db.update(TABLE, cv, COLUMN_ID + "=" + holiday.getId(), null);
         db.close();

@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import ru.solandme.remindmeabout.Holiday;
 import ru.solandme.remindmeabout.HolidayDBHelper;
 import ru.solandme.remindmeabout.R;
 import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
@@ -38,7 +40,7 @@ public class BirthdayFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); //задаем ориентацию вертикальную
         recyclerView.setLayoutManager(linearLayoutManager); //устанавливаем для RV менеджера
         holidayDbHelper = new HolidayDBHelper(getContext());
-        holidaysAdapter = new HolidaysAdapter(holidayDbHelper.getHolidaysByCategory("birthdays"));
+        holidaysAdapter = new HolidaysAdapter(holidayDbHelper.getHolidaysByCategory(Holiday.CATEGORY_BIRTHDAY));
         recyclerView.setAdapter(holidaysAdapter);
         holidayDbHelper.close();
         return view;
@@ -46,7 +48,7 @@ public class BirthdayFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        holidaysAdapter = new HolidaysAdapter(holidayDbHelper.getHolidaysByCategory("birthdays"));
+        holidaysAdapter = new HolidaysAdapter(holidayDbHelper.getHolidaysByCategory(Holiday.CATEGORY_BIRTHDAY));
         recyclerView.setAdapter(holidaysAdapter);
         holidayDbHelper.close();
     }

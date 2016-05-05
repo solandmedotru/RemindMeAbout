@@ -123,22 +123,31 @@ public class AddEditDialog extends AppCompatActivity{
         //задаем категорию праздника
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_button_holidays:
-                holiday.setCategory("holidays");
+                holiday.setCategory(Holiday.CATEGORY_HOLIDAY);
                 break;
             case R.id.radio_button_birthdays:
-                holiday.setCategory("birthdays");
+                holiday.setCategory(Holiday.CATEGORY_EVENT);
                 break;
             case R.id.radio_button_events:
-                holiday.setCategory("events");
+                holiday.setCategory(Holiday.CATEGORY_EVENT);
                 break;
         }
 
         if (getIntent().getBooleanExtra("isActionEdit", true)) {
             holidayDbHelper.replaceHolidayOnDB(holiday);
         } else {
+            holiday.setCode(generateCode());
             holidayDbHelper.addHolidayToDB(holiday);
         }
         holidayDbHelper.close();
+    }
+
+    private String generateCode() {
+        if (holiday.getCategory().equals(Holiday.CATEGORY_HOLIDAY) || holiday.getCategory().equals(Holiday.CATEGORY_EVENT)){
+            return holiday.getCategory() + holiday.getId();
+        } else {
+            return Holiday.CATEGORY_BIRTHDAY;
+        }
     }
 
     private void initView() {
@@ -167,13 +176,13 @@ public class AddEditDialog extends AppCompatActivity{
             edit_image_holiday.setImageBitmap(bmp);
 
             switch (holiday.getCategory()) {
-                case "holidays":
+                case Holiday.CATEGORY_HOLIDAY:
                     radio_button_holidays.setChecked(true);
                     break;
-                case "birthdays":
+                case Holiday.CATEGORY_BIRTHDAY:
                     radio_button_birthdays.setChecked(true);
                     break;
-                case "events":
+                case Holiday.CATEGORY_EVENT:
                     radio_button_events.setChecked(true);
                     break;
             }

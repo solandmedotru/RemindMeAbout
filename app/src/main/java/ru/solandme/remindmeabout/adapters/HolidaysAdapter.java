@@ -43,7 +43,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
+        final Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
         holder.holidayName.setText(holiday.getName());
         holder.textHolidayDescription.setText(holiday.getDescription());
         holder.textDays.setText(getDaysForHolidayDate(holiday.getDate()));
@@ -67,6 +67,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SlidePagerActivity.class);
+                intent.putExtra("code", holiday.getCode());
                 context.startActivity(intent);
             }
         });
