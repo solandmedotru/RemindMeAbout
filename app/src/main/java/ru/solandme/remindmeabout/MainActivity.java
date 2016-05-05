@@ -128,8 +128,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        toolbar.inflateMenu(R.menu.toolbar_main_menu);
         toolbar.setTitle(R.string.app_name);
 
 

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="android:actionMenuTextColor">@color/colorWhiteDark</item>
+    </style>
+
+
     <style name="counterText">
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
