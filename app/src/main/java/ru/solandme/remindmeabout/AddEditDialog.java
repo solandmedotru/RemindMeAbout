@@ -77,6 +77,9 @@ public class AddEditDialog extends AppCompatActivity{
         if (toolbar != null) {
             toolbar.setTitle(R.string.app_name);
         }
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     private void initAdInterstitial() {
@@ -295,5 +298,4 @@ public class AddEditDialog extends AppCompatActivity{
         holiday.setImageUri(mImageName);
         return new File(mediaStorageDir.getPath() + File.separator + mImageName);
     }
-
 }

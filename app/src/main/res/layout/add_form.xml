@@ -13,14 +13,10 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <android.support.v7.widget.Toolbar
+            <include
                 android:id="@+id/toolBarAddEditActivity"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                layout="@layout/toolbar" />
+
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
 

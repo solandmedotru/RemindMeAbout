@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -119,15 +120,19 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
     }
 
 
     private void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolBarMainActivity);
-        if (toolbar != null) {
-            toolbar.setTitle(R.string.app_name);
-        }
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        toolbar.inflateMenu(R.menu.toolbar_main_menu);
+        toolbar.setTitle(R.string.app_name);
+
+
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -135,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
                 return onOptionsItemSelected(item);
             }
         });
-        toolbar.inflateMenu(R.menu.toolbar_main_menu);
+
+
     }
 
     private void initTabs() {
@@ -162,6 +168,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_main_menu, menu);
+        return true;
     }
 
     @Override

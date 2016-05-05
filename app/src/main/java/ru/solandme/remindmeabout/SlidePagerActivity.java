@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -32,8 +33,6 @@ public class SlidePagerActivity extends FragmentActivity {
         PagerAdapter pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
         slidePager.setAdapter(pagerAdapter);
         initToolBar();
-
-
     }
 
     private void initToolBar() {
@@ -98,6 +97,11 @@ public class SlidePagerActivity extends FragmentActivity {
                 Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
                 break;
         }
+        return true;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_slide_activity_menu, menu);
         return true;
     }
 }
