@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -56,17 +57,26 @@ public class AddEditDialog extends AppCompatActivity{
 
     private InterstitialAd mInterstitialAd;
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_form);
         holiday = (Holiday) getIntent().getSerializableExtra(MainActivity.HOLIDAY);
         holidayDbHelper = new HolidayDBHelper(getApplicationContext());
-        setTitle(holiday.getName());
-
+        initToolBar();
         initView();
         initAdView();
         initAdInterstitial();
+
+    }
+
+    private void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolBarAddEditActivity);
+        if (toolbar != null) {
+            toolbar.setTitle(R.string.app_name);
+        }
     }
 
     private void initAdInterstitial() {

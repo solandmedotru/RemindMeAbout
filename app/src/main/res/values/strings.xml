@@ -63,4 +63,6 @@
         Не знать печали никогда!\n
     </string>
     <string name="textCounter">10/124</string>
+    <string name="add_new_congratulate">Add new</string>
+    <string name="share">share</string>
 </resources>
