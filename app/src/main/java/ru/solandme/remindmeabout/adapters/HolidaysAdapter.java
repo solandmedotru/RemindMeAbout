@@ -67,6 +67,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SlidePagerActivity.class);
+                intent.putExtra("holidayName", holiday.getName());
                 intent.putExtra("code", holiday.getCode());
                 context.startActivity(intent);
             }

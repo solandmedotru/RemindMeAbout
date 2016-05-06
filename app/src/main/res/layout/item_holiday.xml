@@ -63,14 +63,14 @@
                         android:text="@string/description"
                         android:textSize="14sp" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/colorWhiteDark" />
+
                 </LinearLayout>
 
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorWhiteDark" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

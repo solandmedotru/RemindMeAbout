@@ -65,4 +65,5 @@
     <string name="textCounter">10/124</string>
     <string name="add_new_congratulate">Add new</string>
     <string name="share">Share</string>
+    <string name="chooser_title">Share to...</string>
 </resources>

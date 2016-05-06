@@ -99,6 +99,7 @@ public class AddEditDialog extends AppCompatActivity{
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("C79BD6D360D092383E26BB030B13893D")
+                .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
                 .build();
         if (adView != null) {
             adView.loadAd(adRequest);
@@ -108,6 +109,7 @@ public class AddEditDialog extends AppCompatActivity{
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
                 .addTestDevice("C79BD6D360D092383E26BB030B13893D")
                 .build();
         mInterstitialAd.loadAd(adRequest);

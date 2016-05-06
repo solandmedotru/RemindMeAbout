@@ -42,7 +42,7 @@ public class SlidePagerActivity extends AppCompatActivity {
     private void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolBarSlideActivity);
         if (toolbar != null) {
-            toolbar.setTitle(R.string.app_name);
+            toolbar.setTitle(getIntent().getStringExtra("holidayName"));
         }
         setSupportActionBar(toolbar);
 
@@ -89,6 +89,13 @@ public class SlidePagerActivity extends AppCompatActivity {
         }
     }
 
+
+    // Работаем с меню
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_slide_activity_menu, menu);
+        return true;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -108,9 +115,5 @@ public class SlidePagerActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_slide_activity_menu, menu);
-        return true;
-    }
+
 }

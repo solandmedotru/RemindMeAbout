@@ -43,11 +43,12 @@ public class SlidePageFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
+                Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, text_container.getText());
-                startActivity(intent);
+                String chooserTitle = getString(R.string.chooser_title);
+                Intent chooserIntent = Intent.createChooser(intent, chooserTitle);
+                startActivity(chooserIntent);
                 break;
         }
         return true;
