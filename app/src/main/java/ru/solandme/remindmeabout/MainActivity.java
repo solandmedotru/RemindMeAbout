@@ -46,6 +46,36 @@ public class MainActivity extends AppCompatActivity {
         initPager();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                onBackPressed();
+                break;
+            case R.id.about_app_menu_item:
+                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
+                break;
+            case R.id.add_new_holiday:
+                Holiday holiday = new Holiday();
+                holiday.setName(getString(R.string.new_holiday));
+                Intent intent = new Intent(getApplicationContext(), AddEditDialog.class);
+                intent.putExtra(HOLIDAY, holiday);
+                intent.putExtra("isActionEdit", false);
+                startActivityForResult(intent, HOLIDAY_REQUEST);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
     private static boolean copyAssetFolder(AssetManager assetManager,
                                            String fromAssetPath, String toPath) {
         try {
@@ -125,21 +155,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolBarMainActivity);
+        if (toolbar != null) {
+            toolbar.setTitle(R.string.app_name);
+        }
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setTitle(R.string.app_name);
-
-
-
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return onOptionsItemSelected(item);
-            }
-        });
-
-
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
     }
 
     private void initTabs() {
@@ -168,29 +191,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_main_menu, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            case R.id.about_app_menu_item:
-                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
-                break;
-            case R.id.add_new_holiday:
-                Holiday holiday = new Holiday();
-                holiday.setName(getString(R.string.new_holiday));
-                Intent intent = new Intent(getApplicationContext(), AddEditDialog.class);
-                intent.putExtra(HOLIDAY, holiday);
-                intent.putExtra("isActionEdit", false);
-                startActivityForResult(intent, HOLIDAY_REQUEST);
-                break;
-        }
-        return true;
-    }
 }

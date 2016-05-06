@@ -20,9 +20,11 @@
         <activity
             android:name=".MainActivity" />
         <activity
-            android:name=".AddEditDialog" />
+            android:name=".AddEditDialog"
+            android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".SlidePagerActivity"/>
+            android:name=".SlidePagerActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

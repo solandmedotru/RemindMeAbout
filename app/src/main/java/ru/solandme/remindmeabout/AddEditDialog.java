@@ -9,6 +9,7 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -46,14 +47,9 @@ public class AddEditDialog extends AppCompatActivity{
     private EditText add_holidayName;
     private EditText add_holidayDescription;
     private RadioGroup radioGroup;
-    private RadioButton radio_button_holidays;
-    private RadioButton radio_button_birthdays;
-    private RadioButton radio_button_events;
     private ImageView edit_image_holiday;
-    private Button btn_delete;
     private Button btn_data;
     private Calendar calendar;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private InterstitialAd mInterstitialAd;
 
@@ -78,8 +74,10 @@ public class AddEditDialog extends AppCompatActivity{
             toolbar.setTitle(R.string.app_name);
         }
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
     }
 
     private void initAdInterstitial() {
@@ -121,7 +119,7 @@ public class AddEditDialog extends AppCompatActivity{
             calendar = Calendar.getInstance();
             calendar.set(year,monthOfYear,dayOfMonth);
             holiday.setDate(calendar.getTimeInMillis());
-            btn_data.setText(dateFormat.format(holiday.getDate()));
+            btn_data.setText(SimpleDateFormat.getDateInstance().format(holiday.getDate()));
         }
     };
 
@@ -167,12 +165,12 @@ public class AddEditDialog extends AppCompatActivity{
         add_holidayName = (EditText) findViewById(R.id.add_holiday_name);
         add_holidayDescription = (EditText) findViewById(R.id.add_holiday_description);
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
-        radio_button_holidays = (RadioButton) findViewById(R.id.radio_button_holidays);
-        radio_button_birthdays = (RadioButton) findViewById(R.id.radio_button_birthdays);
-        radio_button_events = (RadioButton) findViewById(R.id.radio_button_events);
+        RadioButton radio_button_holidays = (RadioButton) findViewById(R.id.radio_button_holidays);
+        RadioButton radio_button_birthdays = (RadioButton) findViewById(R.id.radio_button_birthdays);
+        RadioButton radio_button_events = (RadioButton) findViewById(R.id.radio_button_events);
         edit_image_holiday = (ImageView) findViewById(R.id.edit_image_holiday);
 
-        btn_delete = (Button) findViewById(R.id.btn_delete);
+        Button btn_delete = (Button) findViewById(R.id.btn_delete);
         btn_data = (Button) findViewById(R.id.btn_data);
 
         if(holiday.getDate() == null){
@@ -180,7 +178,7 @@ public class AddEditDialog extends AppCompatActivity{
             holiday.setDate(calendar.getTimeInMillis());
         }
 
-        btn_data.setText(dateFormat.format(holiday.getDate()));
+        btn_data.setText(SimpleDateFormat.getDateInstance().format(holiday.getDate()));
 
         if (getIntent().getBooleanExtra("isActionEdit", true)) {
             add_holidayName.setText(holiday.getName());
@@ -190,17 +188,25 @@ public class AddEditDialog extends AppCompatActivity{
 
             switch (holiday.getCategory()) {
                 case Holiday.CATEGORY_HOLIDAY:
-                    radio_button_holidays.setChecked(true);
+                    if (radio_button_holidays != null) {
+                        radio_button_holidays.setChecked(true);
+                    }
                     break;
                 case Holiday.CATEGORY_BIRTHDAY:
-                    radio_button_birthdays.setChecked(true);
+                    if (radio_button_birthdays != null) {
+                        radio_button_birthdays.setChecked(true);
+                    }
                     break;
                 case Holiday.CATEGORY_EVENT:
-                    radio_button_events.setChecked(true);
+                    if (radio_button_events != null) {
+                        radio_button_events.setChecked(true);
+                    }
                     break;
             }
         } else {
-            btn_delete.setVisibility(View.GONE);
+            if (btn_delete != null) {
+                btn_delete.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -284,6 +290,7 @@ public class AddEditDialog extends AppCompatActivity{
         }
     }
 
+    @Nullable
     private File getOutputMediaFile() {
         File mediaStorageDir = new File(getApplicationContext().getFilesDir().getPath()
                 + "/images");

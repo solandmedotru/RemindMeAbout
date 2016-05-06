@@ -2,11 +2,11 @@ package ru.solandme.remindmeabout;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +17,7 @@ import java.util.List;
 import ru.solandme.remindmeabout.fragments.SlidePageFragment;
 import ru.solandme.remindmeabout.trasformers.ZoomOutPageTransformer;
 
-public class SlidePagerActivity extends FragmentActivity {
+public class SlidePagerActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     @Override
@@ -29,9 +29,13 @@ public class SlidePagerActivity extends FragmentActivity {
 
         //Можно выбрать другую анимацию, заменив PageTransformer на
         //slidePager.setPageTransformer(true, new DepthPageTransformer());
-        slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
+        if (slidePager != null) {
+            slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
+        }
         PagerAdapter pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
-        slidePager.setAdapter(pagerAdapter);
+        if (slidePager != null) {
+            slidePager.setAdapter(pagerAdapter);
+        }
         initToolBar();
     }
 
@@ -40,13 +44,12 @@ public class SlidePagerActivity extends FragmentActivity {
         if (toolbar != null) {
             toolbar.setTitle(R.string.app_name);
         }
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return onOptionsItemSelected(item);
-            }
-        });
-        toolbar.inflateMenu(R.menu.toolbar_slide_activity_menu);
+        setSupportActionBar(toolbar);
+
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
     }
 
     private List<String> getTextCongratulate() {
@@ -73,7 +76,7 @@ public class SlidePagerActivity extends FragmentActivity {
             Fragment fragment = new SlidePageFragment();
             Bundle args = new Bundle();
             args.putString(SlidePageFragment.ARG_TEXT, textData.get(position));
-            args.putInt(SlidePageFragment.ARG_POSITION, position+1);
+            args.putInt(SlidePageFragment.ARG_POSITION, position + 1);
             args.putInt(SlidePageFragment.ARG_COUNT, getCount());
             fragment.setArguments(args);
 
@@ -85,20 +88,26 @@ public class SlidePagerActivity extends FragmentActivity {
             return textData.size();
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-
+            case R.id.home:
+                onBackPressed();
+                break;
             case R.id.about_app_menu_item:
                 Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
                 break;
             case R.id.add_new_congratulate:
                 Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
                 break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_slide_activity_menu, menu);
