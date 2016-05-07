@@ -16,4 +16,9 @@
         <item name="android:textColor">#ff0000</item>
     </style>
 
+    <style name="radioBtnWhite">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+    </style>
+
 </resources>

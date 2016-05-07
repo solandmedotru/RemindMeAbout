@@ -19,19 +19,29 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_CODE = "code";
     public static final String COLUMN_TEXT = "text";
-
+    public static final String COLUMN_SMS = "sms";
+    public static final String COLUMN_FILTER = "filter";
 
     public CongratulateDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         setForcedUpgrade(DATABASE_VERSION);
     }
 
-    public List<String> getCongratulationsByCode(String code) {
+    public List<String> getCongratulationsByCode(String code, String sms, String filter) {
         List<String> congratulations = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
 
-        Cursor cursor = db.rawQuery("select * from " + TABLE + " where " +
-                COLUMN_CODE + "=? ", new String[]{code});
+        if(filter.equals("0") && sms.equals("1")){
+            cursor = db.rawQuery("select * from " + TABLE + " where " +
+                    COLUMN_CODE + "=?" + " and " + COLUMN_SMS + "=?", new String[]{code, sms});
+        } else if(filter.equals("0") && sms.equals("0")) {
+            cursor = db.rawQuery("select * from " + TABLE + " where " +
+                    COLUMN_CODE + "=?", new String[]{code});
+        } else {
+            cursor = db.rawQuery("select * from " + TABLE + " where " +
+                    COLUMN_CODE + "=?" + " and " + COLUMN_SMS + "=?" + " and " + COLUMN_FILTER + "=?", new String[]{code, sms, filter});
+        }
 
         while (cursor.moveToNext()) {
             congratulations.add(cursor.getString(1));

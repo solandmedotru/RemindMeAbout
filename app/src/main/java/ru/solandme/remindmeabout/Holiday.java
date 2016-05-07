@@ -8,6 +8,9 @@ public class Holiday implements Serializable{
     public static final String CATEGORY_HOLIDAY = "holiday";
     public static final String CATEGORY_BIRTHDAY = "birthday";
     public static final String CATEGORY_EVENT = "event";
+    public static final String CODE_WOMANSDAY = "womansday";
+    public static final String CODE_MANSDAY = "mansday";
+
 
     private String id;
     private String name;

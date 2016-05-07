@@ -7,9 +7,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.List;
@@ -19,24 +23,85 @@ import ru.solandme.remindmeabout.trasformers.ZoomOutPageTransformer;
 
 public class SlidePagerActivity extends AppCompatActivity {
     Toolbar toolbar;
+    RadioGroup rg_sex;
+    RadioButton rb_for_her;
+    RadioButton rb_for_him;
+    SwitchCompat switch_sms;
+    ViewPager slidePager;
+    String filter = "0"; // forHim - 1, forHer - 2, forAll - 0
+    String sms = "0"; // on - 1, off - 0
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide);
 
-        ViewPager slidePager = (ViewPager) findViewById(R.id.slidePager);
+        slidePager = (ViewPager) findViewById(R.id.slidePager);
 
         //Можно выбрать другую анимацию, заменив PageTransformer на
         //slidePager.setPageTransformer(true, new DepthPageTransformer());
         if (slidePager != null) {
             slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
         }
+        setAdapter(slidePager);
+        initToolBar();
+
+        initView();
+    }
+
+    private void setAdapter(ViewPager slidePager) {
         PagerAdapter pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
         if (slidePager != null) {
             slidePager.setAdapter(pagerAdapter);
         }
-        initToolBar();
+    }
+
+    private void initView() {
+        rg_sex = (RadioGroup) findViewById(R.id.rg_sex);
+        switch_sms = (SwitchCompat) findViewById(R.id.switch_sms);
+        rb_for_her = (RadioButton) findViewById(R.id.rb_for_her);
+        rb_for_him = (RadioButton) findViewById(R.id.rb_for_him);
+
+        if(getIntent().getStringExtra("code").equals(Holiday.CODE_WOMANSDAY) ||
+                getIntent().getStringExtra("code").equals(Holiday.CODE_MANSDAY)){
+            rb_for_her.setEnabled(false);
+            rb_for_him.setEnabled(false);
+        }
+
+        rg_sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rb_for_all:
+                        filter = "0";
+                        setAdapter(slidePager);
+                        break;
+                    case R.id.rb_for_him:
+                        filter = "1";
+                        setAdapter(slidePager);
+                        break;
+                    case R.id.rb_for_her:
+                        filter = "2";
+                        setAdapter(slidePager);
+                        break;
+                    default:
+                        filter = "0";
+                        setAdapter(slidePager);
+                }
+            }
+        });
+        switch_sms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    sms = "1";
+                    setAdapter(slidePager);
+                } else {
+                    sms = "0";
+                    setAdapter(slidePager);
+                }
+            }
+        });
     }
 
     private void initToolBar() {
@@ -52,7 +117,7 @@ public class SlidePagerActivity extends AppCompatActivity {
     private List<String> getTextCongratulate() {
         List<String> textCongratulate;
         CongratulateDBHelper helper = new CongratulateDBHelper(getApplicationContext());
-        textCongratulate = helper.getCongratulationsByCode(getIntent().getStringExtra("code"));
+        textCongratulate = helper.getCongratulationsByCode(getIntent().getStringExtra("code"), sms, filter);
         if (textCongratulate.size() == 0) {
             textCongratulate.add("Empty");
         }
