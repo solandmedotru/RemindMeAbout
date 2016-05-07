@@ -14,7 +14,7 @@ import java.util.List;
 public class HolidayDBHelper extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "holidays.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 1; //для обновления базы названить assets/databases/holidays.db_upgrade_1-2.sql
 
 
     public static final String TABLE = "holidays";

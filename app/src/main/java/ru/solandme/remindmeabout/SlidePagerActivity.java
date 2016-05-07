@@ -59,6 +59,7 @@ public class SlidePagerActivity extends AppCompatActivity {
         if (textCongratulate.size() == 0) {
             textCongratulate.add("Empty");
         }
+        helper.close();
         return textCongratulate;
     }
 

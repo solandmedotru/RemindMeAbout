@@ -23,6 +23,7 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
 
     public CongratulateDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        setForcedUpgrade(DATABASE_VERSION);
     }
 
     public List<String> getCongratulationsByCode(String code) {

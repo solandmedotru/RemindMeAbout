@@ -51,27 +51,41 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         Bitmap bmp = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/images/" + holiday.getImageUri());
         holder.imageHoliday.setImageBitmap(bmp);
 
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showAddEditActivity(holder);
+                return true;
+            }
+        });
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTextCongratulation(holiday);
+            }
+        });
+
         holder.actionEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Holiday holiday = holidays.get(holder.getAdapterPosition());
-                Intent intent = new Intent(context, AddEditDialog.class);
-                intent.putExtra(HOLIDAY, holiday);
-                intent.putExtra("isActionEdit", true);
-                context.startActivity(intent);
+                showAddEditActivity(holder);
             }
         });
+    }
 
-        holder.img_action_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, SlidePagerActivity.class);
-                intent.putExtra("holidayName", holiday.getName());
-                intent.putExtra("code", holiday.getCode());
-                context.startActivity(intent);
-            }
-        });
+    private void showAddEditActivity(ViewHolder holder) {
+        Holiday holiday = holidays.get(holder.getAdapterPosition());
+        Intent intent = new Intent(context, AddEditDialog.class);
+        intent.putExtra(HOLIDAY, holiday);
+        intent.putExtra("isActionEdit", true);
+        context.startActivity(intent);
+    }
+
+    private void showTextCongratulation(Holiday holiday) {
+        Intent intent = new Intent(context, SlidePagerActivity.class);
+        intent.putExtra("holidayName", holiday.getName());
+        intent.putExtra("code", holiday.getCode());
+        context.startActivity(intent);
     }
 
     @Override
@@ -86,7 +100,6 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         TextView textHolidayDescription;
         ImageView imageHoliday;
         ImageView actionEdit;
-        ImageView img_action_text;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -97,7 +110,6 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             textDays = (TextView) itemView.findViewById(R.id.textDays);
             imageHoliday = (ImageView) itemView.findViewById(R.id.imageHoliday);
             actionEdit = (ImageView) itemView.findViewById(R.id.img_action_edit);
-            img_action_text = (ImageView) itemView.findViewById(R.id.img_action_text);
         }
     }
 

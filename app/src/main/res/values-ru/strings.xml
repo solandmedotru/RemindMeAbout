@@ -9,22 +9,22 @@
     <string name="Holidays">Праздники</string>
 
     <plurals name="days">
-        <item quantity="one">%d\nдень</item>
-        <item quantity="few">%d\nдня</item>
-        <item quantity="many">%d\nдней</item>
-        <item quantity="other">%d\nдней</item>
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дня</item>
+        <item quantity="many">%d дней</item>
+        <item quantity="other">%d дней</item>
     </plurals>
     <plurals name="hours">
-        <item quantity="one">%d\nчас</item>
-        <item quantity="few">%d\nчаса</item>
-        <item quantity="many">%d\nчасов</item>
-        <item quantity="other">%d\nчасов</item>
+        <item quantity="one">%d час</item>
+        <item quantity="few">%d часа</item>
+        <item quantity="many">%d часов</item>
+        <item quantity="other">%d часов</item>
     </plurals>
     <string name="textFinish">прошел</string>
     <string name="textNow">сегодня</string>
     <string name="bookmark_icon">значек закладки</string>
     <string name="add_new_holiday">Добавить праздник</string>
-    <string name="days_from_holiday">356\n дней</string>
+    <string name="days_from_holiday">356 дней</string>
     <string name="description">Описание</string>
     <string name="holiday_name">Название праздника</string>
     <string name="holiday_picture">Картинка праздника</string>

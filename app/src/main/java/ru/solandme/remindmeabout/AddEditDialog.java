@@ -122,6 +122,8 @@ public class AddEditDialog extends AppCompatActivity{
             calendar.set(year,monthOfYear,dayOfMonth);
             holiday.setDate(calendar.getTimeInMillis());
             btn_data.setText(SimpleDateFormat.getDateInstance().format(holiday.getDate()));
+
+            Log.i(TAG, holiday.getDate().toString());
         }
     };
 
