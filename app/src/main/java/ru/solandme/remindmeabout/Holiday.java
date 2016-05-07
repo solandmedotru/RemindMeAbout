@@ -1,8 +1,9 @@
 package ru.solandme.remindmeabout;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
-public class Holiday implements Serializable {
+public class Holiday implements Serializable{
 
     public static final String CATEGORY_HOLIDAY = "holiday";
     public static final String CATEGORY_BIRTHDAY = "birthday";
@@ -18,6 +19,17 @@ public class Holiday implements Serializable {
     private String code;
 
     public Holiday() {
+    }
+
+    public Holiday(String id, String name, String description, String imageUri, String category, int daysLeft, Long date, String code) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.imageUri = imageUri;
+        this.category = category;
+        this.daysLeft = daysLeft;
+        this.date = date;
+        this.code = code;
     }
 
     public String getId() {
@@ -83,4 +95,25 @@ public class Holiday implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
+
+
+    static Comparator<Holiday> daysOrdered = new Comparator<Holiday>() {
+        @Override
+        public int compare(Holiday lhs, Holiday rhs) {
+            if(lhs.daysLeft < rhs.daysLeft){
+                return -1;
+            } else if(lhs.daysLeft > rhs.daysLeft){
+                return 1;
+            }
+            return 0;
+        }
+    };
+
+    static Comparator<Holiday> nameOrdered = new Comparator<Holiday>() {
+        @Override
+        public int compare(Holiday lhs, Holiday rhs) {
+            return lhs.name.compareTo(rhs.name);
+        }
+    };
+
 }

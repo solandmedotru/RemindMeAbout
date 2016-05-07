@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.List;
 
 import ru.solandme.remindmeabout.AddEditDialog;
@@ -46,7 +45,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         final Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
         holder.holidayName.setText(holiday.getName());
         holder.textHolidayDescription.setText(holiday.getDescription());
-        holder.textDays.setText(getDaysForHolidayDate(holiday.getDate()));
+        holder.textDays.setText(parseDay(holiday.getDaysLeft()));
 
         Bitmap bmp = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/images/" + holiday.getImageUri());
         holder.imageHoliday.setImageBitmap(bmp);
@@ -113,28 +112,11 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         }
     }
 
-    private String getDaysForHolidayDate(Long holidaysDate) {
-        Calendar todayCalendar = Calendar.getInstance();
-        Calendar holidayCalendar = Calendar.getInstance();
-        holidayCalendar.setTimeInMillis(holidaysDate);
-
-        int todayYear = todayCalendar.get(Calendar.YEAR);
-        int month = holidayCalendar.get(Calendar.MONTH);
-        int day = holidayCalendar.get(Calendar.DAY_OF_MONTH);
-
-        int daysInYear = todayCalendar.getActualMaximum(Calendar.DAY_OF_YEAR); //максимум дней в этом году
-        holidayCalendar.set(todayYear, month, day);
-        int days = (int) ((holidayCalendar.getTimeInMillis() - todayCalendar.getTimeInMillis()) / 1000) / 86400;
-        int hours = (int) ((holidayCalendar.getTimeInMillis() - todayCalendar.getTimeInMillis()) / 1000) / 3600;
-
+    private String parseDay(int days){
         if (days >= 1) {
             return context.getResources().getQuantityString(R.plurals.days, days, days);
-        } else if (days < -2) {
-            return context.getResources().getQuantityString(R.plurals.days, daysInYear + days, daysInYear + days);
-        } else if ((days == 0) && (hours < 12)) {
+        } else if ((days == 0)) {
             return " " + context.getString(R.string.textNow);
-        } else if ((days == 0) && (hours >= 12)) {
-            return context.getResources().getQuantityString(R.plurals.hours, hours, hours);
         } else {
             return " " + context.getString(R.string.textFinish);
         }
