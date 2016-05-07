@@ -70,11 +70,9 @@ public class AddEditDialog extends AppCompatActivity{
 
     private void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolBarAddEditActivity);
-        if (toolbar != null) {
-            toolbar.setTitle(R.string.app_name);
-        }
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null){
+            getSupportActionBar().setTitle(R.string.app_name);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }

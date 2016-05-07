@@ -5,15 +5,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="4dp">
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
+    android:paddingTop="3dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        app:cardCornerRadius="2dp"
         app:cardElevation="2dp">
 
         <LinearLayout
@@ -126,7 +127,7 @@
         android:layout_alignEnd="@+id/cardView"
         android:layout_alignRight="@+id/cardView"
         android:layout_alignTop="@+id/cardView"
-        android:layout_margin="3dp"
+        android:layout_margin="5dp"
         android:contentDescription="@string/edit_icon"
         android:elevation="2dp"
         android:src="@drawable/ic_edit" />

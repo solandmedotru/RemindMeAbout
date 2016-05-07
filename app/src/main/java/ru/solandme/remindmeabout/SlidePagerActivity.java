@@ -41,12 +41,9 @@ public class SlidePagerActivity extends AppCompatActivity {
 
     private void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolBarSlideActivity);
-        if (toolbar != null) {
-            toolbar.setTitle(getIntent().getStringExtra("holidayName"));
-        }
         setSupportActionBar(toolbar);
-
         if(getSupportActionBar()!=null){
+            getSupportActionBar().setTitle(getIntent().getStringExtra("holidayName"));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
