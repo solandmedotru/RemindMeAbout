@@ -72,7 +72,11 @@ public class AddEditDialog extends AppCompatActivity{
         toolbar = (Toolbar) findViewById(R.id.toolBarAddEditActivity);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null){
-            getSupportActionBar().setTitle(R.string.app_name);
+            if (getIntent().getBooleanExtra("isActionEdit", true)) {
+                getSupportActionBar().setTitle(holiday.getName());
+            } else {
+                getSupportActionBar().setTitle(R.string.add_new_holiday);
+            }
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
