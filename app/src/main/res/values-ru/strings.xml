@@ -21,7 +21,7 @@
         <item quantity="other">%d часов</item>
     </plurals>
     <string name="textFinish">прошел</string>
-    <string name="textNow">сегодня</string>
+    <string name="textNow">Меньше суток</string>
     <string name="bookmark_icon">значек закладки</string>
     <string name="add_new_holiday">Добавить праздник</string>
     <string name="days_from_holiday">356 дней</string>
