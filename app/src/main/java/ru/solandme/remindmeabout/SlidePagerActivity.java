@@ -16,8 +16,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
-
 import java.util.List;
 
 import ru.solandme.remindmeabout.fragments.SlidePageFragment;
@@ -29,6 +27,7 @@ public class SlidePagerActivity extends AppCompatActivity {
     RadioButton rb_for_her;
     RadioButton rb_for_him;
     SwitchCompat switch_sms;
+    PagerAdapter pagerAdapter;
     ViewPager slidePager;
     String filter = "0"; // forHim - 1, forHer - 2, forAll - 0
     String sms = "0"; // on - 1, off - 0
@@ -37,36 +36,40 @@ public class SlidePagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide);
-
-        slidePager = (ViewPager) findViewById(R.id.slidePager);
-
-        //Можно выбрать другую анимацию, заменив PageTransformer на
-        //slidePager.setPageTransformer(true, new DepthPageTransformer());
-        if (slidePager != null) {
-            slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
-        }
-        setAdapter(slidePager);
         initToolBar();
-
         initView();
     }
 
-    private void setAdapter(ViewPager slidePager) {
-        PagerAdapter pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
-        PagerAdapter wrappedAdapter = new InfinitePagerAdapter(pagerAdapter);
+    private void setMyAdapter(ViewPager slidePager) {
+        pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
         if (slidePager != null) {
-            slidePager.setAdapter(wrappedAdapter);
+            //Можно выбрать другую анимацию, заменив PageTransformer на
+            //slidePager.setPageTransformer(true, new DepthPageTransformer());
+            slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
+            slidePager.setAdapter(pagerAdapter);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (slidePager.getCurrentItem() == 0) {
+            super.onBackPressed();
+        } else {
+            slidePager.setCurrentItem(0);
         }
     }
 
     private void initView() {
+        slidePager = (ViewPager) findViewById(R.id.slidePager);
+        setMyAdapter(slidePager);
+
         rg_sex = (RadioGroup) findViewById(R.id.rg_sex);
         switch_sms = (SwitchCompat) findViewById(R.id.switch_sms);
         rb_for_her = (RadioButton) findViewById(R.id.rb_for_her);
         rb_for_him = (RadioButton) findViewById(R.id.rb_for_him);
 
-        if(getIntent().getStringExtra("code").equals(Holiday.CODE_WOMANSDAY) ||
-                getIntent().getStringExtra("code").equals(Holiday.CODE_MANSDAY)){
+        if (getIntent().getStringExtra("code").equals(Holiday.CODE_WOMANSDAY) ||
+                getIntent().getStringExtra("code").equals(Holiday.CODE_MANSDAY)) {
             rb_for_her.setEnabled(false);
             rb_for_him.setEnabled(false);
         }
@@ -74,43 +77,45 @@ public class SlidePagerActivity extends AppCompatActivity {
         rg_sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.rb_for_all:
                         filter = "0";
-                        setAdapter(slidePager);
+                        setMyAdapter(slidePager);
                         break;
                     case R.id.rb_for_him:
                         filter = "1";
-                        setAdapter(slidePager);
+                        setMyAdapter(slidePager);
                         break;
                     case R.id.rb_for_her:
                         filter = "2";
-                        setAdapter(slidePager);
+                        setMyAdapter(slidePager);
                         break;
                     default:
                         filter = "0";
-                        setAdapter(slidePager);
+                        setMyAdapter(slidePager);
                 }
             }
         });
         switch_sms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     sms = "1";
-                    setAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 } else {
                     sms = "0";
-                    setAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 }
             }
         });
+
+
     }
 
     private void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolBarSlideActivity);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getIntent().getStringExtra("holidayName"));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -162,6 +167,7 @@ public class SlidePagerActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_slide_activity_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
