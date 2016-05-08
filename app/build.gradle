@@ -29,5 +29,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
     compile 'com.makeramen:roundedimageview:2.2.1'
+    compile 'com.github.antonyt:infiniteviewpager:v1.0.0'
 
 }

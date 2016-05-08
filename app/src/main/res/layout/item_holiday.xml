@@ -7,15 +7,14 @@
     android:orientation="horizontal"
     android:paddingLeft="3dp"
     android:paddingRight="3dp"
-    android:paddingTop="3dp">
+    android:paddingTop="1dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="2dp">
+        android:layout_margin="4dp"
+        app:cardElevation="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +32,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_gravity="center"
-                    android:layout_margin="6dp"
+                    android:layout_margin="3dp"
                     android:contentDescription="@string/holiday_picture"
                     android:scaleType="centerCrop"
                     app:riv_corner_radius="100dp"
@@ -129,7 +128,7 @@
         android:layout_alignTop="@+id/cardView"
         android:layout_margin="5dp"
         android:contentDescription="@string/edit_icon"
-        android:elevation="2dp"
+        android:elevation="1dp"
         android:src="@drawable/ic_edit" />
 
     <!--<ImageView-->

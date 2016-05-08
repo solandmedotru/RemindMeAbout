@@ -16,6 +16,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
+
 import java.util.List;
 
 import ru.solandme.remindmeabout.fragments.SlidePageFragment;
@@ -51,8 +53,9 @@ public class SlidePagerActivity extends AppCompatActivity {
 
     private void setAdapter(ViewPager slidePager) {
         PagerAdapter pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
+        PagerAdapter wrappedAdapter = new InfinitePagerAdapter(pagerAdapter);
         if (slidePager != null) {
-            slidePager.setAdapter(pagerAdapter);
+            slidePager.setAdapter(wrappedAdapter);
         }
     }
 
