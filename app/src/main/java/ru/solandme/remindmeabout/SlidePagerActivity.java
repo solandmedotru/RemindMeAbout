@@ -30,7 +30,10 @@ public class SlidePagerActivity extends AppCompatActivity {
     PagerAdapter pagerAdapter;
     ViewPager slidePager;
     String filter = "0"; // forHim - 1, forHer - 2, forAll - 0
-    String sms = "0"; // on - 1, off - 0
+    public static final String OFF = "0";
+    public static final String ON = "1";
+    String sms = OFF; // on - 1, off - 0
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +103,10 @@ public class SlidePagerActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    sms = "1";
+                    sms = ON;
                     setMyAdapter(slidePager);
                 } else {
-                    sms = "0";
+                    sms = OFF;
                     setMyAdapter(slidePager);
                 }
             }
@@ -127,7 +130,7 @@ public class SlidePagerActivity extends AppCompatActivity {
         CongratulateDBHelper helper = new CongratulateDBHelper(getApplicationContext());
         textCongratulate = helper.getCongratulationsByCode(getIntent().getStringExtra("code"), sms, filter);
         if (textCongratulate.size() == 0) {
-            textCongratulate.add("Empty");
+            textCongratulate.add(getString(R.string.empty));
         }
         helper.close();
         return textCongratulate;

@@ -50,21 +50,21 @@
                 style="@style/radioBtnWhite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Для него"
+                android:text="@string/forHim"
                 />
             <RadioButton
                 android:id="@+id/rb_for_her"
                 style="@style/radioBtnWhite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Для нее" />
+                android:text="@string/forHer" />
             <RadioButton
                 android:id="@+id/rb_for_all"
                 style="@style/radioBtnWhite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Все" />
+                android:text="@string/all" />
         </RadioGroup>
 
     </LinearLayout>
@@ -72,6 +72,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/slidePager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"/>
 
 </LinearLayout>
