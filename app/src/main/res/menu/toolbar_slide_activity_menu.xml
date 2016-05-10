@@ -17,12 +17,12 @@
         android:orderInCategory="100"
         app:showAsAction="ifRoom">
     </item>
-    <item
-        android:title="@string/add_new_congratulate"
-        android:icon="@drawable/ic_note_add"
-        android:id="@+id/add_new_congratulate"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom">
-    </item>
+    <!--<item-->
+        <!--android:title="@string/add_new_congratulate"-->
+        <!--android:icon="@drawable/ic_note_add"-->
+        <!--android:id="@+id/add_new_congratulate"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="ifRoom">-->
+    <!--</item>-->
 
 </menu>

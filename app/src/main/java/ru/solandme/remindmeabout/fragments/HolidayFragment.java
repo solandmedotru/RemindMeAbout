@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.solandme.remindmeabout.Holiday;
-import ru.solandme.remindmeabout.HolidayDBHelper;
+import ru.solandme.remindmeabout.database.HolidayDBHelper;
 import ru.solandme.remindmeabout.R;
 import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
 

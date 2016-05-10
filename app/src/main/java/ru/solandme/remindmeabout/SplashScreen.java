@@ -1,11 +1,11 @@
 package ru.solandme.remindmeabout;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 
-public class SplashScreen extends Activity {
+public class SplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +19,6 @@ public class SplashScreen extends Activity {
                 startActivity(goToMain);
                 finish();
             }
-        }, 2000);
+        }, 1000);
     }
 }

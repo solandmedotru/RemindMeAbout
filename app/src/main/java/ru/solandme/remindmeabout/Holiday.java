@@ -100,7 +100,7 @@ public class Holiday implements Serializable{
     }
 
 
-    static Comparator<Holiday> daysOrdered = new Comparator<Holiday>() {
+    public static Comparator<Holiday> daysOrdered = new Comparator<Holiday>() {
         @Override
         public int compare(Holiday lhs, Holiday rhs) {
             if(lhs.daysLeft < rhs.daysLeft){
@@ -112,7 +112,7 @@ public class Holiday implements Serializable{
         }
     };
 
-    static Comparator<Holiday> nameOrdered = new Comparator<Holiday>() {
+    public static Comparator<Holiday> nameOrdered = new Comparator<Holiday>() {
         @Override
         public int compare(Holiday lhs, Holiday rhs) {
             return lhs.name.compareTo(rhs.name);

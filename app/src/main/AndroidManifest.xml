@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity" />
+            android:name=".MainActivity"
+            android:parentActivityName=".SplashScreen"/>
         <activity
             android:name=".AddEditDialog"
             android:parentActivityName=".MainActivity"/>

@@ -5,8 +5,8 @@ import android.app.backup.BackupManager;
 import android.app.backup.FileBackupHelper;
 import android.content.Context;
 
-import ru.solandme.remindmeabout.CongratulateDBHelper;
-import ru.solandme.remindmeabout.HolidayDBHelper;
+import ru.solandme.remindmeabout.database.CongratulateDBHelper;
+import ru.solandme.remindmeabout.database.HolidayDBHelper;
 
 public class MyBackupAgent extends BackupAgentHelper {
 

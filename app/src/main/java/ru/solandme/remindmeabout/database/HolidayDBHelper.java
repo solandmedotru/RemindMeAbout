@@ -1,4 +1,4 @@
-package ru.solandme.remindmeabout;
+package ru.solandme.remindmeabout.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+
+import ru.solandme.remindmeabout.Holiday;
 
 public class HolidayDBHelper extends SQLiteAssetHelper {
 

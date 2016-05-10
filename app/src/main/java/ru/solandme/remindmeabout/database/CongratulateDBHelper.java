@@ -1,4 +1,4 @@
-package ru.solandme.remindmeabout;
+package ru.solandme.remindmeabout.database;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -32,10 +32,10 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
 
-        if(filter.equals("0") && sms.equals("1")){
+        if (filter.equals("0") && sms.equals("1")) {
             cursor = db.rawQuery("select * from " + TABLE + " where " +
                     COLUMN_CODE + "=?" + " and " + COLUMN_SMS + "=?", new String[]{code, sms});
-        } else if(filter.equals("0") && sms.equals("0")) {
+        } else if (filter.equals("0") && sms.equals("0")) {
             cursor = db.rawQuery("select * from " + TABLE + " where " +
                     COLUMN_CODE + "=?", new String[]{code});
         } else {
@@ -49,6 +49,16 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
         cursor.close();
         db.close();
         return congratulations;
+    }
+
+    public String getCountAll() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor;
+        cursor = db.rawQuery("select * from " + TABLE, null);
+        String col = Integer.toString(cursor.getCount());
+        cursor.close();
+        return col;
     }
 
 //    public void addCongratulationsToDB(List<String> congratulations) {

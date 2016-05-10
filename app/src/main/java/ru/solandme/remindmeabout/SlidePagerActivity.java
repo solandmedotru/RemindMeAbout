@@ -9,15 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
+import ru.solandme.remindmeabout.database.CongratulateDBHelper;
 import ru.solandme.remindmeabout.fragments.SlidePageFragment;
 import ru.solandme.remindmeabout.trasformers.ZoomOutPageTransformer;
 
@@ -111,8 +109,6 @@ public class SlidePagerActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     private void initToolBar() {
@@ -162,33 +158,4 @@ public class SlidePagerActivity extends AppCompatActivity {
             return textData.size();
         }
     }
-
-
-    // Работаем с меню
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_slide_activity_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.home:
-                onBackPressed();
-                break;
-            case R.id.about_app_menu_item:
-                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
-                break;
-            case R.id.add_new_congratulate:
-                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
-
-
 }
