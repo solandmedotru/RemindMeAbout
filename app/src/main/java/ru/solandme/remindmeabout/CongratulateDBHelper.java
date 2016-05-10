@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CongratulateDBHelper extends SQLiteAssetHelper {
 
-    private static final String DATABASE_NAME = "congratulations.db";
+    public static final String DATABASE_NAME = "congratulations.db";
     private static final int DATABASE_VERSION = 1;
 
 
@@ -51,30 +51,30 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
         return congratulations;
     }
 
-//    public void addCongratulationsToDB(Holiday holiday) {
+//    public void addCongratulationsToDB(List<String> congratulations) {
 //        SQLiteDatabase db = getWritableDatabase();
 //
 //        ContentValues cv = new ContentValues();
-//        cv.put(HolidayDBHelper.COLUMN_NAME, holiday.getName());
-//        cv.put(HolidayDBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
-//        cv.put(HolidayDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
-//        cv.put(HolidayDBHelper.COLUMN_CATEGORY, holiday.getCategory());
-//        cv.put(HolidayDBHelper.COLUMN_DATA, holiday.getDate());
+//        cv.put(CongratulateDBHelper.COLUMN_NAME, holiday.getName());
+//        cv.put(CongratulateDBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
+//        cv.put(CongratulateDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
+//        cv.put(CongratulateDBHelper.COLUMN_CATEGORY, holiday.getCategory());
+//        cv.put(CongratulateDBHelper.COLUMN_DATA, holiday.getDate());
 //
 //        db.insert(TABLE, null, cv);
 //        db.close();
 //        Log.e("DB_add", cv.toString());
 //    }
 
-//    public void replaceHolidayOnDB(Holiday holiday) {
+//    public void replaceCongratulationOnDB(List<String> congratulations) {
 //        SQLiteDatabase db = getWritableDatabase();
 //
 //        ContentValues cv = new ContentValues();
-//        cv.put(HolidayDBHelper.COLUMN_NAME, holiday.getName());
-//        cv.put(HolidayDBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
-//        cv.put(HolidayDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
-//        cv.put(HolidayDBHelper.COLUMN_CATEGORY, holiday.getCategory());
-//        cv.put(HolidayDBHelper.COLUMN_DATA, holiday.getDate());
+//        cv.put(CongratulateDBHelper.COLUMN_NAME, holiday.getName());
+//        cv.put(CongratulateDBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
+//        cv.put(CongratulateDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
+//        cv.put(CongratulateDBHelper.COLUMN_CATEGORY, holiday.getCategory());
+//        cv.put(CongratulateDBHelper.COLUMN_DATA, holiday.getDate());
 //
 //        db.update(TABLE, cv, COLUMN_ID + "=" + holiday.getId(), null);
 //        db.close();

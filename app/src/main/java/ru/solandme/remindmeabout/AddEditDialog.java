@@ -35,6 +35,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import ru.solandme.remindmeabout.util.MyBackupAgent;
+
 
 public class AddEditDialog extends AppCompatActivity{
 
@@ -143,7 +145,7 @@ public class AddEditDialog extends AppCompatActivity{
                 holiday.setCategory(Holiday.CATEGORY_HOLIDAY);
                 break;
             case R.id.radio_button_birthdays:
-                holiday.setCategory(Holiday.CATEGORY_EVENT);
+                holiday.setCategory(Holiday.CATEGORY_BIRTHDAY);
                 break;
             case R.id.radio_button_events:
                 holiday.setCategory(Holiday.CATEGORY_EVENT);
@@ -157,6 +159,7 @@ public class AddEditDialog extends AppCompatActivity{
             holidayDbHelper.addHolidayToDB(holiday);
         }
         holidayDbHelper.close();
+        MyBackupAgent.requestBackup(this);
     }
 
     private String generateCode() {
