@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Просто напомни</string>
+    <string name="app_name">Поздравитель</string>
     <string name="app_icon">Иконка приложения</string>
     <string name="app_version">версия 0.1.альфа</string>
     <string name="about_app">О приложении</string>

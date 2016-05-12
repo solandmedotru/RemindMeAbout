@@ -46,19 +46,18 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
 
         while (cursor.moveToNext()) {
             Holiday holiday = new Holiday();
-            holiday.setId(cursor.getString(0));
-            holiday.setName(cursor.getString(1));
-            holiday.setDescription(cursor.getString(2));
-            holiday.setImageUri(cursor.getString(3));
-            holiday.setCategory(cursor.getString(4));
-            holiday.setDate(cursor.getLong(5));
-            holiday.setCode(cursor.getString(6));
+            holiday.setId(cursor.getString(cursor.getColumnIndex(COLUMN_ID)));
+            holiday.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+            holiday.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)));
+            holiday.setImageUri(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_URI)));
+            holiday.setCategory(cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY)));
+            holiday.setDate(cursor.getLong(cursor.getColumnIndex(COLUMN_DATA)));
+            holiday.setCode(cursor.getString(cursor.getColumnIndex(COLUMN_CODE)));
 
             holiday.setDaysLeft(getDaysForHolidayDate(holiday.getDate()));
             holidays.add(holiday);
         }
         cursor.close();
-        db.close();
         Collections.sort(holidays, Holiday.daysOrdered);
         return holidays;
     }

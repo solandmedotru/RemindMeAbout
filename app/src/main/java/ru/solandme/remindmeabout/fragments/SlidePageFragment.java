@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +22,12 @@ public class SlidePageFragment extends Fragment {
     public static final String ARG_POSITION = "item_position";
     public static final String ARG_COUNT = "item_count";
     public static final String ARG_TEXT = "item_text";
+    public static final String ARG_VERSE = "item_verse";
+
     TextView text_container;
     TextView text_counter;
+
+    CheckBox checkBox_favorite;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,10 +45,17 @@ public class SlidePageFragment extends Fragment {
         text_counter = (TextView) rootView.findViewById(R.id.text_counter);
         text_container = (TextView) rootView.findViewById(R.id.text_container);
 
+        checkBox_favorite = (CheckBox) rootView.findViewById(R.id.chb_favorite);
+
+
         Bundle args = getArguments();
 
-        text_container.setText(args.getString(ARG_TEXT));
         text_counter.setText(args.getInt(ARG_POSITION) + " / " + args.getInt(ARG_COUNT));
+        text_container.setText(args.getString(ARG_TEXT));
+
+        if(args.getString(ARG_VERSE).equals("0")){
+            text_container.setGravity(Gravity.START);
+        }
 
         return rootView;
     }

@@ -13,6 +13,13 @@
         android:lineSpacingMultiplier="1.2"
         android:text="@string/textCounter"
         android:layout_gravity="center"/>
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/chb_add_to_fw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Избранное"
+        android:layout_gravity="center"
+        android:checked="false"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +27,7 @@
 
         <TextView
             android:id="@+id/text_container"
-            style="?android:textAppearanceMedium"
+            android:textSize="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"

@@ -7,11 +7,14 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
@@ -24,13 +27,23 @@ public class SlidePagerActivity extends AppCompatActivity {
     RadioGroup rg_sex;
     RadioButton rb_for_her;
     RadioButton rb_for_him;
-    SwitchCompat switch_sms;
+
+    CheckBox checkBox_sms;
+    CheckBox checkBox_verse;
+    CheckBox checkBox_favorite;
+
     PagerAdapter pagerAdapter;
     ViewPager slidePager;
-    String filter = "0"; // forHim - 1, forHer - 2, forAll - 0
+
     public static final String OFF = "0";
     public static final String ON = "1";
-    String sms = OFF; // on - 1, off - 0
+    String filterFlag = "0"; // forHim - 1, forHer - 2, forAll - 0
+    String smsFlag = OFF; // on - 1, off - 0
+    String verseFlag = ON;
+    String favoriteFlag = OFF;
+
+    List<Congratulation> congratulations;
+
 
 
     @Override
@@ -39,9 +52,22 @@ public class SlidePagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_slide);
         initToolBar();
         initView();
+        initAdView();
+    }
+    private void initAdView() {
+        AdView adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
+                .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
+                .build();
+        if (adView != null) {
+            adView.loadAd(adRequest);
+        }
     }
 
     private void setMyAdapter(ViewPager slidePager) {
+
         pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
         if (slidePager != null) {
             //Можно выбрать другую анимацию, заменив PageTransformer на
@@ -65,9 +91,15 @@ public class SlidePagerActivity extends AppCompatActivity {
         setMyAdapter(slidePager);
 
         rg_sex = (RadioGroup) findViewById(R.id.rg_sex);
-        switch_sms = (SwitchCompat) findViewById(R.id.switch_sms);
+        checkBox_sms = (CheckBox) findViewById(R.id.chb_sms);
+        checkBox_verse = (CheckBox) findViewById(R.id.chb_verse);
+        checkBox_favorite = (CheckBox) findViewById(R.id.chb_favorite);
         rb_for_her = (RadioButton) findViewById(R.id.rb_for_her);
         rb_for_him = (RadioButton) findViewById(R.id.rb_for_him);
+
+
+        checkBox_verse = (CheckBox) findViewById(R.id.chb_verse);
+
 
         if (getIntent().getStringExtra("code").equals(Holiday.CODE_WOMANSDAY) ||
                 getIntent().getStringExtra("code").equals(Holiday.CODE_MANSDAY)) {
@@ -80,31 +112,55 @@ public class SlidePagerActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_for_all:
-                        filter = "0";
+                        filterFlag = "0";
                         setMyAdapter(slidePager);
                         break;
                     case R.id.rb_for_him:
-                        filter = "1";
+                        filterFlag = "1";
                         setMyAdapter(slidePager);
                         break;
                     case R.id.rb_for_her:
-                        filter = "2";
+                        filterFlag = "2";
                         setMyAdapter(slidePager);
                         break;
                     default:
-                        filter = "0";
+                        filterFlag = "0";
                         setMyAdapter(slidePager);
                 }
             }
         });
-        switch_sms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBox_sms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    sms = ON;
+                    smsFlag = ON;
                     setMyAdapter(slidePager);
                 } else {
-                    sms = OFF;
+                    smsFlag = OFF;
+                    setMyAdapter(slidePager);
+                }
+            }
+        });
+        checkBox_verse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    verseFlag = ON;
+                    setMyAdapter(slidePager);
+                } else {
+                    verseFlag = OFF;
+                    setMyAdapter(slidePager);
+                }
+            }
+        });
+        checkBox_favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    favoriteFlag = ON;
+                    setMyAdapter(slidePager);
+                } else {
+                    favoriteFlag = OFF;
                     setMyAdapter(slidePager);
                 }
             }
@@ -121,21 +177,27 @@ public class SlidePagerActivity extends AppCompatActivity {
         }
     }
 
-    private List<String> getTextCongratulate() {
-        List<String> textCongratulate;
+    private List<Congratulation> getTextCongratulate() {
+//        List<String> textCongratulate = new ArrayList<>();
+
         CongratulateDBHelper helper = new CongratulateDBHelper(getApplicationContext());
-        textCongratulate = helper.getCongratulationsByCode(getIntent().getStringExtra("code"), sms, filter);
-        if (textCongratulate.size() == 0) {
-            textCongratulate.add(getString(R.string.empty));
-        }
+        congratulations = helper.getCongratulationsByCode(getIntent().getStringExtra("code"), smsFlag, verseFlag, filterFlag, favoriteFlag);
+
+//        for (int i = 0; i < congratulations.size(); i++) {
+//            textCongratulate.add(congratulations.get(i).getText());
+//        }
+//
+//        if (textCongratulate.size() == 0) {
+//            textCongratulate.add(getString(R.string.empty));
+//        }
         helper.close();
-        return textCongratulate;
+        return congratulations;
     }
 
     private class SlidePageAdapter extends FragmentStatePagerAdapter {
-        List<String> textData;
+        List<Congratulation> textData;
 
-        public SlidePageAdapter(FragmentManager fm, List<String> textData) {
+        public SlidePageAdapter(FragmentManager fm, List<Congratulation> textData) {
             super(fm);
             this.textData = textData;
         }
@@ -145,9 +207,10 @@ public class SlidePagerActivity extends AppCompatActivity {
 
             Fragment fragment = new SlidePageFragment();
             Bundle args = new Bundle();
-            args.putString(SlidePageFragment.ARG_TEXT, textData.get(position));
+            args.putString(SlidePageFragment.ARG_TEXT, textData.get(position).getText());
             args.putInt(SlidePageFragment.ARG_POSITION, position + 1);
             args.putInt(SlidePageFragment.ARG_COUNT, getCount());
+            args.putString(SlidePageFragment.ARG_VERSE, textData.get(position).getVerse());
             fragment.setArguments(args);
 
             return fragment;

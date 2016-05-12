@@ -23,7 +23,6 @@ import android.widget.RadioGroup;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
 import java.io.File;
@@ -36,7 +35,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import ru.solandme.remindmeabout.database.HolidayDBHelper;
-import ru.solandme.remindmeabout.util.MyBackupAgent;
 
 
 public class AddEditDialog extends AppCompatActivity{
@@ -66,7 +64,7 @@ public class AddEditDialog extends AppCompatActivity{
         holidayDbHelper = new HolidayDBHelper(getApplicationContext());
         initToolBar();
         initView();
-        initAdView();
+
         initAdInterstitial();
 
     }
@@ -99,17 +97,7 @@ public class AddEditDialog extends AppCompatActivity{
         requestNewInterstitial();
     }
 
-    private void initAdView() {
-        AdView adView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
-                .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
-                .build();
-        if (adView != null) {
-            adView.loadAd(adRequest);
-        }
-    }
+
 
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
@@ -160,7 +148,7 @@ public class AddEditDialog extends AppCompatActivity{
             holidayDbHelper.addHolidayToDB(holiday);
         }
         holidayDbHelper.close();
-        MyBackupAgent.requestBackup(this);
+//        MyBackupAgent.requestBackup(this);
     }
 
     private String generateCode() {
