@@ -12,10 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.solandme.remindmeabout.R;
+import ru.solandme.remindmeabout.database.CongratulateDBHelper;
 
 public class SlidePageFragment extends Fragment {
 
@@ -23,11 +25,16 @@ public class SlidePageFragment extends Fragment {
     public static final String ARG_COUNT = "item_count";
     public static final String ARG_TEXT = "item_text";
     public static final String ARG_VERSE = "item_verse";
+    public static final String ARG_ID = "item_id";
+    public static final String ARG_FAVORITE = "item_favorite";
+
 
     TextView text_container;
     TextView text_counter;
+    CheckBox checkBox_add_favorite;
 
-    CheckBox checkBox_favorite;
+    CongratulateDBHelper helper;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,21 +48,38 @@ public class SlidePageFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_slide_page, container, false);
+        final Bundle args = getArguments();
 
         text_counter = (TextView) rootView.findViewById(R.id.text_counter);
         text_container = (TextView) rootView.findViewById(R.id.text_container);
 
-        checkBox_favorite = (CheckBox) rootView.findViewById(R.id.chb_favorite);
-
-
-        Bundle args = getArguments();
+        checkBox_add_favorite = (CheckBox) rootView.findViewById(R.id.chb_add_to_fw);
 
         text_counter.setText(args.getInt(ARG_POSITION) + " / " + args.getInt(ARG_COUNT));
         text_container.setText(args.getString(ARG_TEXT));
 
-        if(args.getString(ARG_VERSE).equals("0")){
+
+        if (args.getString(ARG_FAVORITE).equals("0")) {
+            checkBox_add_favorite.setChecked(false);
+        } else checkBox_add_favorite.setChecked(true);
+
+
+
+        if (args.getString(ARG_VERSE).equals("0")) {
             text_container.setGravity(Gravity.START);
         }
+
+        checkBox_add_favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                helper = new CongratulateDBHelper(getContext());
+                if (isChecked) {
+                    helper.setFavorite(args.getString(ARG_ID));
+                } else {
+                    helper.clearFavorite(args.getString(ARG_ID));
+                }
+            }
+        });
 
         return rootView;
     }

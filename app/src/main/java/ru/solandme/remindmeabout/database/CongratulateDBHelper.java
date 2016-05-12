@@ -1,5 +1,6 @@
 package ru.solandme.remindmeabout.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -36,18 +37,24 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
 
-        if (filter.equals("0")) {
+        if ((filter.equals("0")) && (favorite.equals("1"))) {
             cursor = db.rawQuery("select * from " +
                     TABLE + " where " +
                     COLUMN_CODE + "=?" + " and " +
                     COLUMN_SMS + "=?" + " and " +
                     COLUMN_VERSE + "=?" + " and " +
                     COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
+        } else if((filter.equals("0"))){
+            cursor = db.rawQuery("select * from " +
+                    TABLE + " where " +
+                    COLUMN_CODE + "=?" + " and " +
+                    COLUMN_SMS + "=?" + " and " +
+                    COLUMN_VERSE + "=?", new String[]{code, sms, verse});
         } else {
             cursor = db.rawQuery("select * from " +
                     TABLE + " where " +
                     COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?"  + " and " +
+                    COLUMN_SMS + "=?" + " and " +
                     COLUMN_FILTER + "=?" + " and " +
                     COLUMN_VERSE + "=?" + " and " +
                     COLUMN_FAVORITE + "=?", new String[]{code, sms, filter, verse, favorite});
@@ -79,6 +86,26 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
         return col;
     }
 
+    public void setFavorite(String _id) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_FAVORITE, "1");
+
+        db.update(TABLE, cv, "_id=" + _id, null);
+        cv.clear();
+        db.close();
+    }
+
+    public void clearFavorite(String _id) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_FAVORITE, "0");
+
+        db.update(TABLE, cv, "_id=" + _id, null);
+        cv.clear();
+        db.close();
+    }
+
 //    public void addCongratulationsToDB(List<String> congratulations) {
 //        SQLiteDatabase db = getWritableDatabase();
 //
@@ -94,19 +121,19 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
 //        Log.e("DB_add", cv.toString());
 //    }
 
-//    public void replaceCongratulationOnDB(List<String> congratulations) {
+//    public void replaceCongratulationOnDB(List<Congratulation> congratulations) {
 //        SQLiteDatabase db = getWritableDatabase();
 //
 //        ContentValues cv = new ContentValues();
-//        cv.put(CongratulateDBHelper.COLUMN_NAME, holiday.getName());
-//        cv.put(CongratulateDBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
-//        cv.put(CongratulateDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
-//        cv.put(CongratulateDBHelper.COLUMN_CATEGORY, holiday.getCategory());
-//        cv.put(CongratulateDBHelper.COLUMN_DATA, holiday.getDate());
+//        cv.put(CongratulateDBHelper.COLUMN_NAME, congratulations.getName());
+//        cv.put(CongratulateDBHelper.COLUMN_DESCRIPTION, congratulations.getDescription());
+//        cv.put(CongratulateDBHelper.COLUMN_IMAGE_URI, congratulations.getImageUri());
+//        cv.put(CongratulateDBHelper.COLUMN_CATEGORY, congratulations.getCategory());
+//        cv.put(CongratulateDBHelper.COLUMN_DATA, congratulations.getDate());
 //
-//        db.update(TABLE, cv, COLUMN_ID + "=" + holiday.getId(), null);
+//        db.update(TABLE, cv, COLUMN_ID + "=" + congratulations.getId(), null);
 //        db.close();
-//        Log.e("DB_edit", holiday.getId() + "  " + cv.toString());
+//        Log.e("DB_edit", congratulations.getId() + "  " + cv.toString());
 //    }
 
 //    public boolean deleteHolidayFromDB(Holiday holiday) {

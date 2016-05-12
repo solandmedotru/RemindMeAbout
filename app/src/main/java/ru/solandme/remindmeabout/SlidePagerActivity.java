@@ -32,6 +32,7 @@ public class SlidePagerActivity extends AppCompatActivity {
     CheckBox checkBox_verse;
     CheckBox checkBox_favorite;
 
+
     PagerAdapter pagerAdapter;
     ViewPager slidePager;
 
@@ -42,8 +43,9 @@ public class SlidePagerActivity extends AppCompatActivity {
     String verseFlag = ON;
     String favoriteFlag = OFF;
 
-    List<Congratulation> congratulations;
+    CongratulateDBHelper helper;
 
+    List<Congratulation> congratulations;
 
 
     @Override
@@ -52,8 +54,9 @@ public class SlidePagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_slide);
         initToolBar();
         initView();
-        initAdView();
+//        initAdView();
     }
+
     private void initAdView() {
         AdView adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
@@ -68,7 +71,7 @@ public class SlidePagerActivity extends AppCompatActivity {
 
     private void setMyAdapter(ViewPager slidePager) {
 
-        pagerAdapter = new SlidePageAdapter(getSupportFragmentManager(), getTextCongratulate());
+        pagerAdapter = new SlidePageAdapter(getSupportFragmentManager());
         if (slidePager != null) {
             //Можно выбрать другую анимацию, заменив PageTransformer на
             //slidePager.setPageTransformer(true, new DepthPageTransformer());
@@ -96,8 +99,6 @@ public class SlidePagerActivity extends AppCompatActivity {
         checkBox_favorite = (CheckBox) findViewById(R.id.chb_favorite);
         rb_for_her = (RadioButton) findViewById(R.id.rb_for_her);
         rb_for_him = (RadioButton) findViewById(R.id.rb_for_him);
-
-
         checkBox_verse = (CheckBox) findViewById(R.id.chb_verse);
 
 
@@ -165,6 +166,8 @@ public class SlidePagerActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     private void initToolBar() {
@@ -180,7 +183,7 @@ public class SlidePagerActivity extends AppCompatActivity {
     private List<Congratulation> getTextCongratulate() {
 //        List<String> textCongratulate = new ArrayList<>();
 
-        CongratulateDBHelper helper = new CongratulateDBHelper(getApplicationContext());
+        helper = new CongratulateDBHelper(getApplicationContext());
         congratulations = helper.getCongratulationsByCode(getIntent().getStringExtra("code"), smsFlag, verseFlag, filterFlag, favoriteFlag);
 
 //        for (int i = 0; i < congratulations.size(); i++) {
@@ -195,11 +198,10 @@ public class SlidePagerActivity extends AppCompatActivity {
     }
 
     private class SlidePageAdapter extends FragmentStatePagerAdapter {
-        List<Congratulation> textData;
+        List<Congratulation> textData = getTextCongratulate();
 
-        public SlidePageAdapter(FragmentManager fm, List<Congratulation> textData) {
+        public SlidePageAdapter(FragmentManager fm) {
             super(fm);
-            this.textData = textData;
         }
 
         @Override
@@ -211,6 +213,8 @@ public class SlidePagerActivity extends AppCompatActivity {
             args.putInt(SlidePageFragment.ARG_POSITION, position + 1);
             args.putInt(SlidePageFragment.ARG_COUNT, getCount());
             args.putString(SlidePageFragment.ARG_VERSE, textData.get(position).getVerse());
+            args.putString(SlidePageFragment.ARG_ID, textData.get(position).get_id());
+            args.putString(SlidePageFragment.ARG_FAVORITE, textData.get(position).getFavorite());
             fragment.setArguments(args);
 
             return fragment;
