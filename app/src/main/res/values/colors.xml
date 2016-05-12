@@ -8,4 +8,8 @@
     <color name="colorBlack">#212121</color>
     <color name="colorGray">#616161</color>
 
+    <color name="colorUniversal">#8bc34a</color>
+    <color name="colorForHim">#0277bd</color>
+    <color name="colorForHer">#ea80fc</color>
+
 </resources>

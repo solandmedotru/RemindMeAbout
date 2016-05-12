@@ -38,14 +38,16 @@ public class SlidePagerActivity extends AppCompatActivity {
 
     public static final String OFF = "0";
     public static final String ON = "1";
-    String filterFlag = "0"; // forHim - 1, forHer - 2, forAll - 0
+    public static final String FORHIM = "1";
+    public static final String FORHER = "2";
+
+    String filterFlag = OFF; // forHim - 1, forHer - 2, forAll - 0
     String smsFlag = OFF; // on - 1, off - 0
     String verseFlag = ON;
     String favoriteFlag = OFF;
 
     CongratulateDBHelper helper;
 
-    List<Congratulation> congratulations;
 
 
     @Override
@@ -113,19 +115,19 @@ public class SlidePagerActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_for_all:
-                        filterFlag = "0";
+                        filterFlag = OFF;
                         setMyAdapter(slidePager);
                         break;
                     case R.id.rb_for_him:
-                        filterFlag = "1";
+                        filterFlag = FORHIM;
                         setMyAdapter(slidePager);
                         break;
                     case R.id.rb_for_her:
-                        filterFlag = "2";
+                        filterFlag = FORHER;
                         setMyAdapter(slidePager);
                         break;
                     default:
-                        filterFlag = "0";
+                        filterFlag = OFF;
                         setMyAdapter(slidePager);
                 }
             }
@@ -184,7 +186,6 @@ public class SlidePagerActivity extends AppCompatActivity {
 //        List<String> textCongratulate = new ArrayList<>();
 
         helper = new CongratulateDBHelper(getApplicationContext());
-        congratulations = helper.getCongratulationsByCode(getIntent().getStringExtra("code"), smsFlag, verseFlag, filterFlag, favoriteFlag);
 
 //        for (int i = 0; i < congratulations.size(); i++) {
 //            textCongratulate.add(congratulations.get(i).getText());
@@ -193,12 +194,11 @@ public class SlidePagerActivity extends AppCompatActivity {
 //        if (textCongratulate.size() == 0) {
 //            textCongratulate.add(getString(R.string.empty));
 //        }
-        helper.close();
-        return congratulations;
+        return helper.getCongratulationsByCode(getIntent().getStringExtra("code"), smsFlag, verseFlag, filterFlag, favoriteFlag);
     }
 
     private class SlidePageAdapter extends FragmentStatePagerAdapter {
-        List<Congratulation> textData = getTextCongratulate();
+        List<Congratulation> congratulations = getTextCongratulate();
 
         public SlidePageAdapter(FragmentManager fm) {
             super(fm);
@@ -209,12 +209,13 @@ public class SlidePagerActivity extends AppCompatActivity {
 
             Fragment fragment = new SlidePageFragment();
             Bundle args = new Bundle();
-            args.putString(SlidePageFragment.ARG_TEXT, textData.get(position).getText());
+            args.putString(SlidePageFragment.ARG_TEXT, congratulations.get(position).getText());
             args.putInt(SlidePageFragment.ARG_POSITION, position + 1);
             args.putInt(SlidePageFragment.ARG_COUNT, getCount());
-            args.putString(SlidePageFragment.ARG_VERSE, textData.get(position).getVerse());
-            args.putString(SlidePageFragment.ARG_ID, textData.get(position).get_id());
-            args.putString(SlidePageFragment.ARG_FAVORITE, textData.get(position).getFavorite());
+            args.putString(SlidePageFragment.ARG_VERSE, congratulations.get(position).getVerse());
+            args.putString(SlidePageFragment.ARG_ID, congratulations.get(position).get_id());
+            args.putString(SlidePageFragment.ARG_FAVORITE, congratulations.get(position).getFavorite());
+            args.putString(SlidePageFragment.ARG_SEX, congratulations.get(position).getFilter());
             fragment.setArguments(args);
 
             return fragment;
@@ -222,7 +223,7 @@ public class SlidePagerActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return textData.size();
+            return congratulations.size();
         }
     }
 }

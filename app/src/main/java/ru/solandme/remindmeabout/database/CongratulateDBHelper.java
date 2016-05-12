@@ -67,6 +67,7 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
             congratulation.setCode(cursor.getString(cursor.getColumnIndex(COLUMN_CODE)));
             congratulation.setSms(cursor.getString(cursor.getColumnIndex(COLUMN_SMS)));
             congratulation.setVerse(cursor.getString(cursor.getColumnIndex(COLUMN_VERSE)));
+            congratulation.setFilter(cursor.getString(cursor.getColumnIndex(COLUMN_FILTER)));
             congratulation.setFavorite(cursor.getString(cursor.getColumnIndex(COLUMN_FAVORITE)));
 
             congratulations.add(congratulation);
