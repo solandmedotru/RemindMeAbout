@@ -83,7 +83,7 @@ public class SlidePageFragment extends Fragment {
             colorTeg.setBackgroundColor(getResources().getColor(R.color.colorForHim));
         } else {
 //            fragment.setBackgroundColor(getResources().getColor(R.color.colorUniversal));
-            colorTeg.setBackgroundColor(getResources().getColor(R.color.colorUniversal));
+            colorTeg.setBackgroundColor(getResources().getColor(R.color.colorWhiteDark));
 //
         }
 
