@@ -1,5 +1,6 @@
 package ru.solandme.remindmeabout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,13 +9,17 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.List;
 
@@ -24,30 +29,43 @@ import ru.solandme.remindmeabout.trasformers.DepthPageTransformer;
 
 public class SlidePagerActivity extends AppCompatActivity {
     Toolbar toolbar;
-    RadioGroup rg_sex;
-    RadioButton rb_for_her;
-    RadioButton rb_for_him;
 
-    CheckBox checkBox_sms;
-    CheckBox checkBox_verse;
-    CheckBox checkBox_favorite;
+    CheckBox checkBoxSms;
+    CheckBox checkBoxVerse;
+    CheckBox checkBoxFavorite;
+
+    CheckBox checkBoxForHim;
+    CheckBox checkBoxForHer;
+    CheckBox checkBoxForAll;
+
+    String currentText;
+
+    private InterstitialAd mInterstitialAd;
+
+    View fragment_filter;
 
 
     PagerAdapter pagerAdapter;
     ViewPager slidePager;
 
+    TextView text_container;
+
     public static final String OFF = "0";
     public static final String ON = "1";
     public static final String FORHIM = "1";
     public static final String FORHER = "2";
+    public static final String FORALL = "0";
 
-    String filterFlag = OFF; // forHim - 1, forHer - 2, forAll - 0
+
+
     String smsFlag = OFF; // on - 1, off - 0
-    String verseFlag = ON;
-    String favoriteFlag = OFF;
+    String verseFlag = ON; // on - 1, off - 0
+    String favoriteFlag = OFF; // on - 1, off - 0
+    String forHimFlag = OFF;
+    String forHerFlag = OFF;
+    String forAllFlag = OFF;
 
     CongratulateDBHelper helper;
-
 
 
     @Override
@@ -57,18 +75,42 @@ public class SlidePagerActivity extends AppCompatActivity {
         initToolBar();
         initView();
 //        initAdView();
+        initAdInterstitial();
     }
 
-    private void initAdView() {
-        AdView adView = (AdView) findViewById(R.id.adView);
+//    private void initAdView() {
+//        AdView adView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
+//                .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
+//                .build();
+//        if (adView != null) {
+//            adView.loadAd(adRequest);
+//        }
+//    }
+
+    private void initAdInterstitial() {
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.fullscreen_ad_unit_id));
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                share_text();
+            }
+        });
+
+        requestNewInterstitial();
+    }
+
+    private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
                 .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
+                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
                 .build();
-        if (adView != null) {
-            adView.loadAd(adRequest);
-        }
+        mInterstitialAd.loadAd(adRequest);
     }
 
     private void setMyAdapter(ViewPager slidePager) {
@@ -92,79 +134,100 @@ public class SlidePagerActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
+        fragment_filter = findViewById(R.id.fragment_filter);
+
+        text_container = (TextView) findViewById(R.id.text_container);
+
         slidePager = (ViewPager) findViewById(R.id.slidePager);
         setMyAdapter(slidePager);
 
-        rg_sex = (RadioGroup) findViewById(R.id.rg_sex);
-        checkBox_sms = (CheckBox) findViewById(R.id.chb_sms);
-        checkBox_verse = (CheckBox) findViewById(R.id.chb_verse);
-        checkBox_favorite = (CheckBox) findViewById(R.id.chb_favorite);
-        rb_for_her = (RadioButton) findViewById(R.id.rb_for_her);
-        rb_for_him = (RadioButton) findViewById(R.id.rb_for_him);
-        checkBox_verse = (CheckBox) findViewById(R.id.chb_verse);
+        checkBoxSms = (CheckBox) findViewById(R.id.chb_sms);
+        checkBoxVerse = (CheckBox) findViewById(R.id.chb_verse);
+        checkBoxFavorite = (CheckBox) findViewById(R.id.chb_favorite);
+
+        checkBoxForHim = (CheckBox) findViewById(R.id.chb_for_him);
+        checkBoxForHer = (CheckBox) findViewById(R.id.chb_for_her);
+        checkBoxForAll = (CheckBox) findViewById(R.id.chb_for_all);
 
 
         if (getIntent().getStringExtra("code").equals(Holiday.CODE_WOMANSDAY) ||
                 getIntent().getStringExtra("code").equals(Holiday.CODE_MANSDAY)) {
-            rb_for_her.setEnabled(false);
-            rb_for_him.setEnabled(false);
+            checkBoxForHer.setEnabled(false);
+            checkBoxForHim.setEnabled(false);
         }
 
-        rg_sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        checkBoxForHim.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_for_all:
-                        filterFlag = OFF;
-                        setMyAdapter(slidePager);
-                        break;
-                    case R.id.rb_for_him:
-                        filterFlag = FORHIM;
-                        setMyAdapter(slidePager);
-                        break;
-                    case R.id.rb_for_her:
-                        filterFlag = FORHER;
-                        setMyAdapter(slidePager);
-                        break;
-                    default:
-                        filterFlag = OFF;
-                        setMyAdapter(slidePager);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    forHimFlag = ON;
+//                    setMyAdapter(slidePager);
+                } else {
+                    forHimFlag = OFF;
+//                    setMyAdapter(slidePager);
                 }
             }
         });
-        checkBox_sms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        checkBoxForHer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    forHerFlag = ON;
+//                    setMyAdapter(slidePager);
+                } else {
+                    forHerFlag = OFF;
+//                    setMyAdapter(slidePager);
+                }
+            }
+        });
+
+        checkBoxForAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    forAllFlag = ON;
+//                    setMyAdapter(slidePager);
+                } else {
+                    forAllFlag = OFF;
+//                    setMyAdapter(slidePager);
+                }
+            }
+        });
+        checkBoxSms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     smsFlag = ON;
-                    setMyAdapter(slidePager);
+//                    setMyAdapter(slidePager);
                 } else {
                     smsFlag = OFF;
-                    setMyAdapter(slidePager);
+//                    setMyAdapter(slidePager);
                 }
             }
         });
-        checkBox_verse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBoxVerse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     verseFlag = ON;
-                    setMyAdapter(slidePager);
+//                    setMyAdapter(slidePager);
                 } else {
                     verseFlag = OFF;
-                    setMyAdapter(slidePager);
+//                    setMyAdapter(slidePager);
                 }
             }
         });
-        checkBox_favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBoxFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     favoriteFlag = ON;
-                    setMyAdapter(slidePager);
+//                    setMyAdapter(slidePager);
                 } else {
                     favoriteFlag = OFF;
-                    setMyAdapter(slidePager);
+//                    setMyAdapter(slidePager);
                 }
             }
         });
@@ -194,7 +257,14 @@ public class SlidePagerActivity extends AppCompatActivity {
 //        if (textCongratulate.size() == 0) {
 //            textCongratulate.add(getString(R.string.empty));
 //        }
-        return helper.getCongratulationsByCode(getIntent().getStringExtra("code"), smsFlag, verseFlag, filterFlag, favoriteFlag);
+        return helper.getCongratulationsByCode(
+                getIntent().getStringExtra("code"),
+                smsFlag,
+                verseFlag,
+                favoriteFlag,
+                forHimFlag,
+                forHerFlag,
+                forAllFlag);
     }
 
     private class SlidePageAdapter extends FragmentStatePagerAdapter {
@@ -209,7 +279,9 @@ public class SlidePagerActivity extends AppCompatActivity {
 
             Fragment fragment = new SlidePageFragment();
             Bundle args = new Bundle();
-            args.putString(SlidePageFragment.ARG_TEXT, congratulations.get(position).getText());
+
+            currentText = congratulations.get(position).getText();
+            args.putString(SlidePageFragment.ARG_TEXT, currentText);
             args.putInt(SlidePageFragment.ARG_POSITION, position + 1);
             args.putInt(SlidePageFragment.ARG_COUNT, getCount());
             args.putString(SlidePageFragment.ARG_VERSE, congratulations.get(position).getVerse());
@@ -225,5 +297,49 @@ public class SlidePagerActivity extends AppCompatActivity {
         public int getCount() {
             return congratulations.size();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_slide_activity_menu, menu);
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_share:
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    share_text();
+                }
+                break;
+            case R.id.action_filter:
+                if (fragment_filter.getVisibility() == View.GONE) {
+                    fragment_filter.setVisibility(View.VISIBLE);
+                } else {
+                    fragment_filter.setVisibility(View.GONE);
+                    setMyAdapter(slidePager);
+                }
+                break;
+            case R.id.about_app_menu_item:
+                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    public void share_text() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, currentText);
+        String chooserTitle = getString(R.string.chooser_title);
+        Intent chooserIntent = Intent.createChooser(intent, chooserTitle);
+        startActivity(chooserIntent);
     }
 }

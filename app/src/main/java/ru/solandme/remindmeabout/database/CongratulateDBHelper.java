@@ -32,33 +32,116 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
         setForcedUpgrade(DATABASE_VERSION);
     }
 
-    public List<Congratulation> getCongratulationsByCode(String code, String sms, String verse, String filter, String favorite) {
+    public List<Congratulation> getCongratulationsByCode(String code,
+                                                         String sms,
+                                                         String verse,
+                                                         String favorite,
+                                                         String forHim,
+                                                         String forHer,
+                                                         String forAll) {
         List<Congratulation> congratulations = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
 
-        if ((filter.equals("0")) && (favorite.equals("1"))) {
+        // 1 - 0 - 0
+        if(forHim.equals("1") & forHer.equals("0") & forAll.equals("0")){
+            String filter = "1";
+            cursor = db.rawQuery("select * from " +
+                    TABLE + " where " +
+                    COLUMN_CODE + "=?" + " and " +
+                    COLUMN_SMS + "=?" + " and " +
+                    COLUMN_VERSE + "=?" + " and " +
+                    COLUMN_FAVORITE + "=?" + " and " +
+                    COLUMN_FILTER + "=?", new String[]{code, sms, verse, favorite, filter});
+        }
+        // 0 - 1 - 0
+        else if(forHim.equals("0") & forHer.equals("1") & forAll.equals("0")){
+            String filter = "2";
+            cursor = db.rawQuery("select * from " +
+                    TABLE + " where " +
+                    COLUMN_CODE + "=?" + " and " +
+                    COLUMN_SMS + "=?" + " and " +
+                    COLUMN_VERSE + "=?" + " and " +
+                    COLUMN_FAVORITE + "=?" + " and " +
+                    COLUMN_FILTER + "=?", new String[]{code, sms, verse, favorite, filter});
+        }
+        // 1 - 1 - 0
+        else if(forHim.equals("1") & forHer.equals("1") & forAll.equals("0")){
+            String filter1 = "1";
+            String filter2 = "2";
+            cursor = db.rawQuery("select * from " +
+                    TABLE + " where " +
+                    COLUMN_CODE + "=?" + " and " +
+                    COLUMN_SMS + "=?" + " and " +
+                    COLUMN_VERSE + "=?" + " and " +
+                    COLUMN_FAVORITE + "=?" + " and (" +
+                    COLUMN_FILTER + "=?" + " or " +
+                    COLUMN_FILTER + "=?)", new String[]{code, sms, verse, favorite, filter1, filter2});
+        }
+        // 1 - 1 - 1
+        else if(forHim.equals("1") & forHer.equals("1") & forAll.equals("1")){
             cursor = db.rawQuery("select * from " +
                     TABLE + " where " +
                     COLUMN_CODE + "=?" + " and " +
                     COLUMN_SMS + "=?" + " and " +
                     COLUMN_VERSE + "=?" + " and " +
                     COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
-        } else if((filter.equals("0"))){
+        }
+        // 0 - 0 - 0
+        else if(forHim.equals("0") & forHer.equals("0") & forAll.equals("0")){
             cursor = db.rawQuery("select * from " +
                     TABLE + " where " +
                     COLUMN_CODE + "=?" + " and " +
                     COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?", new String[]{code, sms, verse});
+                    COLUMN_VERSE + "=?" + " and " +
+                    COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
+        }
+        // 0 - 0 - 1
+        else if(forHim.equals("0") & forHer.equals("0") & forAll.equals("1")){
+            String filter = "0";
+            cursor = db.rawQuery("select * from " +
+                    TABLE + " where " +
+                    COLUMN_CODE + "=?" + " and " +
+                    COLUMN_SMS + "=?" + " and " +
+                    COLUMN_VERSE + "=?" + " and " +
+                    COLUMN_FAVORITE + "=?" + " and " +
+                    COLUMN_FILTER + "=?", new String[]{code, sms, verse, favorite, filter});
+
+        }
+        // 1 - 0 - 1
+        else if(forHim.equals("1") & forHer.equals("0") & forAll.equals("1")){
+            String filter1 = "0";
+            String filter2 = "1";
+            cursor = db.rawQuery("select * from " +
+                    TABLE + " where " +
+                    COLUMN_CODE + "=?" + " and " +
+                    COLUMN_SMS + "=?" + " and " +
+                    COLUMN_VERSE + "=?" + " and " +
+                    COLUMN_FAVORITE + "=?" + " and (" +
+                    COLUMN_FILTER + "=?" + " or " +
+                    COLUMN_FILTER + "=?)", new String[]{code, sms, verse, favorite, filter1, filter2});
+        }
+        // 0 - 1 - 1
+        else if(forHim.equals("0") & forHer.equals("1") & forAll.equals("1")) {
+            String filter1 = "0";
+            String filter2 = "2";
+            cursor = db.rawQuery("select * from " +
+                    TABLE + " where " +
+                    COLUMN_CODE + "=?" + " and " +
+                    COLUMN_SMS + "=?" + " and " +
+                    COLUMN_VERSE + "=?" + " and " +
+                    COLUMN_FAVORITE + "=?" + " and (" +
+                    COLUMN_FILTER + "=?" + " or " +
+                    COLUMN_FILTER + "=?)", new String[]{code, sms, verse, favorite, filter1, filter2});
         } else {
             cursor = db.rawQuery("select * from " +
                     TABLE + " where " +
                     COLUMN_CODE + "=?" + " and " +
                     COLUMN_SMS + "=?" + " and " +
-                    COLUMN_FILTER + "=?" + " and " +
                     COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?", new String[]{code, sms, filter, verse, favorite});
+                    COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
         }
+
 
         while (cursor.moveToNext()) {
             Congratulation congratulation = new Congratulation();

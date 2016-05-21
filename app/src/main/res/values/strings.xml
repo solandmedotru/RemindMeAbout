@@ -67,8 +67,9 @@
     <string name="share">Share</string>
     <string name="chooser_title">Send to</string>
     <string name="empty">Empty</string>
-    <string name="all">All</string>
+    <string name="all">Universal</string>
     <string name="forHer">For Her</string>
     <string name="forHim">For Him</string>
     <string name="favorite">Favorite</string>
+    <string name="filter">Filter</string>
 </resources>

@@ -37,10 +37,11 @@
             android:id="@+id/text_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="6dp"
             android:gravity="center"
             android:lineSpacingMultiplier="1.2"
             android:text="@string/lorem_ipsum"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
     </ScrollView>
 </LinearLayout>

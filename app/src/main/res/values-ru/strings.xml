@@ -67,6 +67,7 @@
     <string name="empty">Пусто</string>
     <string name="forHim">Для него</string>
     <string name="forHer">Для нее</string>
-    <string name="all">Все</string>
+    <string name="all">Для всех</string>
     <string name="favorite">Избранное</string>
+    <string name="filter">Фильтр</string>
 </resources>

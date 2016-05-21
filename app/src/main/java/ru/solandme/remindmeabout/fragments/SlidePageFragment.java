@@ -1,6 +1,5 @@
 package ru.solandme.remindmeabout.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ru.solandme.remindmeabout.R;
 import ru.solandme.remindmeabout.SlidePagerActivity;
@@ -37,6 +35,8 @@ public class SlidePageFragment extends Fragment {
     CheckBox checkBox_add_favorite;
     View colorTeg;
 
+    View fragment_filter;
+
     CongratulateDBHelper helper;
 
 
@@ -53,6 +53,8 @@ public class SlidePageFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_slide_page, container, false);
         final Bundle args = getArguments();
+
+        fragment_filter = getActivity().findViewById(R.id.fragment_filter);
 
         fragment = rootView.findViewById(R.id.fragment);
         text_counter = (TextView) rootView.findViewById(R.id.text_counter);
@@ -102,29 +104,14 @@ public class SlidePageFragment extends Fragment {
         return rootView;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_share:
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, text_container.getText());
-                String chooserTitle = getString(R.string.chooser_title);
-                Intent chooserIntent = Intent.createChooser(intent, chooserTitle);
-                startActivity(chooserIntent);
-                break;
-            case R.id.about_app_menu_item:
-                Toast.makeText(getContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.toolbar_slide_activity_menu, menu);
     }
 }
