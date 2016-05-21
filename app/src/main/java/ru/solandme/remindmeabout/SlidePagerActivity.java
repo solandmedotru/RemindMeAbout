@@ -330,11 +330,13 @@ public class SlidePagerActivity extends AppCompatActivity {
         return true;
     }
     public void share_text() {
-        TextView textView = (TextView) pagerAdapter.getRegisteredFragment(slidePager.getCurrentItem()).getView().findViewById(R.id.text_container);
+        TextView currentText = (TextView) pagerAdapter
+                .getRegisteredFragment(slidePager.getCurrentItem())
+                .getView().findViewById(R.id.text_container);
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, textView.getText().toString());
+        intent.putExtra(Intent.EXTRA_TEXT, currentText.getText().toString());
         String chooserTitle = getString(R.string.chooser_title);
         Intent chooserIntent = Intent.createChooser(intent, chooserTitle);
         startActivity(chooserIntent);

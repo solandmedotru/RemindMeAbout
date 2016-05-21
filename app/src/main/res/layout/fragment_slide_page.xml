@@ -20,19 +20,20 @@
             android:id="@+id/chb_add_to_fw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="6dp"
             android:checked="false"
-            android:text="@string/favorite" />
+            android:text="@string/favorite"
+            android:layout_margin="6dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"/>
 
         <TextView
             android:id="@+id/text_counter"
-            style="?android:textAppearanceMedium"
+            style="?android:textAppearanceSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_margin="6dp"
-            android:lineSpacingMultiplier="1.2"
             android:text="@string/textCounter" />
     </RelativeLayout>
 
