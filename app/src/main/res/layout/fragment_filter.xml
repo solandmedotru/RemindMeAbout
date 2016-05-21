@@ -111,7 +111,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginStart="6dp"
             android:layout_weight="1"
-            android:checked="false"
+            android:checked="true"
             android:text="@string/all"
             android:textColor="@color/colorWhite" />
 

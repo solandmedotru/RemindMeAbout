@@ -5,9 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -28,22 +25,21 @@ public class SlidePageFragment extends Fragment {
     public static final String ARG_FAVORITE = "item_favorite";
     public static final String ARG_SEX = "item_sex";
 
-
-    View fragment;
+    //    View fragment;
     TextView text_container;
     TextView text_counter;
     CheckBox checkBox_add_favorite;
     View colorTeg;
 
-    View fragment_filter;
+//    View fragment_filter;
 
     CongratulateDBHelper helper;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Nullable
@@ -54,9 +50,9 @@ public class SlidePageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_slide_page, container, false);
         final Bundle args = getArguments();
 
-        fragment_filter = getActivity().findViewById(R.id.fragment_filter);
+//        fragment_filter = getActivity().findViewById(R.id.fragment_filter);
 
-        fragment = rootView.findViewById(R.id.fragment);
+//        fragment = rootView.findViewById(R.id.fragment);
         text_counter = (TextView) rootView.findViewById(R.id.text_counter);
         text_container = (TextView) rootView.findViewById(R.id.text_container);
         colorTeg = rootView.findViewById(R.id.colorTeg);
@@ -94,24 +90,13 @@ public class SlidePageFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 helper = new CongratulateDBHelper(getContext());
                 if (isChecked) {
-                    helper.setFavorite(args.getString(ARG_ID));
+                    helper.setFavorite(getArguments().getString(ARG_ID));
                 } else {
-                    helper.clearFavorite(args.getString(ARG_ID));
+                    helper.clearFavorite(getArguments().getString(ARG_ID));
                 }
             }
         });
-
         return rootView;
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 }

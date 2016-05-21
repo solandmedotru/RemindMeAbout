@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +21,7 @@ import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.List;
 
+import ru.solandme.remindmeabout.adapters.SmartFragmentStatePagerAdapter;
 import ru.solandme.remindmeabout.database.CongratulateDBHelper;
 import ru.solandme.remindmeabout.fragments.SlidePageFragment;
 import ru.solandme.remindmeabout.trasformers.ZoomOutPageTransformer;
@@ -38,17 +37,14 @@ public class SlidePagerActivity extends AppCompatActivity {
     CheckBox checkBoxForHer;
     CheckBox checkBoxForAll;
 
-    String currentText;
-
     private InterstitialAd mInterstitialAd;
 
     View fragment_filter;
 
 
-    PagerAdapter pagerAdapter;
+    SmartFragmentStatePagerAdapter pagerAdapter;
     ViewPager slidePager;
 
-    TextView text_container;
 
     public static final String OFF = "0";
     public static final String ON = "1";
@@ -63,7 +59,7 @@ public class SlidePagerActivity extends AppCompatActivity {
     String favoriteFlag = OFF; // on - 1, off - 0
     String forHimFlag = OFF;
     String forHerFlag = OFF;
-    String forAllFlag = OFF;
+    String forAllFlag = ON;
 
     CongratulateDBHelper helper;
 
@@ -113,16 +109,7 @@ public class SlidePagerActivity extends AppCompatActivity {
         mInterstitialAd.loadAd(adRequest);
     }
 
-    private void setMyAdapter(ViewPager slidePager) {
 
-        pagerAdapter = new SlidePageAdapter(getSupportFragmentManager());
-        if (slidePager != null) {
-            //Можно выбрать другую анимацию, заменив PageTransformer на
-            //slidePager.setPageTransformer(true, new DepthPageTransformer());
-            slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
-            slidePager.setAdapter(pagerAdapter);
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -136,8 +123,6 @@ public class SlidePagerActivity extends AppCompatActivity {
     private void initView() {
 
         fragment_filter = findViewById(R.id.fragment_filter);
-
-        text_container = (TextView) findViewById(R.id.text_container);
 
         slidePager = (ViewPager) findViewById(R.id.slidePager);
         setMyAdapter(slidePager);
@@ -246,6 +231,17 @@ public class SlidePagerActivity extends AppCompatActivity {
         }
     }
 
+    private void setMyAdapter(ViewPager slidePager) {
+
+        pagerAdapter = new SlidePageAdapter(getSupportFragmentManager());
+        if (slidePager != null) {
+            //Можно выбрать другую анимацию, заменив PageTransformer на
+            //slidePager.setPageTransformer(true, new DepthPageTransformer());
+            slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
+            slidePager.setAdapter(pagerAdapter);
+        }
+    }
+
     private List<Congratulation> getTextCongratulate() {
 //        List<String> textCongratulate = new ArrayList<>();
 
@@ -268,8 +264,8 @@ public class SlidePagerActivity extends AppCompatActivity {
                 forAllFlag);
     }
 
-    private class SlidePageAdapter extends FragmentStatePagerAdapter {
-        List<Congratulation> congratulations = getTextCongratulate();
+    private class SlidePageAdapter extends SmartFragmentStatePagerAdapter {
+        public List<Congratulation> congratulations = getTextCongratulate();
 
         public SlidePageAdapter(FragmentManager fm) {
             super(fm);
@@ -281,9 +277,7 @@ public class SlidePagerActivity extends AppCompatActivity {
             Fragment fragment = new SlidePageFragment();
             Bundle args = new Bundle();
 
-            currentText = congratulations.get(position).getText();
-
-            args.putString(SlidePageFragment.ARG_TEXT, currentText);
+            args.putString(SlidePageFragment.ARG_TEXT, congratulations.get(position).getText());
             args.putInt(SlidePageFragment.ARG_POSITION, position + 1);
             args.putInt(SlidePageFragment.ARG_COUNT, getCount());
             args.putString(SlidePageFragment.ARG_VERSE, congratulations.get(position).getVerse());
@@ -335,11 +329,12 @@ public class SlidePagerActivity extends AppCompatActivity {
         }
         return true;
     }
-
     public void share_text() {
+        TextView textView = (TextView) pagerAdapter.getRegisteredFragment(slidePager.getCurrentItem()).getView().findViewById(R.id.text_container);
+
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, currentText);
+        intent.putExtra(Intent.EXTRA_TEXT, textView.getText().toString());
         String chooserTitle = getString(R.string.chooser_title);
         Intent chooserIntent = Intent.createChooser(intent, chooserTitle);
         startActivity(chooserIntent);

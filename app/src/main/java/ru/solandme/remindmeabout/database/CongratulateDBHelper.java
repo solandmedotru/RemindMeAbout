@@ -43,104 +43,207 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
 
-        // 1 - 0 - 0
-        if(forHim.equals("1") & forHer.equals("0") & forAll.equals("0")){
-            String filter = "1";
-            cursor = db.rawQuery("select * from " +
-                    TABLE + " where " +
-                    COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?" + " and " +
-                    COLUMN_FILTER + "=?", new String[]{code, sms, verse, favorite, filter});
-        }
-        // 0 - 1 - 0
-        else if(forHim.equals("0") & forHer.equals("1") & forAll.equals("0")){
-            String filter = "2";
-            cursor = db.rawQuery("select * from " +
-                    TABLE + " where " +
-                    COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?" + " and " +
-                    COLUMN_FILTER + "=?", new String[]{code, sms, verse, favorite, filter});
-        }
-        // 1 - 1 - 0
-        else if(forHim.equals("1") & forHer.equals("1") & forAll.equals("0")){
-            String filter1 = "1";
-            String filter2 = "2";
-            cursor = db.rawQuery("select * from " +
-                    TABLE + " where " +
-                    COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?" + " and (" +
-                    COLUMN_FILTER + "=?" + " or " +
-                    COLUMN_FILTER + "=?)", new String[]{code, sms, verse, favorite, filter1, filter2});
-        }
-        // 1 - 1 - 1
-        else if(forHim.equals("1") & forHer.equals("1") & forAll.equals("1")){
-            cursor = db.rawQuery("select * from " +
-                    TABLE + " where " +
-                    COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
-        }
-        // 0 - 0 - 0
-        else if(forHim.equals("0") & forHer.equals("0") & forAll.equals("0")){
-            cursor = db.rawQuery("select * from " +
-                    TABLE + " where " +
-                    COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
-        }
-        // 0 - 0 - 1
-        else if(forHim.equals("0") & forHer.equals("0") & forAll.equals("1")){
-            String filter = "0";
-            cursor = db.rawQuery("select * from " +
-                    TABLE + " where " +
-                    COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?" + " and " +
-                    COLUMN_FILTER + "=?", new String[]{code, sms, verse, favorite, filter});
+        switch (favorite){
+            case "0":
+                // 1 - 0 - 0
+                if(forHim.equals("1") & forHer.equals("0") & forAll.equals("0")){
+                    String filter = "1";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FILTER + "=?", new String[]{code, sms, verse, filter});
+                }
+                // 0 - 1 - 0
+                else if(forHim.equals("0") & forHer.equals("1") & forAll.equals("0")){
+                    String filter = "2";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FILTER + "=?", new String[]{code, sms, verse, filter});
+                }
+                // 1 - 1 - 0
+                else if(forHim.equals("1") & forHer.equals("1") & forAll.equals("0")){
+                    String filter1 = "1";
+                    String filter2 = "2";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and (" +
+                            COLUMN_FILTER + "=?" + " or " +
+                            COLUMN_FILTER + "=?)", new String[]{code, sms, verse, filter1, filter2});
+                }
+                // 1 - 1 - 1
+                else if(forHim.equals("1") & forHer.equals("1") & forAll.equals("1")){
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?", new String[]{code, sms, verse});
+                }
+                // 0 - 0 - 0
+                else if(forHim.equals("0") & forHer.equals("0") & forAll.equals("0")){
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?", new String[]{code, sms, verse});
+                }
+                // 0 - 0 - 1
+                else if(forHim.equals("0") & forHer.equals("0") & forAll.equals("1")){
+                    String filter = "0";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FILTER + "=?", new String[]{code, sms, verse, filter});
 
+                }
+                // 1 - 0 - 1
+                else if(forHim.equals("1") & forHer.equals("0") & forAll.equals("1")){
+                    String filter1 = "0";
+                    String filter2 = "1";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and (" +
+                            COLUMN_FILTER + "=?" + " or " +
+                            COLUMN_FILTER + "=?)", new String[]{code, sms, verse, filter1, filter2});
+                }
+                // 0 - 1 - 1
+                else if(forHim.equals("0") & forHer.equals("1") & forAll.equals("1")) {
+                    String filter1 = "0";
+                    String filter2 = "2";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and (" +
+                            COLUMN_FILTER + "=?" + " or " +
+                            COLUMN_FILTER + "=?)", new String[]{code, sms, verse, filter1, filter2});
+                } else {
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?", new String[]{code, sms, verse});
+                }
+                break;
+            case "1":
+                // 1 - 0 - 0
+                if(forHim.equals("1") & forHer.equals("0") & forAll.equals("0")){
+                    String filter = "1";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FAVORITE + "=?" + " and " +
+                            COLUMN_FILTER + "=?", new String[]{code, sms, verse, favorite, filter});
+                }
+                // 0 - 1 - 0
+                else if(forHim.equals("0") & forHer.equals("1") & forAll.equals("0")){
+                    String filter = "2";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FAVORITE + "=?" + " and " +
+                            COLUMN_FILTER + "=?", new String[]{code, sms, verse, favorite, filter});
+                }
+                // 1 - 1 - 0
+                else if(forHim.equals("1") & forHer.equals("1") & forAll.equals("0")){
+                    String filter1 = "1";
+                    String filter2 = "2";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FAVORITE + "=?" + " and (" +
+                            COLUMN_FILTER + "=?" + " or " +
+                            COLUMN_FILTER + "=?)", new String[]{code, sms, verse, favorite, filter1, filter2});
+                }
+                // 1 - 1 - 1
+                else if(forHim.equals("1") & forHer.equals("1") & forAll.equals("1")){
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
+                }
+                // 0 - 0 - 0
+                else if(forHim.equals("0") & forHer.equals("0") & forAll.equals("0")){
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
+                }
+                // 0 - 0 - 1
+                else if(forHim.equals("0") & forHer.equals("0") & forAll.equals("1")){
+                    String filter = "0";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FAVORITE + "=?" + " and " +
+                            COLUMN_FILTER + "=?", new String[]{code, sms, verse, favorite, filter});
+
+                }
+                // 1 - 0 - 1
+                else if(forHim.equals("1") & forHer.equals("0") & forAll.equals("1")){
+                    String filter1 = "0";
+                    String filter2 = "1";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FAVORITE + "=?" + " and (" +
+                            COLUMN_FILTER + "=?" + " or " +
+                            COLUMN_FILTER + "=?)", new String[]{code, sms, verse, favorite, filter1, filter2});
+                }
+                // 0 - 1 - 1
+                else if(forHim.equals("0") & forHer.equals("1") & forAll.equals("1")) {
+                    String filter1 = "0";
+                    String filter2 = "2";
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FAVORITE + "=?" + " and (" +
+                            COLUMN_FILTER + "=?" + " or " +
+                            COLUMN_FILTER + "=?)", new String[]{code, sms, verse, favorite, filter1, filter2});
+                } else {
+                    cursor = db.rawQuery("select * from " +
+                            TABLE + " where " +
+                            COLUMN_CODE + "=?" + " and " +
+                            COLUMN_SMS + "=?" + " and " +
+                            COLUMN_VERSE + "=?" + " and " +
+                            COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
+                }
+                break;
+            default:
+                cursor = db.rawQuery("select * from " +
+                        TABLE + " where " +
+                        COLUMN_CODE + "=?" + " and " +
+                        COLUMN_SMS + "=?" + " and " +
+                        COLUMN_VERSE + "=?", new String[]{code, sms, verse});
         }
-        // 1 - 0 - 1
-        else if(forHim.equals("1") & forHer.equals("0") & forAll.equals("1")){
-            String filter1 = "0";
-            String filter2 = "1";
-            cursor = db.rawQuery("select * from " +
-                    TABLE + " where " +
-                    COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?" + " and (" +
-                    COLUMN_FILTER + "=?" + " or " +
-                    COLUMN_FILTER + "=?)", new String[]{code, sms, verse, favorite, filter1, filter2});
-        }
-        // 0 - 1 - 1
-        else if(forHim.equals("0") & forHer.equals("1") & forAll.equals("1")) {
-            String filter1 = "0";
-            String filter2 = "2";
-            cursor = db.rawQuery("select * from " +
-                    TABLE + " where " +
-                    COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?" + " and (" +
-                    COLUMN_FILTER + "=?" + " or " +
-                    COLUMN_FILTER + "=?)", new String[]{code, sms, verse, favorite, filter1, filter2});
-        } else {
-            cursor = db.rawQuery("select * from " +
-                    TABLE + " where " +
-                    COLUMN_CODE + "=?" + " and " +
-                    COLUMN_SMS + "=?" + " and " +
-                    COLUMN_VERSE + "=?" + " and " +
-                    COLUMN_FAVORITE + "=?", new String[]{code, sms, verse, favorite});
-        }
+
+
 
 
         while (cursor.moveToNext()) {
