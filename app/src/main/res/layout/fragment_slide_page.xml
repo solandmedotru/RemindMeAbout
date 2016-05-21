@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/fragment">
+    android:orientation="vertical">
+
     <View
         android:id="@+id/colorTeg"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_gravity="center"/>
-    <TextView
-        android:id="@+id/text_counter"
-        style="?android:textAppearanceMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:lineSpacingMultiplier="1.2"
-        android:padding="8dp"
-        android:text="@string/textCounter" />
+        android:layout_gravity="center" />
 
-    <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/chb_add_to_fw"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:checked="false"
-        android:text="@string/favorite" />
+        android:orientation="horizontal">
 
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/chb_add_to_fw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="6dp"
+            android:checked="false"
+            android:text="@string/favorite" />
+
+        <TextView
+            android:id="@+id/text_counter"
+            style="?android:textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="6dp"
+            android:lineSpacingMultiplier="1.2"
+            android:text="@string/textCounter" />
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/content"
@@ -37,7 +45,7 @@
             android:id="@+id/text_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
+            android:layout_margin="16dp"
             android:gravity="center"
             android:lineSpacingMultiplier="1.2"
             android:text="@string/lorem_ipsum"

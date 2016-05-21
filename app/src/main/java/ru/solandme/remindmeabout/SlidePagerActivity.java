@@ -25,7 +25,7 @@ import java.util.List;
 
 import ru.solandme.remindmeabout.database.CongratulateDBHelper;
 import ru.solandme.remindmeabout.fragments.SlidePageFragment;
-import ru.solandme.remindmeabout.trasformers.DepthPageTransformer;
+import ru.solandme.remindmeabout.trasformers.ZoomOutPageTransformer;
 
 public class SlidePagerActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -118,8 +118,8 @@ public class SlidePagerActivity extends AppCompatActivity {
         pagerAdapter = new SlidePageAdapter(getSupportFragmentManager());
         if (slidePager != null) {
             //Можно выбрать другую анимацию, заменив PageTransformer на
-            slidePager.setPageTransformer(true, new DepthPageTransformer());
-            //slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
+            //slidePager.setPageTransformer(true, new DepthPageTransformer());
+            slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
             slidePager.setAdapter(pagerAdapter);
         }
     }
@@ -155,6 +155,7 @@ public class SlidePagerActivity extends AppCompatActivity {
                 getIntent().getStringExtra("code").equals(Holiday.CODE_MANSDAY)) {
             checkBoxForHer.setEnabled(false);
             checkBoxForHim.setEnabled(false);
+            checkBoxForAll.setEnabled(false);
         }
 
         checkBoxForHim.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -281,6 +282,7 @@ public class SlidePagerActivity extends AppCompatActivity {
             Bundle args = new Bundle();
 
             currentText = congratulations.get(position).getText();
+
             args.putString(SlidePageFragment.ARG_TEXT, currentText);
             args.putInt(SlidePageFragment.ARG_POSITION, position + 1);
             args.putInt(SlidePageFragment.ARG_COUNT, getCount());
