@@ -37,13 +37,15 @@ public class SlidePagerActivity extends AppCompatActivity {
     CheckBox checkBoxForHer;
     CheckBox checkBoxForAll;
 
-    private InterstitialAd mInterstitialAd;
+    private InterstitialAd interstitialAd;
 
-    View fragment_filter;
+    View fragmentFilter;
 
 
     SmartFragmentStatePagerAdapter pagerAdapter;
     ViewPager slidePager;
+
+    public List<Congratulation> congratulations;
 
 
     public static final String OFF = "0";
@@ -89,9 +91,9 @@ public class SlidePagerActivity extends AppCompatActivity {
 //    }
 
     private void initAdInterstitial() {
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getResources().getString(R.string.fullscreen_ad_unit_id));
-        mInterstitialAd.setAdListener(new AdListener() {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.fullscreen_ad_unit_id));
+        interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
@@ -108,7 +110,7 @@ public class SlidePagerActivity extends AppCompatActivity {
                 .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
                 .addTestDevice("C79BD6D360D092383E26BB030B13893D")
                 .build();
-        mInterstitialAd.loadAd(adRequest);
+        interstitialAd.loadAd(adRequest);
     }
 
 
@@ -124,7 +126,7 @@ public class SlidePagerActivity extends AppCompatActivity {
 
     private void initView() {
 
-        fragment_filter = findViewById(R.id.fragment_filter);
+        fragmentFilter = findViewById(R.id.fragment_filter);
 
         slidePager = (ViewPager) findViewById(R.id.slidePager);
         setMyAdapter(slidePager);
@@ -150,10 +152,10 @@ public class SlidePagerActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     forHimFlag = ON;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 } else {
                     forHimFlag = OFF;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 }
             }
         });
@@ -163,10 +165,10 @@ public class SlidePagerActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     forHerFlag = ON;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 } else {
                     forHerFlag = OFF;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 }
             }
         });
@@ -176,10 +178,10 @@ public class SlidePagerActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     forAllFlag = ON;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 } else {
                     forAllFlag = OFF;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 }
             }
         });
@@ -188,10 +190,10 @@ public class SlidePagerActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     smsFlag = ON;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 } else {
                     smsFlag = OFF;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 }
             }
         });
@@ -200,10 +202,10 @@ public class SlidePagerActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     verseFlag = ON;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 } else {
                     verseFlag = OFF;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 }
             }
         });
@@ -212,10 +214,10 @@ public class SlidePagerActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     favoriteFlag = ON;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 } else {
                     favoriteFlag = OFF;
-//                    setMyAdapter(slidePager);
+                    setMyAdapter(slidePager);
                 }
             }
         });
@@ -267,10 +269,11 @@ public class SlidePagerActivity extends AppCompatActivity {
     }
 
     private class SlidePageAdapter extends SmartFragmentStatePagerAdapter {
-        public List<Congratulation> congratulations = getTextCongratulate();
+
 
         public SlidePageAdapter(FragmentManager fm) {
             super(fm);
+            congratulations = getTextCongratulate();
         }
 
         @Override
@@ -309,17 +312,17 @@ public class SlidePagerActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.action_share:
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
+                if (interstitialAd.isLoaded()) {
+                    interstitialAd.show();
                 } else {
                     share_text();
                 }
                 break;
             case R.id.action_filter:
-                if (fragment_filter.getVisibility() == View.GONE) {
-                    fragment_filter.setVisibility(View.VISIBLE);
+                if (fragmentFilter.getVisibility() == View.GONE) {
+                    fragmentFilter.setVisibility(View.VISIBLE);
                 } else {
-                    fragment_filter.setVisibility(View.GONE);
+                    fragmentFilter.setVisibility(View.GONE);
                     setMyAdapter(slidePager);
                 }
                 break;

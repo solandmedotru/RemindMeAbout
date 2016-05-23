@@ -45,14 +45,14 @@ public class AddEditDialog extends AppCompatActivity{
     private static final String TAG = "Holidays Log:";
     private Holiday holiday;
     private HolidayDBHelper holidayDbHelper;
-    private EditText add_holidayName;
-    private EditText add_holidayDescription;
+    private EditText addHolidayName;
+    private EditText addHolidayDescription;
     private RadioGroup radioGroup;
-    private ImageView edit_image_holiday;
+    private ImageView editImageHoliday;
     private Button btn_data;
     private Calendar calendar;
 
-    private InterstitialAd mInterstitialAd;
+    private InterstitialAd interstitialAd;
 
     Toolbar toolbar;
 
@@ -84,9 +84,9 @@ public class AddEditDialog extends AppCompatActivity{
     }
 
     private void initAdInterstitial() {
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getResources().getString(R.string.fullscreen_ad_unit_id));
-        mInterstitialAd.setAdListener(new AdListener() {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.fullscreen_ad_unit_id));
+        interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
@@ -105,7 +105,7 @@ public class AddEditDialog extends AppCompatActivity{
                 .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
                 .addTestDevice("C79BD6D360D092383E26BB030B13893D")
                 .build();
-        mInterstitialAd.loadAd(adRequest);
+        interstitialAd.loadAd(adRequest);
     }
 
     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -122,8 +122,8 @@ public class AddEditDialog extends AppCompatActivity{
 
 
     private void saveHoliday(Holiday holiday) {
-        holiday.setName(add_holidayName.getText().toString());
-        holiday.setDescription(add_holidayDescription.getText().toString());
+        holiday.setName(addHolidayName.getText().toString());
+        holiday.setDescription(addHolidayDescription.getText().toString());
 
         if (holiday.getImageUri() == null) {
             holiday.setImageUri("ic_h.png"); //устанавливаем иконку по умолчанию если не задана
@@ -160,13 +160,13 @@ public class AddEditDialog extends AppCompatActivity{
     }
 
     private void initView() {
-        add_holidayName = (EditText) findViewById(R.id.add_holiday_name);
-        add_holidayDescription = (EditText) findViewById(R.id.add_holiday_description);
+        addHolidayName = (EditText) findViewById(R.id.add_holiday_name);
+        addHolidayDescription = (EditText) findViewById(R.id.add_holiday_description);
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
         RadioButton radio_button_holidays = (RadioButton) findViewById(R.id.radio_button_holidays);
         RadioButton radio_button_birthdays = (RadioButton) findViewById(R.id.radio_button_birthdays);
         RadioButton radio_button_events = (RadioButton) findViewById(R.id.radio_button_events);
-        edit_image_holiday = (ImageView) findViewById(R.id.edit_image_holiday);
+        editImageHoliday = (ImageView) findViewById(R.id.edit_image_holiday);
 
         Button btn_delete = (Button) findViewById(R.id.btn_delete);
         btn_data = (Button) findViewById(R.id.btn_data);
@@ -179,10 +179,10 @@ public class AddEditDialog extends AppCompatActivity{
         btn_data.setText(SimpleDateFormat.getDateInstance().format(holiday.getDate()));
 
         if (getIntent().getBooleanExtra("isActionEdit", true)) {
-            add_holidayName.setText(holiday.getName());
-            add_holidayDescription.setText(holiday.getDescription());
+            addHolidayName.setText(holiday.getName());
+            addHolidayDescription.setText(holiday.getDescription());
             Bitmap bmp = BitmapFactory.decodeFile(getApplicationContext().getFilesDir().getPath() + "/images/" + holiday.getImageUri());
-            edit_image_holiday.setImageBitmap(bmp);
+            editImageHoliday.setImageBitmap(bmp);
 
             switch (holiday.getCategory()) {
                 case Holiday.CATEGORY_HOLIDAY:
@@ -212,8 +212,8 @@ public class AddEditDialog extends AppCompatActivity{
 
         switch (view.getId()) {
             case R.id.btn_save:
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
+                if (interstitialAd.isLoaded()) {
+                    interstitialAd.show();
                 } else {
                     saveHoliday(holiday);
                 }
@@ -265,7 +265,7 @@ public class AddEditDialog extends AppCompatActivity{
                 cursor.close();
 
                 Bitmap thumbImage = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(picturePath), THUMBSIZE, THUMBSIZE);
-                edit_image_holiday.setImageBitmap(thumbImage);
+                editImageHoliday.setImageBitmap(thumbImage);
                 saveImage(thumbImage);
             }
         }

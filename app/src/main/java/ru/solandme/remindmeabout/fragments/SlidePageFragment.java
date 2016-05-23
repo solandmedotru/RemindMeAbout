@@ -26,9 +26,9 @@ public class SlidePageFragment extends Fragment {
     public static final String ARG_SEX = "item_sex";
 
     //    View fragment;
-    TextView text_container;
-    TextView text_counter;
-    CheckBox checkBox_add_favorite;
+    TextView textContainer;
+    TextView textCounter;
+    CheckBox checkBoxAddFavorite;
     View colorTeg;
 
 //    View fragment_filter;
@@ -53,23 +53,23 @@ public class SlidePageFragment extends Fragment {
 //        fragment_filter = getActivity().findViewById(R.id.fragment_filter);
 
 //        fragment = rootView.findViewById(R.id.fragment);
-        text_counter = (TextView) rootView.findViewById(R.id.text_counter);
-        text_container = (TextView) rootView.findViewById(R.id.text_container);
+        textCounter = (TextView) rootView.findViewById(R.id.text_counter);
+        textContainer = (TextView) rootView.findViewById(R.id.text_container);
         colorTeg = rootView.findViewById(R.id.colorTeg);
 
-        checkBox_add_favorite = (CheckBox) rootView.findViewById(R.id.chb_add_to_fw);
+        checkBoxAddFavorite = (CheckBox) rootView.findViewById(R.id.chb_add_to_fw);
 
-        text_counter.setText(args.getInt(ARG_POSITION) + " / " + args.getInt(ARG_COUNT));
-        text_container.setText(args.getString(ARG_TEXT));
+        textCounter.setText(args.getInt(ARG_POSITION) + " / " + args.getInt(ARG_COUNT));
+        textContainer.setText(args.getString(ARG_TEXT));
 
 
         if (args.getString(ARG_FAVORITE).equals(SlidePagerActivity.OFF)) {
-            checkBox_add_favorite.setChecked(false);
-        } else checkBox_add_favorite.setChecked(true);
+            checkBoxAddFavorite.setChecked(false);
+        } else checkBoxAddFavorite.setChecked(true);
 
 
         if (args.getString(ARG_VERSE).equals(SlidePagerActivity.OFF)) {
-            text_container.setGravity(Gravity.START);
+            textContainer.setGravity(Gravity.START);
         }
 
         if (args.getString(ARG_SEX).equals(SlidePagerActivity.FORHER)) {
@@ -85,7 +85,7 @@ public class SlidePageFragment extends Fragment {
 //
         }
 
-        checkBox_add_favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBoxAddFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 helper = new CongratulateDBHelper(getContext());
