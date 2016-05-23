@@ -8,10 +8,10 @@ import ru.solandme.remindmeabout.fragments.BirthdayFragment;
 import ru.solandme.remindmeabout.fragments.EventFragment;
 import ru.solandme.remindmeabout.fragments.HolidayFragment;
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class MyPagerAdapter extends FragmentStatePagerAdapter {
     int numOfTabs;
 
-    public PagerAdapter(FragmentManager fm, int numOfTabs) {
+    public MyPagerAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
         this.numOfTabs = numOfTabs;
     }

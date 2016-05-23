@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ru.solandme.remindmeabout.adapters.PagerAdapter;
+import ru.solandme.remindmeabout.adapters.MyPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -128,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPager() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        final PagerAdapter pagerAdapter = new PagerAdapter
+        final MyPagerAdapter myPagerAdapter = new MyPagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         if (viewPager != null) {
-            viewPager.setAdapter(pagerAdapter);
+            viewPager.setAdapter(myPagerAdapter);
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         }
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

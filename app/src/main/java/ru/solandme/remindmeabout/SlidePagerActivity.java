@@ -68,10 +68,12 @@ public class SlidePagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide);
+        initAdInterstitial();
+
         initToolBar();
         initView();
 //        initAdView();
-        initAdInterstitial();
+
     }
 
 //    private void initAdView() {
