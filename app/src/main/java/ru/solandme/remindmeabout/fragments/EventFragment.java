@@ -15,12 +15,12 @@ import ru.solandme.remindmeabout.R;
 import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
 
 public class EventFragment extends Fragment {
-    public static final int LAYOUT = R.layout.fragment_event;
+    private static final int LAYOUT = R.layout.fragment_event;
     protected View view;
-    HolidaysAdapter holidaysAdapter;
+    private HolidaysAdapter holidaysAdapter;
 
-    HolidayDBHelper holidayDbHelper;
-    RecyclerView recyclerView;
+    private HolidayDBHelper holidayDbHelper;
+    private RecyclerView recyclerView;
 
     public EventFragment() {
     }

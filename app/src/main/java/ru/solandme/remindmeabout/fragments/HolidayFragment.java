@@ -15,11 +15,11 @@ import ru.solandme.remindmeabout.R;
 import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
 
 public class HolidayFragment extends Fragment {
-    public static final int LAYOUT = R.layout.fragment_holiday;
+    private static final int LAYOUT = R.layout.fragment_holiday;
     protected View view;
-    public static HolidaysAdapter holidaysAdapter;
-    HolidayDBHelper holidayDbHelper;
-    RecyclerView recyclerView;
+    private static HolidaysAdapter holidaysAdapter;
+    private HolidayDBHelper holidayDbHelper;
+    private RecyclerView recyclerView;
 
     public HolidayFragment() {
     }

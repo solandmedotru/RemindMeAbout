@@ -22,10 +22,10 @@ import ru.solandme.remindmeabout.adapters.MyPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String HOLIDAY = "holiday";
+    static final String HOLIDAY = "holiday";
     private static final int HOLIDAY_REQUEST = 1;
-    Toolbar toolbar;
-    TabLayout tabLayout;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
         if (!PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext())
                 .getBoolean("installed", false)) {
-            PreferenceManager.getDefaultSharedPreferences(
-                    getApplicationContext())
-                    .edit().putBoolean("installed", true).commit();
+            PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                    .edit().putBoolean("installed", true)
+                    .apply();
             copyAssetFolder(getAssets(), "images", getApplicationContext().getFilesDir().getPath() + "/images");
         }
 

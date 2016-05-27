@@ -9,7 +9,7 @@ import ru.solandme.remindmeabout.fragments.EventFragment;
 import ru.solandme.remindmeabout.fragments.HolidayFragment;
 
 public class MyPagerAdapter extends FragmentStatePagerAdapter {
-    int countTabs;
+    private int countTabs;
 
     public MyPagerAdapter(FragmentManager fm, int countTabs) {
         super(fm);

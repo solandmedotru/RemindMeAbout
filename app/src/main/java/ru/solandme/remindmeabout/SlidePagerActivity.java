@@ -27,25 +27,25 @@ import ru.solandme.remindmeabout.fragments.SlidePageFragment;
 import ru.solandme.remindmeabout.trasformers.ZoomOutPageTransformer;
 
 public class SlidePagerActivity extends AppCompatActivity {
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
-    CheckBox checkBoxSms;
-    CheckBox checkBoxVerse;
-    CheckBox checkBoxFavorite;
+    private CheckBox checkBoxSms;
+    private CheckBox checkBoxVerse;
+    private CheckBox checkBoxFavorite;
 
-    CheckBox checkBoxForHim;
-    CheckBox checkBoxForHer;
-    CheckBox checkBoxForAll;
+    private CheckBox checkBoxForHim;
+    private CheckBox checkBoxForHer;
+    private CheckBox checkBoxForAll;
 
     private InterstitialAd interstitialAd;
 
-    View fragmentFilter;
+    private View fragmentFilter;
 
 
-    SmartFragmentStatePagerAdapter pagerAdapter;
-    ViewPager slidePager;
+    private SmartFragmentStatePagerAdapter pagerAdapter;
+    private ViewPager slidePager;
 
-    public List<Congratulation> congratulations;
+    private List<Congratulation> congratulations;
 
 
     public static final String OFF = "0";
@@ -56,14 +56,14 @@ public class SlidePagerActivity extends AppCompatActivity {
 
 
 
-    String smsFlag = OFF; // on - 1, off - 0
-    String verseFlag = ON; // on - 1, off - 0
-    String favoriteFlag = OFF; // on - 1, off - 0
-    String forHimFlag = OFF;
-    String forHerFlag = OFF;
-    String forAllFlag = ON;
+    private String smsFlag = OFF; // on - 1, off - 0
+    private String verseFlag = ON; // on - 1, off - 0
+    private String favoriteFlag = OFF; // on - 1, off - 0
+    private String forHimFlag = OFF;
+    private String forHerFlag = OFF;
+    private String forAllFlag = ON;
 
-    CongratulateDBHelper helper;
+    private CongratulateDBHelper helper;
 
 
     @Override
@@ -271,7 +271,7 @@ public class SlidePagerActivity extends AppCompatActivity {
     private class SlidePageAdapter extends SmartFragmentStatePagerAdapter {
 
 
-        public SlidePageAdapter(FragmentManager fm) {
+        SlidePageAdapter(FragmentManager fm) {
             super(fm);
             congratulations = getTextCongratulate();
         }
@@ -334,7 +334,7 @@ public class SlidePagerActivity extends AppCompatActivity {
         }
         return true;
     }
-    public void share_text() {
+    private void share_text() {
         TextView currentText = (TextView) pagerAdapter
                 .getRegisteredFragment(slidePager.getCurrentItem())
                 .getView().findViewById(R.id.text_container);

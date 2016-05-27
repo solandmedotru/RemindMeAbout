@@ -22,8 +22,8 @@ import ru.solandme.remindmeabout.SlidePagerActivity;
 
 public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHolder> {
 
-    Context context;
-    List<Holiday> holidays;
+    private Context context;
+    private List<Holiday> holidays;
     private static final String HOLIDAY = "holiday";
     private static final int HOLIDAY_REQUEST = 1;
 
@@ -92,7 +92,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         return holidays.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView holidayName;
         TextView textDays;
@@ -100,7 +100,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         ImageView imageHoliday;
         ImageView actionEdit;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             cardView = (CardView) itemView.findViewById(R.id.cardView);

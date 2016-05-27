@@ -39,7 +39,7 @@ import ru.solandme.remindmeabout.database.HolidayDBHelper;
 
 public class AddEditDialog extends AppCompatActivity{
 
-    public static final int RESULT_SAVE = 100;
+    static final int RESULT_SAVE = 100;
     private static int LOAD_IMAGE_RESULTS = 1;
     private static final int THUMBSIZE = 80;
     private static final String TAG = "Holidays Log:";
@@ -54,7 +54,7 @@ public class AddEditDialog extends AppCompatActivity{
 
     private InterstitialAd interstitialAd;
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +108,7 @@ public class AddEditDialog extends AppCompatActivity{
         interstitialAd.loadAd(adRequest);
     }
 
-    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             calendar = Calendar.getInstance();

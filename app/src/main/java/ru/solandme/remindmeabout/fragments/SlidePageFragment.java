@@ -26,14 +26,14 @@ public class SlidePageFragment extends Fragment {
     public static final String ARG_SEX = "item_sex";
 
     //    View fragment;
-    TextView textContainer;
-    TextView textCounter;
-    CheckBox checkBoxAddFavorite;
-    View colorTeg;
+    private TextView textContainer;
+    private TextView textCounter;
+    private CheckBox checkBoxAddFavorite;
+    private View colorTeg;
 
 //    View fragment_filter;
 
-    CongratulateDBHelper helper;
+    private CongratulateDBHelper helper;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
