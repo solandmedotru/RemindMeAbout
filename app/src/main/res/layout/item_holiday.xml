@@ -36,7 +36,8 @@
                     android:contentDescription="@string/holiday_picture"
                     android:scaleType="centerCrop"
                     app:riv_corner_radius="100dp"
-                    app:riv_mutate_background="true" />
+                    app:riv_mutate_background="true"
+                    android:src="@drawable/ic_launcher"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,7 +74,7 @@
                 android:layout_height="1dp"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="3dp"
-                android:background="@color/colorWhiteDark" />
+                android:background="@color/colorWhite" />
 
             <LinearLayout
                 android:layout_width="match_parent"
