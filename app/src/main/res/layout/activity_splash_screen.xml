@@ -38,4 +38,10 @@
         android:textColor="@color/colorWhite"
         android:textSize="20sp" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/copyAssetsProgressBar"/>
+
 </LinearLayout>

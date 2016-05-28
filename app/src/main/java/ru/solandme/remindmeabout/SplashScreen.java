@@ -21,8 +21,10 @@ import java.util.Arrays;
 
 public class SplashScreen extends AppCompatActivity {
 
-    String[] assetFiles;
-    String[] appImagesFiles;
+    private String[] assetFiles;
+    private String[] appImagesFiles;
+
+    private ProgressBar progressBar;
 
     private static final String TAG = "SplashScreen";
 
@@ -31,6 +33,8 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        progressBar = (ProgressBar) findViewById(R.id.copyAssetsProgressBar);
 
         new MyTask().execute();
     }
@@ -47,10 +51,18 @@ public class SplashScreen extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
             assetFiles = getListAssets("images");
             File f = new File(getApplicationContext().getFilesDir().getPath() + "/images/");
             appImagesFiles = f.list();
+            progressBar.setMax(assetFiles.length);
 
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressBar.incrementProgressBy(values[0]);
         }
 
         @Override
@@ -60,7 +72,7 @@ public class SplashScreen extends AppCompatActivity {
                 copyAssetFolder(getAssets(), "images", getApplicationContext().getFilesDir().getPath() + "/images");
             } else {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -119,8 +131,9 @@ public class SplashScreen extends AppCompatActivity {
                 out.flush();
                 out.close();
                 Log.e(TAG, "copyAsset: " + toPath);
+                publishProgress(1);
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
