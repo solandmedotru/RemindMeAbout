@@ -32,15 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (!PreferenceManager.getDefaultSharedPreferences(
-                getApplicationContext())
-                .getBoolean("installed", false)) {
-            PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                    .edit().putBoolean("installed", true)
-                    .apply();
-            copyAssetFolder(getAssets(), "images", getApplicationContext().getFilesDir().getPath() + "/images");
-        }
-
         initToolBar();
         initTabs();
         initPager();
@@ -59,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.home:
                 onBackPressed();
                 break;
-            case R.id.about_app_menu_item:
-                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
-                break;
+//            case R.id.about_app_menu_item:
+//                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
+//                break;
             case R.id.add_new_holiday:
                 Holiday holiday = new Holiday();
                 holiday.setName(getString(R.string.new_holiday));
@@ -76,54 +67,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private static boolean copyAssetFolder(AssetManager assetManager,
-                                           String fromAssetPath, String toPath) {
-        try {
-            String[] files = assetManager.list(fromAssetPath);
-            new File(toPath).mkdirs();
-            boolean res = true;
-            for (String file : files)
-                if (file.contains("."))
-                    res &= copyAsset(assetManager,
-                            fromAssetPath + "/" + file,
-                            toPath + "/" + file);
-                else
-                    res &= copyAssetFolder(assetManager,
-                            fromAssetPath + "/" + file,
-                            toPath + "/" + file);
-            return res;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
-    private static boolean copyAsset(AssetManager assetManager,
-                                     String fromAssetPath, String toPath) {
-        InputStream in;
-        OutputStream out;
-        try {
-            in = assetManager.open(fromAssetPath);
-            new File(toPath).createNewFile();
-            out = new FileOutputStream(toPath);
-            copyFile(in, out);
-            in.close();
-            out.flush();
-            out.close();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    private static void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
-        }
-    }
 
 
     private void initPager() {

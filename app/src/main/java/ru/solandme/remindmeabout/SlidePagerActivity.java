@@ -326,9 +326,9 @@ public class SlidePagerActivity extends AppCompatActivity {
                     setMyAdapter(slidePager);
                 }
                 break;
-            case R.id.about_app_menu_item:
-                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
-                break;
+//            case R.id.about_app_menu_item:
+//                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
+//                break;
             default:
                 return super.onOptionsItemSelected(item);
         }

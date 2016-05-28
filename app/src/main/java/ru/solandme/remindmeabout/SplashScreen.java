@@ -1,24 +1,143 @@
 package ru.solandme.remindmeabout;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.ArraySet;
+import android.util.Log;
+import android.widget.ProgressBar;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
 
 public class SplashScreen extends AppCompatActivity {
+
+    String[] assetFiles;
+    String[] appImagesFiles;
+
+    private static final String TAG = "SplashScreen";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent goToMain = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(goToMain);
-                finish();
+        new MyTask().execute();
+    }
+
+    private void startMainActivity() {
+        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+    private class MyTask extends AsyncTask<Void, Integer, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            assetFiles = getListAssets("images");
+            File f = new File(getApplicationContext().getFilesDir().getPath() + "/images/");
+            appImagesFiles = f.list();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            if ((appImagesFiles == null) || (!Arrays.asList(appImagesFiles).containsAll(Arrays.asList(assetFiles)))) {
+                copyAssetFolder(getAssets(), "images", getApplicationContext().getFilesDir().getPath() + "/images");
+            } else {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }, 1000);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            startMainActivity();
+        }
+
+        private String[] getListAssets(String folder) {
+            try {
+                return getAssets().list(folder);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        private boolean copyAssetFolder(AssetManager assetManager,
+                                        String fromAssetPath, String toPath) {
+            try {
+                assetFiles = assetManager.list(fromAssetPath);
+                new File(toPath).mkdirs();
+                boolean res = true;
+                for (String file : assetFiles) {
+                    if (file.contains("."))
+                        res &= copyAsset(assetManager,
+                                fromAssetPath + "/" + file,
+                                toPath + "/" + file);
+                    else
+                        res &= copyAssetFolder(assetManager,
+                                fromAssetPath + "/" + file,
+                                toPath + "/" + file);
+                }
+                return res;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        private boolean copyAsset(AssetManager assetManager,
+                                  String fromAssetPath, String toPath) {
+            InputStream in;
+            OutputStream out;
+            try {
+                in = assetManager.open(fromAssetPath);
+                new File(toPath).createNewFile();
+                out = new FileOutputStream(toPath);
+                copyFile(in, out);
+                in.close();
+                out.flush();
+                out.close();
+                Log.e(TAG, "copyAsset: " + toPath);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        private void copyFile(InputStream in, OutputStream out) throws IOException {
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+        }
     }
 }
+

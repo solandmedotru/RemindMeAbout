@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SlidePagerActivity">
 
-    <item
-        android:title="@string/about_app"
-        android:id="@+id/about_app_menu_item"
-        android:orderInCategory="100"
-        app:showAsAction="never">
-    </item>
+    <!--<item-->
+        <!--android:title="@string/about_app"-->
+        <!--android:id="@+id/about_app_menu_item"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="never">-->
+    <!--</item>-->
     <item
         android:title="@string/filter"
         android:icon="@drawable/ic_filter"
@@ -22,7 +22,7 @@
         android:icon="@drawable/ic_share"
         android:id="@+id/action_share"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom">
+        app:showAsAction="always">
     </item>
     <!--<item-->
         <!--android:title="@string/add_new_congratulate"-->
