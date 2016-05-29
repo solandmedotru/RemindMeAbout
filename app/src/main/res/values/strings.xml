@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Best Wishes</string>
     <string name="app_icon">App Icon</string>
-    <string name="app_version">v0.1</string>
+    <string name="app_version">v0.2</string>
     <string name="about_app">About App</string>
     <string name="Holidays">Holidays</string>
     <string name="Birthdays">Birthdays</string>

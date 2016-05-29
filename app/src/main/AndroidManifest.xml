@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.solandme.remindmeabout">
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
+        android:backupAgent=".util.MyBackupAgent"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:restoreAnyVersion="true"
         android:supportsRtl="true"
-        android:theme="@style/MyTheme"
-        android:backupAgent=".util.MyBackupAgent"
-        android:restoreAnyVersion="true">
-        <meta-data android:name="com.google.android.backup.api_key"
+        android:theme="@style/MyTheme">
+        <meta-data
+            android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIgQ76iC1KzqbZ-Ds9T_zMB0idcKhxGa0fKb4BVQ" />
 
         <activity
@@ -24,13 +29,13 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:parentActivityName=".SplashScreen"/>
+            android:parentActivityName=".SplashScreen" />
         <activity
             android:name=".AddEditDialog"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SlidePagerActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
