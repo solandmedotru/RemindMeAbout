@@ -75,21 +75,21 @@ public class SlidePagerActivity extends AppCompatActivity {
 
         initToolBar();
         initView();
-        initAdView();
+//        initAdView();
 
     }
 
-    private void initAdView() {
-        AdView adView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
-                .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
-                .build();
-        if (adView != null) {
-            adView.loadAd(adRequest);
-        }
-    }
+//    private void initAdView() {
+//        AdView adView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
+//                .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
+//                .build();
+//        if (adView != null) {
+//            adView.loadAd(adRequest);
+//        }
+//    }
 
     private void initAdInterstitial() {
         interstitialAd = new InterstitialAd(this);

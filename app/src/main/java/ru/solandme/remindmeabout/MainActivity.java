@@ -12,6 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import java.io.File;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int HOLIDAY_REQUEST = 1;
     private Toolbar toolbar;
     private TabLayout tabLayout;
+    private InterstitialAd interstitialAd;
+    private boolean shownAdvert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-8994936165518589~1639164557");
+        initAdInterstitial();
 
         initToolBar();
         initTabs();
@@ -72,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     private void initPager() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         final MyPagerAdapter myPagerAdapter = new MyPagerAdapter
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     private void initToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolBarMainActivity);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.app_name);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -135,6 +139,41 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (shownAdvert) {
+            super.onBackPressed();
+        } else {
+            if (interstitialAd.isLoaded()) {
+                interstitialAd.show();
+            } else super.onBackPressed();
+        }
+    }
+
+    private void initAdInterstitial() {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.fullscreen_ad_unit_id));
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                shownAdvert = true;
+            }
+        });
+
+        requestNewInterstitial();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
+                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
+                .build();
+        interstitialAd.loadAd(adRequest);
     }
 
 //    private void updateSubtitle(){
