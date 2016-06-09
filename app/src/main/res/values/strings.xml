@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Best Wishes</string>
     <string name="app_icon">App Icon</string>
-    <string name="app_version">v0.4</string>
+    <string name="app_version">v0.5</string>
     <string name="about_app">About App</string>
     <string name="Holidays">Holidays</string>
     <string name="Birthdays">Birthdays</string>
@@ -72,4 +72,5 @@
     <string name="forHim">For Him</string>
     <string name="favorite">Favorite</string>
     <string name="filter">Filter</string>
+    <string name="text_data">March, 26</string>
 </resources>

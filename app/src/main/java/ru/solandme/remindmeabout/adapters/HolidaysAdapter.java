@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,19 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         final Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
+
+        if(holiday.getDate() == 0){
+            holder.textDays.setVisibility(View.INVISIBLE);
+            holder.textData.setVisibility(View.INVISIBLE);
+        }
+
         holder.holidayName.setText(holiday.getName());
         holder.textHolidayDescription.setText(holiday.getDescription());
         holder.textDays.setText(parseDay(holiday.getDaysLeft()));
+
+        int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_YEAR;
+        String monthAndDayText = DateUtils.formatDateTime(context, holiday.getDate(), flags);
+        holder.textData.setText(monthAndDayText);
 
         Bitmap bmp = BitmapFactory.decodeFile(context.getFilesDir().getPath() + "/images/" + holiday.getImageUri());
         holder.imageHoliday.setImageBitmap(bmp);
@@ -99,6 +110,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         TextView textHolidayDescription;
         ImageView imageHoliday;
         ImageView actionEdit;
+        TextView textData;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -109,6 +121,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             textDays = (TextView) itemView.findViewById(R.id.textDays);
             imageHoliday = (ImageView) itemView.findViewById(R.id.imageHoliday);
             actionEdit = (ImageView) itemView.findViewById(R.id.img_action_edit);
+            textData = (TextView) itemView.findViewById(R.id.textData);
         }
     }
 

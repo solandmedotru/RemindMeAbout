@@ -18,7 +18,7 @@ import ru.solandme.remindmeabout.Holiday;
 public class HolidayDBHelper extends SQLiteAssetHelper {
 
     public static final String DATABASE_NAME = "holidays.db";
-    private static final int DATABASE_VERSION = 2; //для обновления базы названить assets/databases/holidays.db_upgrade_1-2.sql
+    private static final int DATABASE_VERSION = 3; //для обновления базы названить assets/databases/holidays.db_upgrade_1-2.sql
 
 
     public static final String TABLE = "holidays";

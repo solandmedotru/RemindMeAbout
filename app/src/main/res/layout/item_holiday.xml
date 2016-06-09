@@ -54,7 +54,7 @@
                         android:gravity="center"
                         android:text="@string/holiday_name"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -62,9 +62,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/description"
-                        android:textSize="14sp" />
-
-
+                        android:textColor="@color/colorWhiteDark"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -108,14 +107,28 @@
                     <!--android:src="@drawable/ic_calendar" />-->
 
                 <TextView
+                    android:id="@+id/textData"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginStart="3dp"
+                    android:gravity="start"
+                    android:text="@string/text_data"
+                    android:textColor="@color/colorWhiteDark"
+                    android:textSize="12sp" />
+
+                <TextView
                     android:id="@+id/textDays"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:gravity="end"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginEnd="3dp"
                     android:text="@string/days_from_holiday"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textColor="@color/colorWhiteDark"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
