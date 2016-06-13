@@ -17,20 +17,20 @@ public class Holiday implements Serializable{
     private String description;
     private String imageUri;
     private String category;
-    private int daysLeft;
+    private int hoursLeft;
     private Long date;
     private String code;
 
     public Holiday() {
     }
 
-    public Holiday(String id, String name, String description, String imageUri, String category, int daysLeft, Long date, String code) {
+    public Holiday(String id, String name, String description, String imageUri, String category, int hoursLeft, Long date, String code) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.imageUri = imageUri;
         this.category = category;
-        this.daysLeft = daysLeft;
+        this.hoursLeft = hoursLeft;
         this.date = date;
         this.code = code;
     }
@@ -75,12 +75,12 @@ public class Holiday implements Serializable{
         this.category = category;
     }
 
-    public int getDaysLeft() {
-        return daysLeft;
+    public int getHoursLeft() {
+        return hoursLeft;
     }
 
-    public void setDaysLeft(int daysLeft) {
-        this.daysLeft = daysLeft;
+    public void setHoursLeft(int hoursLeft) {
+        this.hoursLeft = hoursLeft;
     }
 
     public Long getDate() {
@@ -103,9 +103,9 @@ public class Holiday implements Serializable{
     public static Comparator<Holiday> daysOrdered = new Comparator<Holiday>() {
         @Override
         public int compare(Holiday lhs, Holiday rhs) {
-            if(lhs.daysLeft < rhs.daysLeft){
+            if(lhs.hoursLeft < rhs.hoursLeft){
                 return -1;
-            } else if(lhs.daysLeft > rhs.daysLeft){
+            } else if(lhs.hoursLeft > rhs.hoursLeft){
                 return 1;
             }
             return 0;

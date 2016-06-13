@@ -6,7 +6,8 @@
     <string name="Holidays">Holidays</string>
     <string name="Birthdays">Birthdays</string>
     <string name="Events">Events</string>
-    <string name="textNow">Less 24h</string>
+    <string name="textLess24">Less 24h</string>
+    <string name="textNow">Today</string>
     <string name="textFinish">finished</string>
     <string name="bookmark_icon">bookmark icon</string>
     <string name="days_from_holiday">356 days</string>

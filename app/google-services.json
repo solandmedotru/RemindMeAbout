@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "355641061542",
+    "firebase_url": "https://admob-app-id-4143696559.firebaseio.com",
+    "project_id": "admob-app-id-4143696559",
+    "storage_bucket": "admob-app-id-4143696559.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355641061542:android:731ca2847283877c",
+        "android_client_info": {
+          "package_name": "ru.solandme.universal_congratulator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355641061542-jq28h5e7m0lcdk3jvuu96sqvd0of5udm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG4ZAPzPbHlm4w20bI9b9xzWRCAkJiP0g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355641061542:android:6a8d69e21b08e217",
+        "android_client_info": {
+          "package_name": "ru.solandme.remindmeabout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355641061542-jq28h5e7m0lcdk3jvuu96sqvd0of5udm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG4ZAPzPbHlm4w20bI9b9xzWRCAkJiP0g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

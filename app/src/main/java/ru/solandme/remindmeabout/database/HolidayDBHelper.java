@@ -55,7 +55,7 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
             holiday.setDate(cursor.getLong(cursor.getColumnIndex(COLUMN_DATA)));
             holiday.setCode(cursor.getString(cursor.getColumnIndex(COLUMN_CODE)));
 
-            holiday.setDaysLeft(getDaysForHolidayDate(holiday.getDate()));
+            holiday.setHoursLeft(getHoursForHolidayDate(holiday.getDate()));
             holidays.add(holiday);
         }
         cursor.close();
@@ -102,7 +102,7 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
         return db.delete(TABLE, COLUMN_ID + "=" + holiday.getId(), null) > 0;
     }
 
-    private int getDaysForHolidayDate(Long holidaysDate) {
+    private int getHoursForHolidayDate(Long holidaysDate) {
         Calendar todayCalendar = Calendar.getInstance();
         Calendar holidayCalendar = Calendar.getInstance();
         holidayCalendar.setTimeInMillis(holidaysDate);
@@ -113,13 +113,13 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
 
         int daysInYear = todayCalendar.getActualMaximum(Calendar.DAY_OF_YEAR); //максимум дней в этом году
         holidayCalendar.set(todayYear, month, day);
-        int days = (int) ((holidayCalendar.getTimeInMillis() - todayCalendar.getTimeInMillis()) / 1000) / 86400;
-        //int hours = (int) ((holidayCalendar.getTimeInMillis() - todayCalendar.getTimeInMillis()) / 1000) / 3600;
-
-        if (days < 0){
-            return daysInYear+days;
+        int hours = (int) ((holidayCalendar.getTimeInMillis() - todayCalendar.getTimeInMillis()) / 1000) / 3600;
+        if ((hours < 0) && (hours > -48)){
+            return hours;
+        } else if (hours < 0){
+            return daysInYear * 24 + hours;
         }
-        return days;
+        return hours;
     }
 
 }

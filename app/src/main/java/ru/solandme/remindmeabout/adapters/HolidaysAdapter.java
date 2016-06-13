@@ -44,15 +44,17 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         final Holiday holiday = holidays.get(position); //получаю экземпляр праздника по позиции из массива всех праздников
-
-        if(holiday.getDate() == 0){
+        if (holiday.getDate() == 0) {
             holder.textDays.setVisibility(View.INVISIBLE);
             holder.textData.setVisibility(View.INVISIBLE);
+        } else {
+            holder.textDays.setVisibility(View.VISIBLE);
+            holder.textData.setVisibility(View.VISIBLE);
         }
 
         holder.holidayName.setText(holiday.getName());
         holder.textHolidayDescription.setText(holiday.getDescription());
-        holder.textDays.setText(parseDay(holiday.getDaysLeft()));
+        holder.textDays.setText(parseDay(holiday.getHoursLeft()));
 
         int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_YEAR;
         String monthAndDayText = DateUtils.formatDateTime(context, holiday.getDate(), flags);
@@ -125,13 +127,18 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         }
     }
 
-    private String parseDay(int days){
-        if (days >= 1) {
-            return context.getResources().getQuantityString(R.plurals.days, days, days);
-        } else if ((days == 0)) {
-            return " " + context.getString(R.string.textNow);
-        } else {
+    private String parseDay(int hours) {
+        int days = hours / 24;
+
+        if (hours < 24 && hours > 0) {
+            return " " + context.getString(R.string.textLess24);
+        } else if ((hours < 0) && (hours > -48)) {
             return " " + context.getString(R.string.textFinish);
+        } else if (hours == 0){
+            return " " + context.getString(R.string.textNow);
+        }
+        else {
+            return context.getResources().getQuantityString(R.plurals.days, days, days);
         }
     }
 }

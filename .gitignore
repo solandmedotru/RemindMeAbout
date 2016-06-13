@@ -11,6 +11,9 @@
 *.apk
 *.ap_
 
+# Android
+google-services.json
+
 # Files for the Dalvik VM
 *.dex
 
