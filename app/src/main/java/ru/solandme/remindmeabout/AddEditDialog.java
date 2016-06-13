@@ -148,7 +148,6 @@ public class AddEditDialog extends AppCompatActivity{
             holidayDbHelper.addHolidayToDB(holiday);
         }
         holidayDbHelper.close();
-//        MyBackupAgent.requestBackup(this);
     }
 
     private String generateCode() {
