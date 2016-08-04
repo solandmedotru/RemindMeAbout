@@ -16,6 +16,12 @@
     <string name="holiday_picture">Holiday picture</string>
     <string name="add_new_holiday">Add new holiday</string>
     <string name="new_holiday">New Holiday</string>
+    <string name="author">App Author:</string>
+    <string name="author_name">Solomin Andrey</string>
+    <string name="author_email" translatable="false">solomin.andrey@gmail.com</string>
+    <string name="designer">App Designer:</string>
+    <string name="designer_name">Gorshkov Oleg</string>
+    <string name="designer_email" translatable="false">grr.oleg@gmail.com</string>
 
 
     <plurals name="days">

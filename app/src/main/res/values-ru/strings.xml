@@ -72,4 +72,8 @@
     <string name="favorite">Избранное</string>
     <string name="filter">Фильтр</string>
     <string name="text_data">26 Марта</string>
+    <string name="author">Автор программы:</string>
+    <string name="author_name">Соломин Андрей</string>
+    <string name="designer">Дизайн:</string>
+    <string name="designer_name">Горшков Олег</string>
 </resources>

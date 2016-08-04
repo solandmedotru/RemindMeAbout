@@ -1,9 +1,7 @@
 package ru.solandme.remindmeabout;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +14,6 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import ru.solandme.remindmeabout.adapters.MyPagerAdapter;
 
@@ -60,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.home:
                 onBackPressed();
                 break;
-//            case R.id.about_app_menu_item:
-//                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
-//                break;
+            case R.id.about_app_menu_item:
+                new MyAboutDialog().show(getSupportFragmentManager(),
+                        "about");
+                break;
             case R.id.add_new_holiday:
                 Holiday holiday = new Holiday();
                 holiday.setName(getString(R.string.new_holiday));
