@@ -1,63 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
     android:columnCount="2"
     android:rowCount="4"
-    android:padding="10dp"
+    android:padding="18dp"
     tools:context=".MyAboutDialog">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/author"
-        android:layout_column="0"/>
+        android:layout_marginStart="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginLeft="18dp"
+        android:id="@+id/textView4" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/author_name"
+        tools:layout_constraintTop_creator="1"
         android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_column="1"/>
+        android:id="@+id/textView2"
+        android:layout_marginTop="18dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/textView4"
+        android:layout_marginLeft="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/author_email"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:textSize="10sp"
-        android:layout_column="1"/>
+        android:textSize="12sp"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/textView2"
+        android:id="@+id/textView5" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/designer"
-        android:layout_column="0"
-        android:layout_row="2"/>
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="@+id/textView3"
+        android:layout_marginLeft="18dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/designer_name"
-        android:layout_column="1"
-        android:layout_row="2"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"/>
+        tools:layout_constraintTop_creator="1"
+        android:id="@+id/textView3"
+        android:layout_marginTop="11dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/textView5" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/designer_email"
-        android:layout_column="1"
-        android:layout_row="3"
-        android:textSize="10sp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"/>
-
-
-</GridLayout>
+        android:textSize="12sp"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/textView3" />
+</android.support.constraint.ConstraintLayout>
