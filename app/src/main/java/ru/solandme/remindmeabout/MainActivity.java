@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         initToolBar();
         initTabs();
         initPager();
+        RemindService.setServiceAlarm(getApplicationContext(), true);
     }
 
     @Override
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(HOLIDAY, holiday);
                 intent.putExtra("isActionEdit", false);
                 startActivityForResult(intent, HOLIDAY_REQUEST);
+                break;
+            case R.id.menu_item_toggle_polling:
+                boolean shouldStartAlarm = !RemindService.isServiceAlarmOn(getApplicationContext());
+                RemindService.setServiceAlarm(getApplicationContext(), shouldStartAlarm);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -165,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
                 .addTestDevice("C79BD6D360D092383E26BB030B13893D")
+                .addTestDevice("2C3C035C0493E83D9C1F0E40421EC41B")
                 .build();
         interstitialAd.loadAd(adRequest);
     }

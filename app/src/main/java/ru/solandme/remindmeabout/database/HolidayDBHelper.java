@@ -60,6 +60,7 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
         }
         cursor.close();
         Collections.sort(holidays, Holiday.daysOrdered);
+        db.close();
         return holidays;
     }
 

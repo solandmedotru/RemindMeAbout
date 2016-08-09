@@ -80,4 +80,7 @@
     <string name="favorite">Favorite</string>
     <string name="filter">Filter</string>
     <string name="text_data">March, 26</string>
+    <string name="left">"left "</string>
+    <string name="start_polling">Start polling</string>
+    <string name="stop_polling">Stop polling</string>
 </resources>
