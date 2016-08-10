@@ -62,11 +62,11 @@ public class RemindService extends IntentService {
             int hoursLeft;
             hoursLeft = allHolidays.get(i).getHoursLeft();
 
-            if (hoursLeft <= 48) {
+            if ((hoursLeft <= 48) & (hoursLeft > 0 )) {
                 notifies.add(allHolidays.get(i).getName() + " - " + getString(R.string.left) + getApplicationContext().getResources().getQuantityString(hours, hoursLeft, hoursLeft));
             }
         }
-        if (notifies != null) {
+        if (notifies.size() > 0) {
             sendNotif();
         }
     }
@@ -88,9 +88,12 @@ public class RemindService extends IntentService {
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                 .setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_SOUND)
-                .setContentTitle("Напоминание о празднике");
+                .setContentTitle(getApplicationContext().getResources().getString(R.string.app_name))
+                .setWhen(System.currentTimeMillis());
 
         NotificationCompat.InboxStyle notification = new NotificationCompat.InboxStyle(builder);
+        notification.setBigContentTitle(getApplicationContext().getResources().getString(R.string.app_name));
+        notification.setSummaryText(""); //Bug with InboxStyle fixed
         String[] arr = notifies.toArray(new String[notifies.size()]);
         for (int i = 0; i < notifies.size(); i++) {
             notification.addLine(arr[i]);
