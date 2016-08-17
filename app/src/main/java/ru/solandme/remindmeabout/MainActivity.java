@@ -54,8 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 onBackPressed();
                 break;
             case R.id.about_app_menu_item:
-                new MyAboutDialog().show(getSupportFragmentManager(),
-                        "about");
+                new MyAboutDialog().show(getSupportFragmentManager(), "about");
                 break;
             case R.id.add_new_holiday:
                 Holiday holiday = new Holiday();
