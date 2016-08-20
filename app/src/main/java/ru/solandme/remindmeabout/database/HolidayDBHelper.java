@@ -17,24 +17,20 @@ import ru.solandme.remindmeabout.Holiday;
 
 public class HolidayDBHelper extends SQLiteAssetHelper {
 
-    public static final String DATABASE_NAME = "holidays.db";
+    private static final String DATABASE_NAME = "holidays.db";
     private static final int DATABASE_VERSION = 3; //для обновления базы названить assets/databases/holidays.db_upgrade_1-2.sql
-
-
-    public static final String TABLE = "holidays";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_IMAGE_URI = "imageUri";
-    public static final String COLUMN_CATEGORY = "category";
-    public static final String COLUMN_DATA = "date";
-    public static final String COLUMN_CODE = "code";
-    Context context;
+    private static final String TABLE = "holidays";
+    private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_NAME = "name";
+    private static final String COLUMN_DESCRIPTION = "description";
+    private static final String COLUMN_IMAGE_URI = "imageUri";
+    private static final String COLUMN_CATEGORY = "category";
+    private static final String COLUMN_DATA = "date";
+    private static final String COLUMN_CODE = "code";
 
 
     public HolidayDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
         setForcedUpgrade(DATABASE_VERSION);
     }
 
@@ -54,7 +50,6 @@ public class HolidayDBHelper extends SQLiteAssetHelper {
             holiday.setCategory(cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY)));
             holiday.setDate(cursor.getLong(cursor.getColumnIndex(COLUMN_DATA)));
             holiday.setCode(cursor.getString(cursor.getColumnIndex(COLUMN_CODE)));
-
             holiday.setHoursLeft(getHoursForHolidayDate(holiday.getDate()));
             holidays.add(holiday);
         }

@@ -14,18 +14,16 @@ import ru.solandme.remindmeabout.Congratulation;
 
 public class CongratulateDBHelper extends SQLiteAssetHelper {
 
-    public static final String DATABASE_NAME = "congratulations.db";
-    public static final int DATABASE_VERSION = 3;
-
-
-    public static final String TABLE = "congratulation";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_TEXT = "text";
-    public static final String COLUMN_CODE = "code";
-    public static final String COLUMN_SMS = "sms";
-    public static final String COLUMN_VERSE = "verse";
-    public static final String COLUMN_FILTER = "filter";
-    public static final String COLUMN_FAVORITE = "favorite";
+    private static final String DATABASE_NAME = "congratulations.db";
+    private static final int DATABASE_VERSION = 3;
+    private static final String TABLE = "congratulation";
+    private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_TEXT = "text";
+    private static final String COLUMN_CODE = "code";
+    private static final String COLUMN_SMS = "sms";
+    private static final String COLUMN_VERSE = "verse";
+    private static final String COLUMN_FILTER = "filter";
+    private static final String COLUMN_FAVORITE = "favorite";
 
     public CongratulateDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -263,15 +261,15 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
         return congratulations;
     }
 
-    public String getCountAll() {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor;
-        cursor = db.rawQuery("select * from " + TABLE, null);
-        String col = Integer.toString(cursor.getCount());
-        cursor.close();
-        return col;
-    }
+//    public String getCountAll() {
+//
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor;
+//        cursor = db.rawQuery("select * from " + TABLE, null);
+//        String col = Integer.toString(cursor.getCount());
+//        cursor.close();
+//        return col;
+//    }
 
     public void setFavorite(String _id) {
         SQLiteDatabase db = getWritableDatabase();

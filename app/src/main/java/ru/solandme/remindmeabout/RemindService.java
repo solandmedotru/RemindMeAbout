@@ -20,7 +20,7 @@ import static ru.solandme.remindmeabout.R.plurals.hours;
 
 public class RemindService extends IntentService {
     private static final String TAG = "RemindService";
-    private static final int POLL_INTERVAL = 1000*60;
+    private static final int POLL_INTERVAL = 1000 * 60;
 
     private static final int NOTIFY_ID = 101;
     List<Holiday> allHolidays = new ArrayList<>();
@@ -34,11 +34,11 @@ public class RemindService extends IntentService {
         super(TAG);
     }
 
-    public static void setServiceAlarm(Context context, boolean isOn){
+    public static void setServiceAlarm(Context context, boolean isOn) {
         Intent i = RemindService.newIntent(context);
-        PendingIntent pi = PendingIntent.getService(context, 0 , i, 0);
+        PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if(isOn){
+        if (isOn) {
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_HALF_DAY, pi);
         } else {
             alarmManager.cancel(pi);
@@ -62,7 +62,7 @@ public class RemindService extends IntentService {
             int hoursLeft;
             hoursLeft = allHolidays.get(i).getHoursLeft();
 
-            if ((hoursLeft <= 48) & (hoursLeft > 0 )) {
+            if ((hoursLeft <= 48) & (hoursLeft > 0)) {
                 notifies.add(allHolidays.get(i).getName() + " - " + getString(R.string.left) + getApplicationContext().getResources().getQuantityString(hours, hoursLeft, hoursLeft));
             }
         }
