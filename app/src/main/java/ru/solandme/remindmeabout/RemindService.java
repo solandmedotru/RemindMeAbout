@@ -3,12 +3,12 @@ package ru.solandme.remindmeabout;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.SystemClock;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.NotificationCompat;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import static ru.solandme.remindmeabout.R.plurals.hours;
 
 public class RemindService extends IntentService {
     private static final String TAG = "RemindService";
-    private static final int POLL_INTERVAL = 1000 * 60;
+    private static final int ALARM_INTERVAL = 1000 * 60;
 
     private static final int NOTIFY_ID = 101;
     List<Holiday> allHolidays = new ArrayList<>();
@@ -69,11 +69,11 @@ public class RemindService extends IntentService {
             }
         }
         if (notifies.size() > 0) {
-            sendNotif();
+            sendNotification();
         }
     }
 
-    void sendNotif() {
+    void sendNotification() {
         Context context = getApplicationContext();
 
         Intent notificationIntent = new Intent(context, MainActivity.class);
@@ -85,6 +85,7 @@ public class RemindService extends IntentService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
         builder.setContentIntent(contentIntent)
+                .setTicker(getApplicationContext().getResources().getString(R.string.app_name))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                 .setAutoCancel(true)
@@ -100,8 +101,7 @@ public class RemindService extends IntentService {
             notification.addLine(arr[i]);
         }
 
-        NotificationManager notificationManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(NOTIFY_ID, notification.build());
     }
 
