@@ -37,12 +37,19 @@ public class MainActivity extends AppCompatActivity {
         initToolBar();
         initTabs();
         initPager();
-        RemindService.setServiceAlarm(getApplicationContext(), true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_main_menu, menu);
+        MenuItem toggleItem = menu.findItem(R.id.menu_item_toggle_polling);
+        if (RemindService.isServiceAlarmOn(getApplicationContext())) {
+            toggleItem.setTitle(R.string.alarm_on);
+            toggleItem.setIcon(R.drawable.ic_notifications);
+        } else {
+            toggleItem.setTitle(R.string.alarm_off);
+            toggleItem.setIcon(R.drawable.ic_notifications_off);
+        }
         return true;
     }
 
@@ -65,13 +72,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, HOLIDAY_REQUEST);
                 break;
             case R.id.menu_item_toggle_polling:
-                boolean shouldStartAlarm = !RemindService.isServiceAlarmOn(getApplicationContext());
-                RemindService.setServiceAlarm(getApplicationContext(), shouldStartAlarm);
+                RemindService.setServiceAlarm(getApplicationContext(), isShouldStartAlarm());
+                Toast.makeText(getApplicationContext(), Boolean.toString(RemindService.isServiceAlarmOn(getApplicationContext())), Toast.LENGTH_SHORT).show();
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().invalidateOptionsMenu();
+                }
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    private boolean isShouldStartAlarm() {
+        return !RemindService.isServiceAlarmOn(getApplicationContext());
     }
 
 

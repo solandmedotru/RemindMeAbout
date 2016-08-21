@@ -81,6 +81,6 @@
     <string name="filter">Filter</string>
     <string name="text_data">March, 26</string>
     <string name="left">"left "</string>
-    <string name="start_polling">Start polling</string>
-    <string name="stop_polling">Stop polling</string>
+    <string name="alarm_on">Alarm on</string>
+    <string name="alarm_off">Alarm off</string>
 </resources>

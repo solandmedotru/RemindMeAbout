@@ -14,10 +14,11 @@
         android:icon="@drawable/ic_note_add"
         android:orderInCategory="1"
         android:title="@string/add_new_holiday"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_item_toggle_polling"
         android:orderInCategory="2"
-        android:title="@string/start_polling"
-        app:showAsAction="never"/>
+        android:title="@string/alarm_on"
+        android:icon="@drawable/ic_notifications"
+        app:showAsAction="ifRoom" />
 </menu>

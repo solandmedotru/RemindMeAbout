@@ -77,6 +77,6 @@
     <string name="designer">Дизайн:</string>
     <string name="designer_name">Горшков Олег</string>
     <string name="left">"осталось "</string>
-    <string name="start_polling">Вкл. уведомление</string>
-    <string name="stop_polling">Выкл. уведомление</string>
+    <string name="alarm_on">Уведомление ВКЛ.</string>
+    <string name="alarm_off">Уведомление ВЫКЛ.</string>
 </resources>
