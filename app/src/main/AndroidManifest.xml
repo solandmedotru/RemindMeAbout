@@ -9,6 +9,7 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:restoreAnyVersion="true"
@@ -38,7 +39,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:enabled="true" android:name=".RemindReceiver"
+        <receiver
+            android:name=".RemindReceiver"
+            android:enabled="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

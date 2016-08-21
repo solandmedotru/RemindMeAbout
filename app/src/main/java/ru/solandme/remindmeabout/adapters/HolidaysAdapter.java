@@ -10,6 +10,8 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -73,7 +75,26 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTextCongratulation(holiday);
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.rotate_left);
+                holder.imageHoliday.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+                holder.imageHoliday.startAnimation(animation);
+
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        holder.imageHoliday.setLayerType(View.LAYER_TYPE_NONE, null);
+                        showTextCongratulation(holiday);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+                });
+
             }
         });
 
@@ -134,10 +155,9 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
             return " " + context.getString(R.string.textLess24);
         } else if ((hours < 0) && (hours > -48)) {
             return " " + context.getString(R.string.textFinish);
-        } else if (hours == 0){
+        } else if (hours == 0) {
             return " " + context.getString(R.string.textNow);
-        }
-        else {
+        } else {
             return context.getResources().getQuantityString(R.plurals.days, days, days);
         }
     }

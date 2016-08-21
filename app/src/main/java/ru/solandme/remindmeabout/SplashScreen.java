@@ -4,11 +4,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.ArraySet;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -130,7 +126,7 @@ public class SplashScreen extends AppCompatActivity {
                 in.close();
                 out.flush();
                 out.close();
-                Log.e(TAG, "copyAsset: " + toPath);
+                Log.d(TAG, "copyAsset: " + toPath);
                 publishProgress(1);
                 try {
                     Thread.sleep(50);
