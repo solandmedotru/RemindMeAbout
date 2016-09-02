@@ -66,6 +66,8 @@ public class SlidePagerActivity extends AppCompatActivity {
 
     private CongratulateDBHelper helper;
 
+    protected int textPosition;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,12 @@ public class SlidePagerActivity extends AppCompatActivity {
 
     }
 
-//    private void initAdView() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setMyAdapter(slidePager);
+    }
+    //    private void initAdView() {
 //        AdView adView = (AdView) findViewById(R.id.adView);
 //        AdRequest adRequest = new AdRequest.Builder()
 //                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -130,7 +137,6 @@ public class SlidePagerActivity extends AppCompatActivity {
         fragmentFilter = findViewById(R.id.fragment_filter);
 
         slidePager = (ViewPager) findViewById(R.id.slidePager);
-        setMyAdapter(slidePager);
 
         checkBoxSms = (CheckBox) findViewById(R.id.chb_sms);
         checkBoxVerse = (CheckBox) findViewById(R.id.chb_verse);
@@ -282,14 +288,10 @@ public class SlidePagerActivity extends AppCompatActivity {
 
             Fragment fragment = new SlidePageFragment();
             Bundle args = new Bundle();
-
-            args.putString(SlidePageFragment.ARG_TEXT, congratulations.get(position).getText());
+            textPosition = position-1;
+            args.putSerializable(SlidePageFragment.CONGRATULATION, congratulations.get(position));
             args.putInt(SlidePageFragment.ARG_POSITION, position + 1);
             args.putInt(SlidePageFragment.ARG_COUNT, getCount());
-            args.putString(SlidePageFragment.ARG_VERSE, congratulations.get(position).getVerse());
-            args.putString(SlidePageFragment.ARG_ID, congratulations.get(position).get_id());
-            args.putString(SlidePageFragment.ARG_FAVORITE, congratulations.get(position).getFavorite());
-            args.putString(SlidePageFragment.ARG_SEX, congratulations.get(position).getFilter());
             fragment.setArguments(args);
 
             return fragment;
@@ -327,6 +329,22 @@ public class SlidePagerActivity extends AppCompatActivity {
                     setMyAdapter(slidePager);
                 }
                 break;
+            case R.id.add_new_congratulate:
+                Congratulation congratulation = new Congratulation();
+                congratulation.setCode(getIntent().getStringExtra("code"));
+                Intent intent = new Intent(getApplicationContext(), AddEditCongratulateDialog.class);
+                intent.putExtra(SlidePageFragment.CONGRATULATION, congratulation);
+                intent.putExtra("isActionEdit", false);
+                startActivity(intent);
+                break;
+            case R.id.edit_congratulate:
+                Intent intent2 = new Intent(getApplicationContext(), AddEditCongratulateDialog.class);
+                intent2.putExtra(SlidePageFragment.CONGRATULATION, congratulations.get(textPosition));
+                intent2.putExtra("code", congratulations.get(textPosition).getCode());
+                intent2.putExtra("isActionEdit", true);
+                startActivity(intent2);
+                break;
+
 //            case R.id.about_app_menu_item:
 //                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
 //                break;

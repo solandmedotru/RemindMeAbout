@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -291,39 +292,42 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
         db.close();
     }
 
-//    public void addCongratulationsToDB(List<String> congratulations) {
-//        SQLiteDatabase db = getWritableDatabase();
-//
-//        ContentValues cv = new ContentValues();
-//        cv.put(CongratulateDBHelper.COLUMN_NAME, holiday.getName());
-//        cv.put(CongratulateDBHelper.COLUMN_DESCRIPTION, holiday.getDescription());
-//        cv.put(CongratulateDBHelper.COLUMN_IMAGE_URI, holiday.getImageUri());
-//        cv.put(CongratulateDBHelper.COLUMN_CATEGORY, holiday.getCategory());
-//        cv.put(CongratulateDBHelper.COLUMN_DATA, holiday.getDate());
-//
-//        db.insert(TABLE, null, cv);
-//        db.close();
-//        Log.e("DB_add", cv.toString());
-//    }
+    public void addCongratulationToDB(Congratulation congratulation) {
+        SQLiteDatabase db = getWritableDatabase();
 
-//    public void replaceCongratulationOnDB(List<Congratulation> congratulations) {
-//        SQLiteDatabase db = getWritableDatabase();
-//
-//        ContentValues cv = new ContentValues();
-//        cv.put(CongratulateDBHelper.COLUMN_NAME, congratulations.getName());
-//        cv.put(CongratulateDBHelper.COLUMN_DESCRIPTION, congratulations.getDescription());
-//        cv.put(CongratulateDBHelper.COLUMN_IMAGE_URI, congratulations.getImageUri());
-//        cv.put(CongratulateDBHelper.COLUMN_CATEGORY, congratulations.getCategory());
-//        cv.put(CongratulateDBHelper.COLUMN_DATA, congratulations.getDate());
-//
-//        db.update(TABLE, cv, COLUMN_ID + "=" + congratulations.getId(), null);
-//        db.close();
-//        Log.e("DB_edit", congratulations.getId() + "  " + cv.toString());
-//    }
+        ContentValues cv = new ContentValues();
+        cv.put(CongratulateDBHelper.COLUMN_CODE, congratulation.getCode());
+        cv.put(CongratulateDBHelper.COLUMN_FAVORITE, congratulation.getFavorite());
+        cv.put(CongratulateDBHelper.COLUMN_FILTER, congratulation.getFilter());
+        cv.put(CongratulateDBHelper.COLUMN_SMS, congratulation.getSms());
+        cv.put(CongratulateDBHelper.COLUMN_TEXT, congratulation.getText());
+        cv.put(CongratulateDBHelper.COLUMN_VERSE, congratulation.getVerse());
 
-//    public boolean deleteHolidayFromDB(Holiday holiday) {
-//        SQLiteDatabase db = getWritableDatabase();
-//        return db.delete(TABLE, COLUMN_ID + "=" + holiday.getId(), null) > 0;
-//    }
+        db.insert(TABLE, null, cv);
+        db.close();
+        Log.e("DB_add", cv.toString());
+    }
+
+    public void replaceCongratulationOnDB(Congratulation congratulation) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(CongratulateDBHelper.COLUMN_ID, congratulation.get_id());
+        cv.put(CongratulateDBHelper.COLUMN_CODE, congratulation.getCode());
+        cv.put(CongratulateDBHelper.COLUMN_FAVORITE, congratulation.getFavorite());
+        cv.put(CongratulateDBHelper.COLUMN_FILTER, congratulation.getFilter());
+        cv.put(CongratulateDBHelper.COLUMN_SMS, congratulation.getSms());
+        cv.put(CongratulateDBHelper.COLUMN_TEXT, congratulation.getText());
+        cv.put(CongratulateDBHelper.COLUMN_VERSE, congratulation.getVerse());
+
+        db.update(TABLE, cv, COLUMN_ID + "=" + congratulation.get_id(), null);
+        db.close();
+        Log.e("DB_edit", congratulation.get_id() + "  " + cv.toString());
+    }
+
+    public boolean deleteCongratulationFromDB(Congratulation congratulation) {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(TABLE, COLUMN_ID + "=" + congratulation.get_id(), null) > 0;
+    }
 
 }

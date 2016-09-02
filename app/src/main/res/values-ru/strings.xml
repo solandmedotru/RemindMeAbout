@@ -79,4 +79,6 @@
     <string name="left">"осталось "</string>
     <string name="alarm_on">Уведомление ВКЛ.</string>
     <string name="alarm_off">Уведомление ВЫКЛ.</string>
+    <string name="edit_congratulate">Редактировать</string>
+    <string name="add_your_text">Напишите текст своего поздравления</string>
 </resources>

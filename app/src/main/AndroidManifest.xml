@@ -28,7 +28,7 @@
             android:name=".MainActivity"
             android:parentActivityName=".SplashScreen" />
         <activity
-            android:name=".AddEditDialog"
+            android:name=".AddEditHolidayDialog"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SlidePagerActivity"
@@ -45,9 +45,12 @@
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".AddEditCongratulateDialog"></activity>
     </application>
 
 </manifest>

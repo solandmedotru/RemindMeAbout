@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.add_new_holiday:
                 Holiday holiday = new Holiday();
                 holiday.setName(getString(R.string.new_holiday));
-                Intent intent = new Intent(getApplicationContext(), AddEditDialog.class);
+                Intent intent = new Intent(getApplicationContext(), AddEditHolidayDialog.class);
                 intent.putExtra(HOLIDAY, holiday);
                 intent.putExtra("isActionEdit", false);
                 startActivityForResult(intent, HOLIDAY_REQUEST);
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 case RESULT_CANCELED:
                     Toast.makeText(this, R.string.canceled, Toast.LENGTH_SHORT).show();
                     break;
-                case AddEditDialog.RESULT_SAVE:
+                case AddEditHolidayDialog.RESULT_SAVE:
                     Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
                     break;
                 default:

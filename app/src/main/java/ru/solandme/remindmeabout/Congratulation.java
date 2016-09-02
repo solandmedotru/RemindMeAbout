@@ -13,6 +13,10 @@ public class Congratulation implements Serializable {
     private String favorite;
 
     public Congratulation() {
+        verse = "1";
+        sms = "0";
+        favorite = "0";
+        filter = "0";
     }
 
     public String get_id() {

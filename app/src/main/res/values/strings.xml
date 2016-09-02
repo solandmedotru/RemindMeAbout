@@ -83,4 +83,6 @@
     <string name="left">"left "</string>
     <string name="alarm_on">Alarm on</string>
     <string name="alarm_off">Alarm off</string>
+    <string name="edit_congratulate">Edit</string>
+    <string name="add_your_text">Add your congratulation text</string>
 </resources>

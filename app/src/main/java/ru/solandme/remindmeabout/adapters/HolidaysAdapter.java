@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ru.solandme.remindmeabout.AddEditDialog;
+import ru.solandme.remindmeabout.AddEditHolidayDialog;
 import ru.solandme.remindmeabout.Holiday;
 import ru.solandme.remindmeabout.R;
 import ru.solandme.remindmeabout.SlidePagerActivity;
@@ -108,7 +108,7 @@ public class HolidaysAdapter extends RecyclerView.Adapter<HolidaysAdapter.ViewHo
 
     private void showAddEditActivity(ViewHolder holder) {
         Holiday holiday = holidays.get(holder.getAdapterPosition());
-        Intent intent = new Intent(context, AddEditDialog.class);
+        Intent intent = new Intent(context, AddEditHolidayDialog.class);
         intent.putExtra(HOLIDAY, holiday);
         intent.putExtra("isActionEdit", true);
         context.startActivity(intent);

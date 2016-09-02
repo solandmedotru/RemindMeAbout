@@ -37,7 +37,7 @@ import java.util.Locale;
 import ru.solandme.remindmeabout.database.HolidayDBHelper;
 
 
-public class AddEditDialog extends AppCompatActivity{
+public class AddEditHolidayDialog extends AppCompatActivity{
 
     static final int RESULT_SAVE = 100;
     private static int LOAD_IMAGE_RESULTS = 1;
@@ -152,7 +152,7 @@ public class AddEditDialog extends AppCompatActivity{
 
     private String generateCode() {
         if (holiday.getCategory().equals(Holiday.CATEGORY_HOLIDAY) || holiday.getCategory().equals(Holiday.CATEGORY_EVENT)){
-            return holiday.getCategory() + holiday.getId();
+            return holiday.getCategory() + holiday.getDate();
         } else {
             return Holiday.CATEGORY_BIRTHDAY;
         }
