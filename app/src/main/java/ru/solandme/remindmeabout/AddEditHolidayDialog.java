@@ -32,8 +32,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import ru.solandme.remindmeabout.database.CongratulateDBHelper;
 import ru.solandme.remindmeabout.database.HolidayDBHelper;
 
 
@@ -224,6 +226,16 @@ public class AddEditHolidayDialog extends AppCompatActivity{
                 finish();
                 break;
             case R.id.btn_delete:
+                CongratulateDBHelper congratulateDBHelper = new CongratulateDBHelper(getApplicationContext());
+
+
+                List<Congratulation> congratulations;
+                congratulations = congratulateDBHelper.getAllCongratulationsByCode(holiday.getCode());
+
+                for (Congratulation c : congratulations) {
+                    congratulateDBHelper.deleteCongratulationFromDB(c);
+                }
+
                 holidayDbHelper.deleteHolidayFromDB(holiday);
                 setResult(RESULT_SAVE);
                 finish();

@@ -25,10 +25,37 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
     private static final String COLUMN_VERSE = "verse";
     private static final String COLUMN_FILTER = "filter";
     private static final String COLUMN_FAVORITE = "favorite";
+    private static final String TAG = "CongratulateDBHelper";
 
     public CongratulateDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         setForcedUpgrade(DATABASE_VERSION);
+    }
+
+    public List<Congratulation> getAllCongratulationsByCode(String code) {
+        List<Congratulation> congratulations = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+
+        cursor = db.rawQuery("select * from " +
+                TABLE + " where " +
+                COLUMN_CODE + "=?", new String[]{code});
+
+        while (cursor.moveToNext()) {
+            Congratulation congratulation = new Congratulation();
+            congratulation.set_id(cursor.getString(cursor.getColumnIndex(COLUMN_ID)));
+            congratulation.setText(cursor.getString(cursor.getColumnIndex(COLUMN_TEXT)));
+            congratulation.setCode(cursor.getString(cursor.getColumnIndex(COLUMN_CODE)));
+            congratulation.setSms(cursor.getString(cursor.getColumnIndex(COLUMN_SMS)));
+            congratulation.setVerse(cursor.getString(cursor.getColumnIndex(COLUMN_VERSE)));
+            congratulation.setFilter(cursor.getString(cursor.getColumnIndex(COLUMN_FILTER)));
+            congratulation.setFavorite(cursor.getString(cursor.getColumnIndex(COLUMN_FAVORITE)));
+
+            congratulations.add(congratulation);
+        }
+        cursor.close();
+        db.close();
+        return congratulations;
     }
 
     public List<Congratulation> getCongratulationsByCode(String code,
@@ -327,6 +354,7 @@ public class CongratulateDBHelper extends SQLiteAssetHelper {
 
     public boolean deleteCongratulationFromDB(Congratulation congratulation) {
         SQLiteDatabase db = getWritableDatabase();
+        Log.e(TAG, "deleteCongratulationFromDB: deleted");
         return db.delete(TABLE, COLUMN_ID + "=" + congratulation.get_id(), null) > 0;
     }
 

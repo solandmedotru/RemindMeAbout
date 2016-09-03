@@ -13,11 +13,9 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.List;
@@ -65,9 +63,6 @@ public class SlidePagerActivity extends AppCompatActivity {
     private String forAllFlag = ON;
 
     private CongratulateDBHelper helper;
-
-    protected int textPosition;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -288,7 +283,6 @@ public class SlidePagerActivity extends AppCompatActivity {
 
             Fragment fragment = new SlidePageFragment();
             Bundle args = new Bundle();
-            textPosition = position-1;
             args.putSerializable(SlidePageFragment.CONGRATULATION, congratulations.get(position));
             args.putInt(SlidePageFragment.ARG_POSITION, position + 1);
             args.putInt(SlidePageFragment.ARG_COUNT, getCount());
@@ -339,15 +333,12 @@ public class SlidePagerActivity extends AppCompatActivity {
                 break;
             case R.id.edit_congratulate:
                 Intent intent2 = new Intent(getApplicationContext(), AddEditCongratulateDialog.class);
-                intent2.putExtra(SlidePageFragment.CONGRATULATION, congratulations.get(textPosition));
-                intent2.putExtra("code", congratulations.get(textPosition).getCode());
+                intent2.putExtra(SlidePageFragment.CONGRATULATION, congratulations.get(slidePager.getCurrentItem()));
+                intent2.putExtra("code", congratulations.get(slidePager.getCurrentItem()).getCode());
+
                 intent2.putExtra("isActionEdit", true);
                 startActivity(intent2);
                 break;
-
-//            case R.id.about_app_menu_item:
-//                Toast.makeText(getApplicationContext(), item.getTitle().toString(), Toast.LENGTH_LONG).show();
-//                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
