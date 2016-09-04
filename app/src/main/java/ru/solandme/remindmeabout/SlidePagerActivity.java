@@ -324,26 +324,35 @@ public class SlidePagerActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.add_new_congratulate:
-                Congratulation congratulation = new Congratulation();
-                congratulation.setCode(getIntent().getStringExtra("code"));
-                Intent intent = new Intent(getApplicationContext(), AddEditCongratulateDialog.class);
-                intent.putExtra(SlidePageFragment.CONGRATULATION, congratulation);
-                intent.putExtra("isActionEdit", false);
-                startActivity(intent);
+                addNewCongratulate();
                 break;
             case R.id.edit_congratulate:
-                Intent intent2 = new Intent(getApplicationContext(), AddEditCongratulateDialog.class);
-                intent2.putExtra(SlidePageFragment.CONGRATULATION, congratulations.get(slidePager.getCurrentItem()));
-                intent2.putExtra("code", congratulations.get(slidePager.getCurrentItem()).getCode());
-
-                intent2.putExtra("isActionEdit", true);
-                startActivity(intent2);
+                editCongratulate();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
     }
+
+    private void editCongratulate() {
+        Intent intent2 = new Intent(getApplicationContext(), AddEditCongratulateDialog.class);
+        intent2.putExtra(SlidePageFragment.CONGRATULATION, congratulations.get(slidePager.getCurrentItem()));
+        intent2.putExtra("code", congratulations.get(slidePager.getCurrentItem()).getCode());
+
+        intent2.putExtra("isActionEdit", true);
+        startActivity(intent2);
+    }
+
+    private void addNewCongratulate() {
+        Congratulation congratulation = new Congratulation();
+        congratulation.setCode(getIntent().getStringExtra("code"));
+        Intent intent = new Intent(getApplicationContext(), AddEditCongratulateDialog.class);
+        intent.putExtra(SlidePageFragment.CONGRATULATION, congratulation);
+        intent.putExtra("isActionEdit", false);
+        startActivity(intent);
+    }
+
     private void share_text() {
         TextView currentText = (TextView) pagerAdapter
                 .getRegisteredFragment(slidePager.getCurrentItem())
