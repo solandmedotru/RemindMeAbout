@@ -7,7 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 
-public class MyAboutDialog extends DialogFragment implements
+public class AboutAppDialog extends DialogFragment implements
         DialogInterface.OnClickListener {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -24,6 +24,10 @@ public class Holiday implements Serializable{
     public Holiday() {
     }
 
+    public Holiday(String name) {
+        this.name = name;
+    }
+
     public Holiday(String id, String name, String description, String imageUri, String category, int hoursLeft, Long date, String code) {
         this.id = id;
         this.name = name;

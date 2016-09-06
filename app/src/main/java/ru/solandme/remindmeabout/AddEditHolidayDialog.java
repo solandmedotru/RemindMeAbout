@@ -62,7 +62,7 @@ public class AddEditHolidayDialog extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_form);
-        holiday = (Holiday) getIntent().getSerializableExtra(MainActivity.HOLIDAY);
+        holiday = (Holiday) getIntent().getSerializableExtra(MainActivity.HOLIDAY_OBJECT_KEY);
         holidayDbHelper = new HolidayDBHelper(getApplicationContext());
         initToolBar();
         initView();

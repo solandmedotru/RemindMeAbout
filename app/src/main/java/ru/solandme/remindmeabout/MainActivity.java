@@ -2,6 +2,7 @@ package ru.solandme.remindmeabout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +20,11 @@ import ru.solandme.remindmeabout.adapters.MyPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String HOLIDAY = "holiday";
+    static final String HOLIDAY_OBJECT_KEY = "holiday";
     private static final int HOLIDAY_REQUEST = 1;
+    public static final String TAG_ABOUT = "about";
+    public static final String ADS_APP_ID = "ca-app-pub-8994936165518589~1639164557";
+    public static final String IS_ACTION_EDIT_KEY = "isActionEdit";
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private InterstitialAd interstitialAd;
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-8994936165518589~1639164557");
+        MobileAds.initialize(getApplicationContext(), ADS_APP_ID);
         initAdInterstitial();
 
         initToolBar();
@@ -39,55 +43,25 @@ public class MainActivity extends AppCompatActivity {
         initPager();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_main_menu, menu);
-        MenuItem toggleItem = menu.findItem(R.id.menu_item_toggle_polling);
-        if (RemindService.isServiceAlarmOn(getApplicationContext())) {
-            toggleItem.setTitle(R.string.alarm_on);
-            toggleItem.setIcon(R.drawable.ic_notifications);
-        } else {
-            toggleItem.setTitle(R.string.alarm_off);
-            toggleItem.setIcon(R.drawable.ic_notifications_off);
+    private void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolBarMainActivity);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
-        return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.home:
-                onBackPressed();
-                break;
-            case R.id.about_app_menu_item:
-                new MyAboutDialog().show(getSupportFragmentManager(), "about");
-                break;
-            case R.id.add_new_holiday:
-                Holiday holiday = new Holiday();
-                holiday.setName(getString(R.string.new_holiday));
-                Intent intent = new Intent(getApplicationContext(), AddEditHolidayDialog.class);
-                intent.putExtra(HOLIDAY, holiday);
-                intent.putExtra("isActionEdit", false);
-                startActivityForResult(intent, HOLIDAY_REQUEST);
-                break;
-            case R.id.menu_item_toggle_polling:
-                RemindService.setServiceAlarm(getApplicationContext(), isShouldStartAlarm());
-                Toast.makeText(getApplicationContext(), Boolean.toString(RemindService.isServiceAlarmOn(getApplicationContext())), Toast.LENGTH_SHORT).show();
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().invalidateOptionsMenu();
-                }
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+    private void initTabs() {
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        if (tabLayout != null) {
+            tabLayout.addTab(tabLayout.newTab().setText(R.string.Holidays));
+            tabLayout.addTab(tabLayout.newTab().setText(R.string.Birthdays));
+            tabLayout.addTab(tabLayout.newTab().setText(R.string.Events));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         }
-        return true;
     }
-
-    private boolean isShouldStartAlarm() {
-        return !RemindService.isServiceAlarmOn(getApplicationContext());
-    }
-
 
     private void initPager() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -115,25 +89,55 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    private void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolBarMainActivity);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(R.string.app_name);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_main_menu, menu);
+        MenuItem toggleItem = menu.findItem(R.id.menu_item_toggle_polling);
+        if (RemindService.isServiceAlarmOn(getApplicationContext())) {
+            toggleItem.setTitle(R.string.alarm_on);
+            toggleItem.setIcon(R.drawable.ic_notifications);
+        } else {
+            toggleItem.setTitle(R.string.alarm_off);
+            toggleItem.setIcon(R.drawable.ic_notifications_off);
         }
+        return true;
     }
 
-    private void initTabs() {
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        if (tabLayout != null) {
-            tabLayout.addTab(tabLayout.newTab().setText(R.string.Holidays));
-            tabLayout.addTab(tabLayout.newTab().setText(R.string.Birthdays));
-            tabLayout.addTab(tabLayout.newTab().setText(R.string.Events));
-            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                onBackPressed();
+                break;
+            case R.id.about_app_menu_item:
+                new AboutAppDialog().show(getSupportFragmentManager(), TAG_ABOUT);
+                break;
+            case R.id.add_new_holiday:
+                startActivityForResult(getNewHolidayIntent(), HOLIDAY_REQUEST);
+                break;
+            case R.id.menu_item_toggle_polling:
+                RemindService.setServiceAlarm(getApplicationContext(), isShouldStartAlarm());
+                Toast.makeText(getApplicationContext(), Boolean.toString(RemindService.isServiceAlarmOn(getApplicationContext())), Toast.LENGTH_SHORT).show();
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().invalidateOptionsMenu();
+                }
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+        return true;
+    }
+
+    @NonNull
+    private Intent getNewHolidayIntent() {
+        return new Intent(getApplicationContext(), AddEditHolidayDialog.class)
+                .putExtra(HOLIDAY_OBJECT_KEY, new Holiday(getString(R.string.new_holiday)))
+                .putExtra(IS_ACTION_EDIT_KEY, false);
+    }
+
+    private boolean isShouldStartAlarm() {
+        return !RemindService.isServiceAlarmOn(getApplicationContext());
     }
 
     @Override
