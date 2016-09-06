@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG_ABOUT = "about";
     public static final String ADS_APP_ID = "ca-app-pub-8994936165518589~1639164557";
     public static final String IS_ACTION_EDIT_KEY = "isActionEdit";
-    private Toolbar toolbar;
     private TabLayout tabLayout;
     private InterstitialAd interstitialAd;
     private boolean shownAdvert;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolBarMainActivity);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBarMainActivity);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.app_name);

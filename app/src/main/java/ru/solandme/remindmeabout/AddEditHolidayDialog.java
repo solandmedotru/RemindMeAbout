@@ -56,8 +56,6 @@ public class AddEditHolidayDialog extends AppCompatActivity{
 
     private InterstitialAd interstitialAd;
 
-    private Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +70,7 @@ public class AddEditHolidayDialog extends AppCompatActivity{
     }
 
     private void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolBarAddEditActivity);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBarAddEditActivity);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null){
             if (getIntent().getBooleanExtra("isActionEdit", true)) {

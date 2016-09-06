@@ -1,8 +1,7 @@
 package ru.solandme.remindmeabout;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +13,6 @@ import ru.solandme.remindmeabout.database.CongratulateDBHelper;
 import ru.solandme.remindmeabout.fragments.SlidePageFragment;
 
 public class AddEditCongratulateDialog extends AppCompatActivity {
-    private Toolbar toolbar;
 
     private CheckBox checkBoxSms;
     private CheckBox checkBoxVerse;
@@ -23,10 +21,6 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
     private CheckBox checkBoxForHim;
     private CheckBox checkBoxForHer;
     private CheckBox checkBoxForAll;
-
-    private Button btnSaveCongratulation;
-    private Button btnCancel;
-    private Button btnDelete;
 
     EditText editCongratulationText;
 
@@ -37,7 +31,6 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
     public static final String FORHIM = "1";
     public static final String FORHER = "2";
     public static final String FORALL = "0";
-
 
     private String smsFlag = OFF; // on - 1, off - 0
     private String verseFlag = ON; // on - 1, off - 0
@@ -60,7 +53,6 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
     }
 
     private void initView() {
-
 
         checkBoxSms = (CheckBox) findViewById(R.id.chb_sms);
         checkBoxVerse = (CheckBox) findViewById(R.id.chb_verse);
@@ -138,13 +130,13 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
 
         editCongratulationText = (EditText) findViewById(R.id.edit_text_congratulate);
 
-        btnSaveCongratulation = (Button) findViewById(R.id.btn_congratulation_save);
-        btnCancel = (Button) findViewById(R.id.btn_congratulation_cancel);
-        btnDelete = (Button) findViewById(R.id.btn_congratulation_delete);
+        Button btnSaveCongratulation = (Button) findViewById(R.id.btn_congratulation_save);
+        Button btnCancel = (Button) findViewById(R.id.btn_congratulation_cancel);
+        Button btnDelete = (Button) findViewById(R.id.btn_congratulation_delete);
         btnSaveCongratulation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (getIntent().getBooleanExtra("isActionEdit", true)) {
+                if (getIntent().getBooleanExtra(MainActivity.IS_ACTION_EDIT_KEY, true)) {
                     congratulation.setText(editCongratulationText.getText().toString());
                     congratulateDBHelper.replaceCongratulationOnDB(congratulation);
                 } else {
@@ -164,7 +156,7 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (getIntent().getBooleanExtra("isActionEdit", true)) {
+                if (getIntent().getBooleanExtra(MainActivity.IS_ACTION_EDIT_KEY, true)) {
                     congratulateDBHelper.deleteCongratulationFromDB(congratulation);
                 }
                 finish();
@@ -177,7 +169,7 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
 
     private void setCheckBoxes() {
         EditText editTextCongratulate = (EditText) findViewById(R.id.edit_text_congratulate);
-        if (getIntent().getBooleanExtra("isActionEdit", true)) {
+        if (getIntent().getBooleanExtra(MainActivity.IS_ACTION_EDIT_KEY, true)) {
             editTextCongratulate.setText(congratulation.getText());
             checkBoxSms.setChecked(congratulation.getSms().equals(ON));
             checkBoxVerse.setChecked(congratulation.getVerse().equals(ON));
@@ -197,10 +189,10 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
     }
 
     private void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolBarAddEditActivity);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBarAddEditActivity);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            if (getIntent().getBooleanExtra("isActionEdit", true)) {
+            if (getIntent().getBooleanExtra(MainActivity.IS_ACTION_EDIT_KEY, true)) {
                 getSupportActionBar().setTitle(R.string.edit_congratulate);
             } else {
                 getSupportActionBar().setTitle(R.string.add_new_congratulate);
