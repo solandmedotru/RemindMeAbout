@@ -1,7 +1,10 @@
 package ru.solandme.remindmeabout;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +12,12 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -38,9 +47,10 @@ import java.util.Locale;
 import ru.solandme.remindmeabout.database.CongratulateDBHelper;
 import ru.solandme.remindmeabout.database.HolidayDBHelper;
 
-public class AddEditHolidayDialog extends AppCompatActivity{
+public class AddEditHolidayDialog extends AppCompatActivity {
 
     static final int RESULT_SAVE = 100;
+    public static final int REQUEST_PERMISION_CODE = 2;
     private static int LOAD_IMAGE_RESULTS = 1;
     private static final int THUMBSIZE = 80;
     private static final String TAG = "Holidays Log:";
@@ -71,7 +81,7 @@ public class AddEditHolidayDialog extends AppCompatActivity{
     private void initToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBarAddEditActivity);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             if (getIntent().getBooleanExtra("isActionEdit", true)) {
                 getSupportActionBar().setTitle(holiday.getName());
             } else {
@@ -97,7 +107,6 @@ public class AddEditHolidayDialog extends AppCompatActivity{
     }
 
 
-
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -111,7 +120,7 @@ public class AddEditHolidayDialog extends AppCompatActivity{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             calendar = Calendar.getInstance();
-            calendar.set(year,monthOfYear,dayOfMonth);
+            calendar.set(year, monthOfYear, dayOfMonth);
             holiday.setDate(calendar.getTimeInMillis());
             btn_data.setText(SimpleDateFormat.getDateInstance().format(holiday.getDate()));
 
@@ -149,7 +158,7 @@ public class AddEditHolidayDialog extends AppCompatActivity{
     }
 
     private String generateCode() {
-        if (holiday.getCategory().equals(Holiday.CATEGORY_HOLIDAY) || holiday.getCategory().equals(Holiday.CATEGORY_EVENT)){
+        if (holiday.getCategory().equals(Holiday.CATEGORY_HOLIDAY) || holiday.getCategory().equals(Holiday.CATEGORY_EVENT)) {
             return holiday.getCategory() + holiday.getDate();
         } else {
             return Holiday.CATEGORY_BIRTHDAY;
@@ -168,7 +177,7 @@ public class AddEditHolidayDialog extends AppCompatActivity{
         Button btn_delete = (Button) findViewById(R.id.btn_delete);
         btn_data = (Button) findViewById(R.id.btn_data);
 
-        if(holiday.getDate() == null){
+        if (holiday.getDate() == null) {
             calendar = Calendar.getInstance();
             holiday.setDate(calendar.getTimeInMillis());
         }
@@ -237,8 +246,37 @@ public class AddEditHolidayDialog extends AppCompatActivity{
                 finish();
                 break;
             case R.id.edit_image_holiday:
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, LOAD_IMAGE_RESULTS);
+
+                int hasReadPermission = ContextCompat.checkSelfPermission(AddEditHolidayDialog.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE);
+
+                boolean shouldShow = ActivityCompat.shouldShowRequestPermissionRationale(AddEditHolidayDialog.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE);
+
+                if (hasReadPermission != PackageManager.PERMISSION_GRANTED) {
+                    if (shouldShow) {
+                        showCustomDialog(getString(R.string.permission_text),
+                                new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                                Uri.fromParts("package", getPackageName(), null));
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                    } else {
+                        ActivityCompat.requestPermissions(AddEditHolidayDialog.this,
+                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                REQUEST_PERMISION_CODE);
+                    }
+                } else {
+                    Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, LOAD_IMAGE_RESULTS);
+                }
+
                 break;
             case R.id.btn_data:
                 Calendar calendar = Calendar.getInstance();
@@ -253,6 +291,15 @@ public class AddEditHolidayDialog extends AppCompatActivity{
                 break;
         }
 
+    }
+
+    private void showCustomDialog(String message, DialogInterface.OnClickListener listner) {
+        new AlertDialog.Builder(AddEditHolidayDialog.this)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, listner)
+                .setNegativeButton(android.R.string.cancel, null)
+                .create()
+                .show();
     }
 
     @Override
@@ -281,7 +328,7 @@ public class AddEditHolidayDialog extends AppCompatActivity{
     private void saveImage(Bitmap image) {
         File pictureFile = getOutputMediaFile();
         if (pictureFile == null) {
-            Log.d(TAG,"Error creating media file, check storage permissions: ");
+            Log.d(TAG, "Error creating media file, check storage permissions: ");
             return;
         }
         try {
@@ -308,5 +355,26 @@ public class AddEditHolidayDialog extends AppCompatActivity{
         String mImageName = "thumbImage_" + timeStamp + ".png";
         holiday.setImageUri(mImageName);
         return new File(mediaStorageDir.getPath() + File.separator + mImageName);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST_PERMISION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, LOAD_IMAGE_RESULTS);
+                } else {
+                    Toast.makeText(this, "I need access to External Storage to take photo", Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+
     }
 }

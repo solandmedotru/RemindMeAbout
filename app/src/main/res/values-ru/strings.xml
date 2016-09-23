@@ -81,4 +81,5 @@
     <string name="alarm_off">Уведомление ВЫКЛ.</string>
     <string name="edit_congratulate">Редактировать</string>
     <string name="add_your_text">Напишите текст своего поздравления</string>
+    <string name="permission_text">Вы должны разрешить доступ к внешней памяти телефона</string>
 </resources>
