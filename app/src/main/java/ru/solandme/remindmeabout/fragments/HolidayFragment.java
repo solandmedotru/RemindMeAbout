@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.solandme.remindmeabout.Holiday;
-import ru.solandme.remindmeabout.database.HolidayDBHelper;
 import ru.solandme.remindmeabout.R;
 import ru.solandme.remindmeabout.adapters.HolidaysAdapter;
+import ru.solandme.remindmeabout.database.HolidayDBHelper;
 
 public class HolidayFragment extends Fragment {
     private static final int LAYOUT = R.layout.fragment_holiday;
@@ -32,12 +32,12 @@ public class HolidayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(LAYOUT, container, false); //надуваем вьюху
+        view = inflater.inflate(LAYOUT, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rvHolidays);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext()); //создаем новый LinearLayoutManager
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); //задаем ориентацию вертикальную
-        recyclerView.setLayoutManager(linearLayoutManager); //устанавливаем для RV менеджера
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
         holidayDbHelper = new HolidayDBHelper(getContext());
         holidaysAdapter = new HolidaysAdapter(holidayDbHelper.getHolidaysByCategory(Holiday.CATEGORY_HOLIDAY));
         recyclerView.setAdapter(holidaysAdapter);

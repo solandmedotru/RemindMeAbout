@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Поздравления</string>
     <string name="app_icon">Иконка приложения</string>
-    <string name="app_version">версия 0.9</string>
+    <string name="app_version">версия 1.0</string>
     <string name="about_app">О приложении</string>
     <string name="Birthdays">Дни рождения</string>
     <string name="Events">События</string>

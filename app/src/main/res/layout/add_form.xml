@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.design.widget.CoordinatorLayout
@@ -12,6 +12,7 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <include
                 android:id="@+id/toolBarAddEditActivity"
                 layout="@layout/toolbar" />
@@ -64,10 +65,10 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:counterEnabled="true"
-        app:counterMaxLength="50"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="50"
         app:counterOverflowTextAppearance="@style/counterOverride"
         app:counterTextAppearance="@style/counterText">
 
@@ -85,10 +86,10 @@
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/radio_button_holidays"
@@ -119,18 +120,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:text="@string/celebrated_from" />
 
         <Button
             android:id="@+id/btn_data"
+            style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -142,13 +145,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_save"
+            style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onClick"
@@ -156,6 +160,7 @@
 
         <Button
             android:id="@+id/btn_cancel"
+            style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onClick"
@@ -163,6 +168,7 @@
 
         <Button
             android:id="@+id/btn_delete"
+            style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onClick"

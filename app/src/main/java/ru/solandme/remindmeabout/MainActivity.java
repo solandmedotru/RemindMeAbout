@@ -191,14 +191,4 @@ public class MainActivity extends AppCompatActivity {
         interstitialAd.loadAd(adRequest);
     }
 
-//    private void updateSubtitle(){
-//
-//        CongratulateDBHelper congratulateDBHelper = new CongratulateDBHelper(getApplicationContext());
-//        String subtitle = "В базе "+ congratulateDBHelper.getCountAll()+" поздравлений";
-//        if (getSupportActionBar() != null){
-//            getSupportActionBar().setSubtitle(subtitle);
-//        }
-//    }
-
-
 }

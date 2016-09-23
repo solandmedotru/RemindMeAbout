@@ -26,15 +26,6 @@ import ru.solandme.remindmeabout.fragments.SlidePageFragment;
 import ru.solandme.remindmeabout.trasformers.ZoomOutPageTransformer;
 
 public class SlidePagerActivity extends AppCompatActivity {
-    private Toolbar toolbar;
-
-    private CheckBox checkBoxSms;
-    private CheckBox checkBoxVerse;
-    private CheckBox checkBoxFavorite;
-
-    private CheckBox checkBoxForHim;
-    private CheckBox checkBoxForHer;
-    private CheckBox checkBoxForAll;
 
     private InterstitialAd interstitialAd;
 
@@ -62,8 +53,6 @@ public class SlidePagerActivity extends AppCompatActivity {
     private String forHerFlag = OFF;
     private String forAllFlag = ON;
 
-    private CongratulateDBHelper helper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +61,6 @@ public class SlidePagerActivity extends AppCompatActivity {
 
         initToolBar();
         initView();
-//        initAdView();
-
     }
 
     @Override
@@ -81,17 +68,6 @@ public class SlidePagerActivity extends AppCompatActivity {
         super.onResume();
         setMyAdapter(slidePager);
     }
-    //    private void initAdView() {
-//        AdView adView = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder()
-//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-//                .addTestDevice("C79BD6D360D092383E26BB030B13893D")
-//                .addTestDevice("E38C2A53C7B24FE9163CDCE72FFA277B")
-//                .build();
-//        if (adView != null) {
-//            adView.loadAd(adRequest);
-//        }
-//    }
 
     private void initAdInterstitial() {
         interstitialAd = new InterstitialAd(this);
@@ -116,8 +92,6 @@ public class SlidePagerActivity extends AppCompatActivity {
         interstitialAd.loadAd(adRequest);
     }
 
-
-
     @Override
     public void onBackPressed() {
         if (slidePager.getCurrentItem() == 0) {
@@ -133,13 +107,13 @@ public class SlidePagerActivity extends AppCompatActivity {
 
         slidePager = (ViewPager) findViewById(R.id.slidePager);
 
-        checkBoxSms = (CheckBox) findViewById(R.id.chb_sms);
-        checkBoxVerse = (CheckBox) findViewById(R.id.chb_verse);
-        checkBoxFavorite = (CheckBox) findViewById(R.id.chb_favorite);
+        CheckBox checkBoxSms = (CheckBox) findViewById(R.id.chb_sms);
+        CheckBox checkBoxVerse = (CheckBox) findViewById(R.id.chb_verse);
+        CheckBox checkBoxFavorite = (CheckBox) findViewById(R.id.chb_favorite);
 
-        checkBoxForHim = (CheckBox) findViewById(R.id.chb_for_him);
-        checkBoxForHer = (CheckBox) findViewById(R.id.chb_for_her);
-        checkBoxForAll = (CheckBox) findViewById(R.id.chb_for_all);
+        CheckBox checkBoxForHim = (CheckBox) findViewById(R.id.chb_for_him);
+        CheckBox checkBoxForHer = (CheckBox) findViewById(R.id.chb_for_her);
+        CheckBox checkBoxForAll = (CheckBox) findViewById(R.id.chb_for_all);
 
 
         if (getIntent().getStringExtra("code").equals(Holiday.CODE_WOMANSDAY) ||
@@ -228,7 +202,7 @@ public class SlidePagerActivity extends AppCompatActivity {
     }
 
     private void initToolBar() {
-        toolbar = (Toolbar) findViewById(R.id.toolBarSlideActivity);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBarSlideActivity);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getIntent().getStringExtra("holidayName"));
@@ -241,26 +215,13 @@ public class SlidePagerActivity extends AppCompatActivity {
 
         pagerAdapter = new SlidePageAdapter(getSupportFragmentManager());
         if (slidePager != null) {
-            //Можно выбрать другую анимацию, заменив PageTransformer на
-            //slidePager.setPageTransformer(true, new DepthPageTransformer());
             slidePager.setPageTransformer(true, new ZoomOutPageTransformer());
             slidePager.setAdapter(pagerAdapter);
         }
     }
 
     private List<Congratulation> getTextCongratulate() {
-//        List<String> textCongratulate = new ArrayList<>();
-
-        helper = new CongratulateDBHelper(getApplicationContext());
-
-//        for (int i = 0; i < congratulations.size(); i++) {
-//            textCongratulate.add(congratulations.get(i).getText());
-//        }
-//
-//        if (textCongratulate.size() == 0) {
-//            textCongratulate.add(getString(R.string.empty));
-//        }
-        return helper.getCongratulationsByCode(
+        return new CongratulateDBHelper(getApplicationContext()).getCongratulationsByCode(
                 getIntent().getStringExtra("code"),
                 smsFlag,
                 verseFlag,

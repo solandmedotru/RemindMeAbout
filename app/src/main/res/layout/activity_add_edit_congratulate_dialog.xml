@@ -52,29 +52,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/save"
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/colorWhite"
-                    android:layout_margin="3dp"
-                    android:padding="6dp" />
+                    style="@style/button" />
 
                 <Button
                     android:id="@+id/btn_congratulation_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cancel"
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/colorWhite"
-                    android:layout_margin="3dp"
-                    android:padding="6dp" />
+                    style="@style/button" />
                 <Button
                     android:id="@+id/btn_congratulation_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/delete"
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/colorWhite"
-                    android:layout_margin="3dp"
-                    android:padding="6dp" />
+                    style="@style/button" />
             </LinearLayout>
 
         </LinearLayout>

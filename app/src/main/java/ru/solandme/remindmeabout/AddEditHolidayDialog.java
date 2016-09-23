@@ -38,7 +38,6 @@ import java.util.Locale;
 import ru.solandme.remindmeabout.database.CongratulateDBHelper;
 import ru.solandme.remindmeabout.database.HolidayDBHelper;
 
-
 public class AddEditHolidayDialog extends AppCompatActivity{
 
     static final int RESULT_SAVE = 100;
@@ -128,7 +127,6 @@ public class AddEditHolidayDialog extends AppCompatActivity{
         if (holiday.getImageUri() == null) {
             holiday.setImageUri("ic_h.png"); //устанавливаем иконку по умолчанию если не задана
         }
-        //задаем категорию праздника
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_button_holidays:
                 holiday.setCategory(Holiday.CATEGORY_HOLIDAY);
@@ -306,7 +304,6 @@ public class AddEditHolidayDialog extends AppCompatActivity{
                 return null;
             }
         }
-        // Create a media file name
         String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.ROOT).format(new Date());
         String mImageName = "thumbImage_" + timeStamp + ".png";
         holiday.setImageUri(mImageName);

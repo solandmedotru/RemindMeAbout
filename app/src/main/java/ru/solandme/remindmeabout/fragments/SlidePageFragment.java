@@ -13,9 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import ru.solandme.remindmeabout.AddEditCongratulateDialog;
-import ru.solandme.remindmeabout.AddEditHolidayDialog;
 import ru.solandme.remindmeabout.Congratulation;
-import ru.solandme.remindmeabout.Holiday;
 import ru.solandme.remindmeabout.R;
 import ru.solandme.remindmeabout.SlidePagerActivity;
 import ru.solandme.remindmeabout.database.CongratulateDBHelper;
@@ -25,20 +23,14 @@ public class SlidePageFragment extends Fragment {
     public static final String ARG_POSITION = "item_position";
     public static final String ARG_COUNT = "item_count";
     public static final String CONGRATULATION = "congratulation";
-    //    public static final String ARG_TEXT = "item_text";
-//    public static final String ARG_VERSE = "item_verse";
-//    public static final String ARG_ID = "item_id";
-//    public static final String ARG_FAVORITE = "item_favorite";
-//    public static final String ARG_SEX = "item_sex";
 
-    //    View fragment;
+
     private TextView textContainer;
     private TextView textCounter;
     private CheckBox checkBoxAddFavorite;
     private View colorTeg;
     private Congratulation congratulation;
 
-//    View fragment_filter;
 
     private CongratulateDBHelper helper;
 
@@ -57,10 +49,6 @@ public class SlidePageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_slide_page, container, false);
         final Bundle args = getArguments();
         congratulation = (Congratulation) args.getSerializable(CONGRATULATION);
-
-//        fragment_filter = getActivity().findViewById(R.id.fragment_filter);
-
-//        fragment = rootView.findViewById(R.id.fragment);
         textCounter = (TextView) rootView.findViewById(R.id.text_counter);
         textContainer = (TextView) rootView.findViewById(R.id.text_container);
         colorTeg = rootView.findViewById(R.id.colorTeg);
@@ -93,16 +81,12 @@ public class SlidePageFragment extends Fragment {
         }
 
         if (congratulation.getCode().equals(SlidePagerActivity.FORHER)) {
-//            fragment.setBackgroundColor(getResources().getColor(R.color.colorForHer));
             colorTeg.setBackgroundColor(getResources().getColor(R.color.colorForHer));
 
         } else if (congratulation.getCode().equals(SlidePagerActivity.FORHIM)) {
-//            fragment.setBackgroundColor(getResources().getColor(R.color.colorForHim));
             colorTeg.setBackgroundColor(getResources().getColor(R.color.colorForHim));
         } else {
-//            fragment.setBackgroundColor(getResources().getColor(R.color.colorUniversal));
             colorTeg.setBackgroundColor(getResources().getColor(R.color.colorWhiteDark));
-//
         }
 
         checkBoxAddFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
