@@ -184,7 +184,6 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
             }
         });
 
-
         setCheckBoxes();
 
         checkFieldForEmptyValue();
