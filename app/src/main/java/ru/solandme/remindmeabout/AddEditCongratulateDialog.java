@@ -3,6 +3,8 @@ package ru.solandme.remindmeabout;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -38,6 +40,8 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
     private String forHimFlag = OFF;
     private String forHerFlag = OFF;
     private String forAllFlag = ON;
+
+    Button btnSaveCongratulation;
 
     private Congratulation congratulation;
 
@@ -130,7 +134,24 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
 
         editCongratulationText = (EditText) findViewById(R.id.edit_text_congratulate);
 
-        Button btnSaveCongratulation = (Button) findViewById(R.id.btn_congratulation_save);
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkFieldForEmptyValue();
+            }
+        };
+
+        editCongratulationText.addTextChangedListener(textWatcher);
+
+        btnSaveCongratulation = (Button) findViewById(R.id.btn_congratulation_save);
         Button btnCancel = (Button) findViewById(R.id.btn_congratulation_cancel);
         Button btnDelete = (Button) findViewById(R.id.btn_congratulation_delete);
         btnSaveCongratulation.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +186,20 @@ public class AddEditCongratulateDialog extends AppCompatActivity {
 
 
         setCheckBoxes();
+
+        checkFieldForEmptyValue();
+    }
+
+    private void checkFieldForEmptyValue() {
+        if (editCongratulationText.getText().toString().length() > 0) {
+            btnSaveCongratulation.setClickable(true);
+            btnSaveCongratulation.setEnabled(true);
+            btnSaveCongratulation.setBackground(getResources().getDrawable(R.drawable.bg_button_enabled));
+        } else {
+            btnSaveCongratulation.setClickable(false);
+            btnSaveCongratulation.setEnabled(false);
+            btnSaveCongratulation.setBackground(getResources().getDrawable(R.drawable.bg_button_desabled));
+        }
     }
 
     private void setCheckBoxes() {

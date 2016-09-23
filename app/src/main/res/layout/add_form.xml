@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:counterEnabled="true"
-            app:counterMaxLength="20"
+            app:counterMaxLength="30"
             app:counterOverflowTextAppearance="@style/counterOverride"
             app:counterTextAppearance="@style/counterText">
 
@@ -56,7 +56,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:ems="20"
                 android:hint="@string/holiday_name" />
         </android.support.design.widget.TextInputLayout>
 
@@ -68,7 +67,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         app:counterEnabled="true"
-        app:counterMaxLength="50"
+        app:counterMaxLength="150"
         app:counterOverflowTextAppearance="@style/counterOverride"
         app:counterTextAppearance="@style/counterText">
 
@@ -78,7 +77,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:ems="20"
             android:hint="@string/holiday_description" />
     </android.support.design.widget.TextInputLayout>
 
@@ -136,8 +134,7 @@
             style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="onClick" />
+            android:layout_gravity="center" />
 
     </LinearLayout>
 
@@ -155,7 +152,6 @@
             style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClick"
             android:text="@string/save" />
 
         <Button
@@ -163,7 +159,6 @@
             style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClick"
             android:text="@string/cancel" />
 
         <Button
@@ -171,7 +166,6 @@
             style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClick"
             android:text="@string/delete" />
 
     </LinearLayout>
