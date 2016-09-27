@@ -20,11 +20,13 @@ import ru.solandme.remindmeabout.adapters.MyPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String HOLIDAY_OBJECT_KEY = "holiday";
+    private static final String ADS_APP_ID = "ca-app-pub-8994936165518589~1639164557";
     private static final int HOLIDAY_REQUEST = 1;
-    public static final String TAG_ABOUT = "about";
-    public static final String ADS_APP_ID = "ca-app-pub-8994936165518589~1639164557";
-    public static final String IS_ACTION_EDIT_KEY = "isActionEdit";
+
+    static final String HOLIDAY_OBJECT_KEY = "holiday";
+    static final String IS_ACTION_EDIT_KEY = "isActionEdit";
+    static final String TAG_ABOUT = "about";
+
     private TabLayout tabLayout;
     private InterstitialAd interstitialAd;
     private boolean shownAdvert;
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MobileAds.initialize(getApplicationContext(), ADS_APP_ID);
         initAdInterstitial();
 
         initToolBar();
@@ -63,14 +64,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initPager() {
+
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        final MyPagerAdapter myPagerAdapter = new MyPagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
+        final MyPagerAdapter myPagerAdapter =
+                new MyPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+
         if (viewPager != null) {
             viewPager.setAdapter(myPagerAdapter);
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         }
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (viewPager != null) {
@@ -168,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initAdInterstitial() {
+        MobileAds.initialize(getApplicationContext(), ADS_APP_ID);
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.fullscreen_ad_unit_id));
         interstitialAd.setAdListener(new AdListener() {
