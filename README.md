@@ -9,7 +9,7 @@
 ![Holidays list](http://lh3.googleusercontent.com/erf_np4uXGOM-AGAmIdaDkB8K7bhRwLa5tSYfTnDjFK-Wpupq7aVQ32Lf7IgPt44FQA=h300-rw) 
 ![Birthdays list](http://lh3.googleusercontent.com/zmEus93GGEO4ITIBDCjbXS7-5Jp8Z2gedl1XduodxnbhtAXtWL5dVqtvpKqtIZN9xfc=h300-rw)
 ![Events list](http://lh3.googleusercontent.com/OHlHCv2BHG0E_uTkrZubru4armRO-BgDSQXzzFDtXNRbi0Ehyyu2Ufo6_H3ojkT4TQ=h300-rw)
-![Congratulation](//lh3.googleusercontent.com/kj6TRlZoWy_2OkxGJy9W3G_NW4qvyCJiBJr_ohzKaPSVOLh6EA-fNZCthlTS7XVssg=h300-rw) 
+![Congratulation](http://lh3.googleusercontent.com/kj6TRlZoWy_2OkxGJy9W3G_NW4qvyCJiBJr_ohzKaPSVOLh6EA-fNZCthlTS7XVssg=h300-rw) 
 
 This sample is available
 
