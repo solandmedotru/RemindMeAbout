@@ -32,7 +32,7 @@ Prevent code-style related changes (at least run ⌘+O, ⌘+L) before commiting.
 
 ### License
 
-	Copyright © 2016 Joaquim Ley
+	Copyright © 2016 Solomin Andrey
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
