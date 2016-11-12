@@ -1,6 +1,6 @@
 ![AppIcon](https://github.com/solandmedotru/RemindMeAbout/blob/master/app/src/main/res/mipmap-xhdpi/ic_launcher.png) 
 # RemindMeAbout
-Приложение напоминает о праздниках и днях рождения
+Приложение напоминает о праздниках и днях рождения. А также содержит базу поздравлений, стихов и пожеланий, которые можно отправить по СМС или в соц.сети.
 
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-16-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-24-green.svg?style=true)
