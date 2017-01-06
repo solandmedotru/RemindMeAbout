@@ -5,6 +5,8 @@
 ![minSdkVersion](https://img.shields.io/badge/minSdkVersion-16-yellow.svg?style=true)
 ![compileSdkVersion](https://img.shields.io/badge/compileSdkVersion-24-green.svg?style=true)
 
+<a href='https://ko-fi.com/A036I5F' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
 ![Splash](http://lh3.googleusercontent.com/J-4h_ye1y9TH4c8JQpNyIq8mCeuG3bdtayW44hS_xhy1aLKIqNkQSqYK_VPM2r8OjQ=h300-rw) 
 ![Holidays list](http://lh3.googleusercontent.com/erf_np4uXGOM-AGAmIdaDkB8K7bhRwLa5tSYfTnDjFK-Wpupq7aVQ32Lf7IgPt44FQA=h300-rw) 
 ![Birthdays list](http://lh3.googleusercontent.com/zmEus93GGEO4ITIBDCjbXS7-5Jp8Z2gedl1XduodxnbhtAXtWL5dVqtvpKqtIZN9xfc=h300-rw)
